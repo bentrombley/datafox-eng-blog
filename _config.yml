@@ -1,0 +1,12 @@
+# Site settings
+title: DataFox Tech Blog
+email:
+description: "DataFox Tech Blog"
+baseurl: ""
+url: "http://datafox.co"
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+highlighter: pygments
