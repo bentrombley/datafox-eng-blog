@@ -7,11 +7,11 @@ categories: nodejs
 
 # What I Wish I’d Read When I Started Node
 
-As an experienced programmer, NodeJS is easy to learn with many tutorials to cover the basics.  However, I was (and am) unclear about how NodeJS best practices.
+As an experienced programmer, I've found that NodeJS is easy to learn with many tutorials to cover the basics.  However, I was (and still am) unclear about what are the best practices for NodeJS. Here are a few of the things I've learned so far...
 
 ## Everything in Node should be done with callbacks.
 
-It can be tempting to write functions that just return the results like:
+It can be tempting to write functions that just return results like:
 
 {% highlight javascript %}
   function calculateScore(someInput) {
@@ -22,7 +22,7 @@ It can be tempting to write functions that just return the results like:
 
 But that’s generally a bad idea because you’ve closely tied your interface to your implementation.  That means if you decide to change your implementation to do something asynchronous, like fetching a cached value, you now have to change all of your callers.  In practice you’ll run into a lot of bugs where the function actually returns nothing (undefined) or fails to call a callback, making your program hang.
 
-NodeJS requires you to invert the usual sequential way of solving problems into an asynchronous set of callbacks.  Embrace it.  Once wrap your head around this inverted idea, it’s actually a lot of fun and powerful.  Have you ever tried to run parallel database queries in PHP?
+NodeJS requires you to invert the usual sequential way of solving problems into an asynchronous set of callbacks.  Embrace it.  Once you wrap your head around this inverted idea, it’s actually a lot of fun and powerful.  Have you ever tried to run parallel database queries in PHP?
 
 Use the async library to organize your callbacks
 
@@ -33,7 +33,7 @@ There are some nice articles [link] on how to prevent the “callback soup,” b
 
 ## Invoke all callbacks with exacty two arguments like this: callback(err, response)
 
-One of my biggest frustrations is how unpredictable callbacks are in NodeJS, because the number of arguments is arbitrary.   Most Node authors respect the convention that the first argument is an error (or null), although you can omit it:
+One of my biggest frustrations is how unpredictable callbacks are in NodeJS, because the number of arguments is arbitrary. Most Node authors respect the convention that the first argument is an error (or null), although you can omit it:
 
     callback(data);
 
@@ -52,7 +52,7 @@ Sadly, a few Node core libraries like filter [cite] follow this pattern.  The pr
       // broken :(
     ], ...)
 
-Furthermore, I believe strongly that you should  pass the actual response as one argument.  This is the same reason you should not return multiple values from a function.  For example this is bad practice in Python:
+Furthermore, I believe strongly that you should pass the actual response as one argument.  This is the same reason you should not return multiple values from a function.  For example this is bad practice in Python:
 
 return [users, total_users]  # <— God help you if you change this return value.
 
@@ -120,28 +120,28 @@ The only issue is that while Node v.10 vastly improved streams, the libraries (e
 
 ...except the stream.pause() function is “strictly advisory” and therefore doesn’t work :(.  I’ve experienced the same problems in other libraries.
 
-I hope this is rapidly solved as the libraries mature, because this is a much better way to think about data problems.  However, I reserve judgment until then.
+I hope this is rapidly solved as the libraries mature, because this is a much better way to think about data problems.  However, I will reserve judgment until then.
 
 
 ## Warning: Event Emitting is Blocking
 
 There is a very unfortunate inconsistency at the heart of NodeJS.  As you’ve probably read, everything in Node is non-blocking, which can be extremely efficient without multithreading.  At the same time, JavaScript is built around event emitting, which is a powerful way to decouple code, whether you want to call it Pub/Sub or whatever.
 
-The issue is that doing
+The issue is that doing...
 
     myObject.emit(‘some notification…’)
 
-is a blocking operation while all listeners respond.
+...is a blocking operation while all listeners respond.
 
 I’ve talked to core contributors that argue this is a fundamental design flaw in Node, and are arguing to change it.  I’ve also read good arguments that the listeners should be blocking, otherwise there is no guarantee they’ll have a chance to respond to the event before it’s too late.  The important point is that you should be aware of this inconsistency and plan accordingly.  Which brings me to my next point:
 
-## Most NodeJS Example Assume a Persistent Server
+## Most NodeJS Examples Assume a Persistent Server
 
 A related problem I have encountered with events is that Node authors tend to assume that you are working with a persistent instance, like a web server, so all events and callbacks will have unlimited time to complete.  This assumption falls apart when you start to write background scripts that are intended to run and shutdown, releasing resources like DB connections.
 
 My issue occurred because I want to emit and listen for events (to keep my code nicely decoupled), while ensuring that any subsequent asynchronous behavior completes.  To make this more concrete:
 
-When you create a company in DataFox, we trigger many background jobs like crawling the corporation’s website and hitting various APIs.  Rather than have my Company class now about all of these ever-changing jobs, I have it emit a “new company” event, which those jobs can listen for.  So for example:
+When you create a company in [DataFox](http://datafox.co), we trigger many background jobs like crawling the corporation’s website and hitting various APIs.  Rather than have my Company class know about all of these ever-changing jobs, I have it emit a “new company” event, which those jobs can listen for.  So for example:
 
     // in WebsiteCrawler
     Company.on(‘new company’, function(company) {
@@ -151,7 +151,7 @@ When you create a company in DataFox, we trigger many background jobs like crawl
       }
     });
 
-So what happens if my script completes before that http response gets back?  Yes, Node will not terminate running while there are outstanding callbacks, but I can still have issues if I’ve disconnected from the database.
+So what happens if my script completes before the http response gets back?  Yes, Node will not terminate running while there are outstanding callbacks, but I can still have issues if I’ve disconnected from the database.
 
 
 ## Error Handling in Node is a Mess
@@ -231,7 +231,7 @@ The solution is to either avoid the circular import if possible, or to lazy-requ
 
 ## Conclusion
 
-This is not meant to be an authoritative list, and I haven’t covered important learning like NPM or deploying and monitoring NodeJS.  I’m still learning the right way to tackle Node and would love to hear feedback.
+This is not meant to be an authoritative list, and I haven’t covered other important topics such as installing packages with NPM or deploying and monitoring NodeJS.  I’m still learning the right way to tackle Node and would love to hear feedback.
 
 
 
