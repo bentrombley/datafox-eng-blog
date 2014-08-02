@@ -139,7 +139,7 @@ user.save(function(err, user, num) {
 
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
 
-&lt;p&gt;NodeJS is awesome, but the best practices are stilling emerging.  I hope these thoughts are helpful to others who are adopting NodeJS&amp;lt; and I’d love to hear more about other best practices.&lt;/p&gt;
+&lt;p&gt;NodeJS is awesome, but the best practices are stilling emerging.  I hope these thoughts are helpful to others who are adopting NodeJS and I’d love to hear more about other best practices.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 08 Jun 2014 05:03:49 -0700</pubDate>

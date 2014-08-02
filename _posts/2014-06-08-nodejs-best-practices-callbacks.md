@@ -80,7 +80,7 @@ Rigidly sticking with the convention of `callback(err, data)` saves a lot of hea
 
 ## Conclusion
 
-NodeJS is awesome, but the best practices are stilling emerging.  I hope these thoughts are helpful to others who are adopting NodeJS< and I'd love to hear more about other best practices.
+NodeJS is awesome, but the best practices are stilling emerging.  I hope these thoughts are helpful to others who are adopting NodeJS and I'd love to hear more about other best practices.
 
 
 
