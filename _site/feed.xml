@@ -6,5 +6,146 @@
     <link>http://datafox.co/</link>
     <atom:link href="http://datafox.co/feed.xml" rel="self" type="application/rss+xml" />
     
+      <item>
+        <title>NodeJs Best Practices: Event Emitting and Async Callbacks</title>
+        <description>&lt;h2 id=&quot;the-issue&quot;&gt;The Issue&lt;/h2&gt;
+
+&lt;p&gt;There is a very unfortunate inconsistency at the heart of NodeJS.  As you’ve probably read, everything in Node is non-blocking, which can be extremely efficient without multithreading.  At the same time, JavaScript is built around event emitting, which is a powerful way to decouple code, whether you want to call it Pub/Sub or whatever.&lt;/p&gt;
+
+&lt;p&gt;The issue is that doing…&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;myObject.emit(&quot;some notification...&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;…is a blocking operation while all listeners respond.&lt;/p&gt;
+
+&lt;p&gt;I’ve talked to core contributors that argue this is a fundamental design flaw in Node, and are arguing to change it.  I’ve also read good arguments that the listeners should be blocking, otherwise there is no guarantee they’ll have a chance to respond to the event before it’s too late.  The important point is that you should be aware of this inconsistency and plan accordingly.  Which brings me to my next point:&lt;/p&gt;
+
+&lt;h2 id=&quot;most-nodejs-examples-assume-a-persistent-server&quot;&gt;Most NodeJS Examples Assume a Persistent Server&lt;/h2&gt;
+
+&lt;p&gt;A related problem I have encountered with events is that Node tutorials tend to assume that you are working with a persistent instance, like a web server, so all events and callbacks will have unlimited time to complete.  This assumption falls apart when you start to write background scripts that are intended to run and shutdown, releasing resources like DB connections.&lt;/p&gt;
+
+&lt;p&gt;My issue occurred because I want to emit and listen for events (to keep my code nicely decoupled), while ensuring that any subsequent asynchronous behavior completes.  To make this more concrete:&lt;/p&gt;
+
+&lt;p&gt;When you create a company in &lt;a href=&quot;http://www.datafox.co&quot;&gt;DataFox&lt;/a&gt;, we trigger many background jobs like crawling the corporation’s website and hitting various APIs.  Rather than have my &lt;code&gt;Company&lt;/code&gt; class know about all of these ever-changing jobs, I have it emit a “new company” event, which those jobs can listen for.  So for example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// in WebsiteCrawler
+Company.on(&#39;new company&#39;, function(company) {
+  // the request is non-blocking.
+  request.get(company.url, function(err, response) {
+    // process the response and write to the db...
+  }
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So what happens if my script completes before the http response gets back?  Yes, Node will not terminate running while there are outstanding callbacks, but I can still have issues if I’ve disconnected from the database.&lt;/p&gt;
+
+&lt;h2 id=&quot;my-solution&quot;&gt;My Solution&lt;/h2&gt;
+
+&lt;p&gt;The solution is to avoid doing any real work (asynchronous calls) in an event listener.  For me this means a listener should enqueue the work to be done, using &lt;a href=&quot;https://github.com/caolan/async#queue&quot;&gt;async.queue&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;fetchUrlQueue = async.queue(functionThatWillFetchUrl);
+Company.on(&#39;new company&#39;, function(company) {
+  fetchUrlQueue.push({url: company.url});
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then I can check that this queue is drained before disconnecting from the database, etc. and shutting down my script.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 02 Aug 2014 00:00:00 -0700</pubDate>
+        <link>http://datafox.co/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/</link>
+        <guid isPermaLink="true">http://datafox.co/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/</guid>
+      </item>
+    
+      <item>
+        <title>NodeJS Best Practices: Callbacks</title>
+        <description>&lt;p&gt;As an experienced programmer, I’ve found that NodeJS is easy to learn with many tutorials to cover the basics.  However, I was (and still am) unclear about what are the best practices for NodeJS. Here are a few of the things I’ve learned so far about callbacks:&lt;/p&gt;
+
+&lt;h2 id=&quot;everything-in-node-should-be-done-with-callbacks&quot;&gt;&lt;em&gt;Everything&lt;/em&gt; in Node should be done with callbacks.&lt;/h2&gt;
+
+&lt;p&gt;It can be tempting to write functions that just return results like:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;calculateScore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;someInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;…&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;But that’s generally a bad idea because you’ve closely tied your interface to your implementation.  That means if you decide to change your implementation to do something asynchronous, like fetching a cached value, you now have to change all of your callers.  In practice you’ll run into a lot of bugs where the function actually returns nothing (undefined) or fails to call a callback, making your program hang.&lt;/p&gt;
+
+&lt;p&gt;NodeJS requires you to invert the usual sequential way of solving problems into an asynchronous set of callbacks.  Embrace it.  Once you wrap your head around this inverted idea, it’s actually a lot of fun and powerful.  Have you ever tried to run parallel database queries in PHP?&lt;/p&gt;
+
+&lt;h2 id=&quot;use-the-async-library-to-organize-your-callbacks&quot;&gt;Use the async library to organize your callbacks&lt;/h2&gt;
+
+&lt;p&gt;There are some lots of ways to prevent “callback soup,” but here’s what worked for me in practice:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Move most of your anonymous callbacks to clearly named functions, following good object-oriented design.&lt;/li&gt;
+  &lt;li&gt;Use the awesome &lt;a href=&quot;https://github.com/caolan/async&quot;&gt;async library&lt;/a&gt; to handle all of your common practices like calling functions in parallel or in a series.  Promises and generators are both cool ideas that falter in practice.  Async just works.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;callbacks-should-have-exactly-two-arguments&quot;&gt;Callbacks should have &lt;strong&gt;exactly two&lt;/strong&gt; arguments&lt;/h2&gt;
+
+&lt;p&gt;What’s wrong with this code?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;fs.exists(&#39;/etc/passwd&#39;, function (err, exists) {
+  util.debug(exists ? &quot;it&#39;s there&quot; : &quot;no passwd!&quot;);
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;fs.exists&lt;/code&gt; doesn’t follow the convention of invoking a callback with an &lt;code&gt;err&lt;/code&gt; parameter so &lt;code&gt;exists&lt;/code&gt; is undefined and silently cast to false. Oops.&lt;/p&gt;
+
+&lt;p&gt;One of my biggest frustrations is how unpredictable callbacks are in NodeJS, because the number of arguments is arbitrary. While most authors respect the convention that the first argument is an error (or null), you can’t rely on it.  The problem is compounded if you use the async library, which expects the standard (err, data) format:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;async.waterfall([
+  function(next) {
+    fs.exists(&#39;/etc/passwd&#39;, next);
+  },
+  function(next) {
+    // next is undefined and the script hangs...
+  }
+], ...);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Furthermore, I believe strongly that you should pass the actual response as one argument.  This is the same reason you should not return multiple values from a function.  For example this is bad practice in Python:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# changing this array will probably break callers
+return [users, total_users]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This happens often enough in Node libraries to be infuriating.  For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// mongoose js model
+user.save(function(err, user, num) {
+  ...
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The real reason this is a problem is that you are violating the &lt;strong&gt;Single Responsibility Principle&lt;/strong&gt;: your function returns multiple arguments because it’s trying to do more than one thing.  The awkward callback is a symptom of OO design that needs rethinking.  In this case it would really be better to return some type of Response object that encapsulates the saved model, number saved, etc.  In the future you can add information like query time without breaking the contract.&lt;/p&gt;
+
+&lt;p&gt;In practice this ambiguity has caused more bugs for me than anything else.  For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;async.waterfall([
+  function(callback) {
+    user.save(callback);
+  },
+  function(user, callback) {
+   // oops, next is actually a number, so there is an error or the script just hangs
+  },
+  ...
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Rigidly sticking with the convention of &lt;code&gt;callback(err, data)&lt;/code&gt; saves a lot of headache.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;NodeJS is awesome, but the best practices are stilling emerging.  I hope these thoughts are helpful to others who are adopting NodeJS&amp;lt; and I’d love to hear more about other best practices.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 08 Jun 2014 05:03:49 -0700</pubDate>
+        <link>http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-callbacks/</link>
+        <guid isPermaLink="true">http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-callbacks/</guid>
+      </item>
+    
   </channel>
 </rss>

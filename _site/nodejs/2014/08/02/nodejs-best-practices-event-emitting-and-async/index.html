@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>DataFox Tech Blog</title>
+    <title>NodeJs Best Practices: Event Emitting and Async Callbacks</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="DataFox Tech Blog">
-    <link rel="canonical" href="http://datafox.co/">
+    <link rel="canonical" href="http://datafox.co/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
@@ -53,28 +53,61 @@
 
     <div class="page-content">
       <div class="wrap">
-      <div class="home">
+      <div class="post">
 
-  <h1>Posts</h1>
+  <header class="post-header">
+    <h1>NodeJs Best Practices: Event Emitting and Async Callbacks</h1>
+    <p class="meta">Aug 2, 2014</p>
+  </header>
 
-  <ul class="posts">
-    
-      <li>
-        <span class="post-date">Aug 2, 2014</span>
-        <a class="post-link" href="/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/">NodeJs Best Practices: Event Emitting and Async Callbacks</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-callbacks/">NodeJS Best Practices: Callbacks</a>
-      </li>
-    
-  </ul>
+  <article class="post-content">
+  <h2 id="the-issue">The Issue</h2>
 
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+<p>There is a very unfortunate inconsistency at the heart of NodeJS.  As you’ve probably read, everything in Node is non-blocking, which can be extremely efficient without multithreading.  At the same time, JavaScript is built around event emitting, which is a powerful way to decouple code, whether you want to call it Pub/Sub or whatever.</p>
+
+<p>The issue is that doing…</p>
+
+<pre><code>myObject.emit("some notification...")
+</code></pre>
+
+<p>…is a blocking operation while all listeners respond.</p>
+
+<p>I’ve talked to core contributors that argue this is a fundamental design flaw in Node, and are arguing to change it.  I’ve also read good arguments that the listeners should be blocking, otherwise there is no guarantee they’ll have a chance to respond to the event before it’s too late.  The important point is that you should be aware of this inconsistency and plan accordingly.  Which brings me to my next point:</p>
+
+<h2 id="most-nodejs-examples-assume-a-persistent-server">Most NodeJS Examples Assume a Persistent Server</h2>
+
+<p>A related problem I have encountered with events is that Node tutorials tend to assume that you are working with a persistent instance, like a web server, so all events and callbacks will have unlimited time to complete.  This assumption falls apart when you start to write background scripts that are intended to run and shutdown, releasing resources like DB connections.</p>
+
+<p>My issue occurred because I want to emit and listen for events (to keep my code nicely decoupled), while ensuring that any subsequent asynchronous behavior completes.  To make this more concrete:</p>
+
+<p>When you create a company in <a href="http://www.datafox.co">DataFox</a>, we trigger many background jobs like crawling the corporation’s website and hitting various APIs.  Rather than have my <code>Company</code> class know about all of these ever-changing jobs, I have it emit a “new company” event, which those jobs can listen for.  So for example:</p>
+
+<pre><code>// in WebsiteCrawler
+Company.on('new company', function(company) {
+  // the request is non-blocking.
+  request.get(company.url, function(err, response) {
+    // process the response and write to the db...
+  }
+});
+</code></pre>
+
+<p>So what happens if my script completes before the http response gets back?  Yes, Node will not terminate running while there are outstanding callbacks, but I can still have issues if I’ve disconnected from the database.</p>
+
+<h2 id="my-solution">My Solution</h2>
+
+<p>The solution is to avoid doing any real work (asynchronous calls) in an event listener.  For me this means a listener should enqueue the work to be done, using <a href="https://github.com/caolan/async#queue">async.queue</a>:</p>
+
+<pre><code>fetchUrlQueue = async.queue(functionThatWillFetchUrl);
+Company.on('new company', function(company) {
+  fetchUrlQueue.push({url: company.url});
+});
+</code></pre>
+
+<p>Then I can check that this queue is drained before disconnecting from the database, etc. and shutting down my script.</p>
+
+  </article>
 
 </div>
-
       </div>
     </div>
 
