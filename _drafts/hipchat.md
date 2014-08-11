@@ -7,11 +7,11 @@ categories: hipchat
 
 
 
-We're huge fans of [HipChat](https://www.hipchat.com/) here at DataFox and it has rapidly become our central means of communicating and sharing information.
+We're huge fans of [HipChat](https://www.hipchat.com/) here at DataFox and it has rapidly become our central means of communication.
 
-We started by using it a simple instant messenger for 1:1 conversations, and then expanded to using the chat rooms as a way to send out customer feedback without clogging our inboxes with e-mail.  And it has become the way to broadcast announcements like `@all order lunch from [doordash](http://doordash.com)`.
+We started by using it as a simple instant messenger for 1:1 conversations, and then expanded to using the chat rooms as a way to send out customer feedback without clogging our inboxes.  And it has become the way to broadcast announcements like `@all order lunch from [doordash](http://doordash.com)`.
 
-But that's just the beginning.  HipChat is also _the_ simplest way to communicate with our automated tools and processes.  No more e-mails or dashboards spread across 10 different systems.  By consolidating our messaging through HipChat we get all of our alerts in one place and can instantly see everything that is happening, and discuss.
+But that's just the beginning.  HipChat is also _the_ simplest way to communicate with our automated tools and processes.  No more e-mails or dashboards spread across 10 different systems.  By consolidating our messaging through HipChat we get all of our alerts in one place and can instantly discuss everything that is happening.
 
 
 ### Deployment and Configuration
@@ -102,13 +102,13 @@ And then invoke it from monit like:
 
 ### Bugs and Uncaught Exceptions
 
-We use [Bugsnag](https://bugsnag.com) to report on uncaught errors in our frontend JavaScript, as well as our backend NodeJS and Python services.  I haven't used any of the competing products, but Bugsnag was extremely easy to setup and automatically groups all errors,  so we are alerted the 1st, 10th, 100th, etc. time an error occurs.  
+We use [Bugsnag](https://bugsnag.com) to report uncaught errors in our frontend JavaScript, as well as in our backend NodeJS and Python services.  I haven't used any of the competing products, but Bugsnag was extremely easy to setup and automatically groups all errors,  so we are alerted the 1st, 10th, 100th, etc. time an error occurs.  
 
 Connecting Bugsnag to HipChat takes less than 60 seconds, and now we can immediately see if the errors started occurring after a deployment.
 
 
 ### And More...
 
-With widespread adoption it seems like most cloud-based services support HipChat.  We particularly rely on NewRelic alerts, but also use Github.  The only concern is to be sure you don't drown out the useful signal with noise (e.g. github commits).
+With widespread adoption it seems like most cloud-based services support HipChat.  We particularly rely on NewRelic alerts, but also use Github.  The only concern is drowning out the useful signal with noise (e.g. github commits).
 
 
