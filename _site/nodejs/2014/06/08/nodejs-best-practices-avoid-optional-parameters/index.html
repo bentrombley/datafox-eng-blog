@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>DataFox Tech Blog</title>
+    <title>NodeJs Best Practices: Avoid Optional Parameters</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="DataFox Tech Blog">
-    <link rel="canonical" href="http://datafox.co/">
+    <link rel="canonical" href="http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-avoid-optional-parameters/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
@@ -53,48 +53,59 @@
 
     <div class="page-content">
       <div class="wrap">
-      <div class="home">
+      <div class="post">
 
-  <h1>Posts</h1>
+  <header class="post-header">
+    <h1>NodeJs Best Practices: Avoid Optional Parameters</h1>
+    <p class="meta">Jun 8, 2014</p>
+  </header>
 
-  <ul class="posts">
-    
-      <li>
-        <span class="post-date">Aug 9, 2014</span>
-        <a class="post-link" href="/hipchat/2014/08/09/hipchat/">Automate Everything Using Hipchat</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Aug 2, 2014</span>
-        <a class="post-link" href="/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/">NodeJs Best Practices: Event Emitting and Async Callbacks</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-streams/">NodeJs Best Practices: Streams</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-circular-dependencies/">NodeJs Best Practices: Avoiding Circular Dependencies</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-callbacks/">NodeJS Best Practices: Callbacks</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-avoid-optional-parameters/">NodeJs Best Practices: Avoid Optional Parameters</a>
-      </li>
-    
-  </ul>
+  <article class="post-content">
+  <p>NodeJS authors really love taking advantage of JavaScript’s looseness to create ambiguous functions.  For example, mongoose (MongoDB ORM)’s <code>populate</code> function can be invoked any of these ways:</p>
 
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+<pre><code>.populate('path')
+
+.populate('path1 path2')
+
+.populate('path1').populate('path2')
+
+.populate({path: 'path', ...})
+</code></pre>
+
+<p>with subtly varying results.</p>
+
+<p>I also frequently see code like this:</p>
+
+<pre><code>myFunction(api, options, callback) {
+  if (typeof callback === "undefined")
+    callback = options
+  ...
+}
+</code></pre>
+
+<p>This feels very clever, but really it just achieves the convenience of being able to write</p>
+
+<pre><code>myFunction(‘my/api/endpoint/‘, callback)
+</code></pre>
+
+<p>instead of:</p>
+
+<pre><code>myFunction(‘my/api/endpoint/‘, {}, callback)
+</code></pre>
+
+<p>I’m not sure why these patterns are so common, but I suspect the author believes they are supporting a wider variety of inputs and shorthands.  In practice this has makes code:</p>
+
+<ul>
+  <li>harder to document and search</li>
+  <li>harder to predict, since it may accept more than you expect</li>
+  <li>harder to catch mistakes, since the code will tries to accomodate those unintended mistakes.</li>
+</ul>
+
+<p>Experience has taught me the importance of writing explicit code.  Ambiguity causes bugs.</p>
+
+  </article>
 
 </div>
-
       </div>
     </div>
 

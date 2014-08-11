@@ -102,7 +102,7 @@ And then invoke it from monit like:
 
 ### Bugs and Uncaught Exceptions
 
-We use [Bugsnag](https://bugsnag.com) to report uncaught errors in our frontend JavaScript, as well as in our backend NodeJS and Python services.  I haven't used any of the competing products, but Bugsnag was extremely easy to setup and automatically groups all errors,  so we are alerted the 1st, 10th, 100th, etc. time an error occurs.  
+We use [Bugsnag](https://bugsnag.com) to report uncaught errors in our frontend JavaScript, as well as in our backend NodeJS and Python services.  I haven't used any of the competing products, but Bugsnag was extremely easy to setup and automatically groups all errors,  so we are alerted the 1st, 10th, 100th, etc. time an error occurs.
 
 Connecting Bugsnag to HipChat takes less than 60 seconds, and now we can immediately see if the errors started occurring after a deployment.
 
@@ -111,4 +111,5 @@ Connecting Bugsnag to HipChat takes less than 60 seconds, and now we can immedia
 
 With widespread adoption it seems like most cloud-based services support HipChat.  We particularly rely on NewRelic alerts, but also use Github.  The only concern is drowning out the useful signal with noise (e.g. github commits).
 
-
+<img src="/img/hipchat-screenshot.png" style="width: 100%" />
+<small><b>Pictured Above:</b> HipChat showing a git push to our Master branch, followed by an automated Jenkins build and Ansible deployment. Unfortunately, this deployment resulted in a bug which was subsequently caught by bugsnag and displayed prominently in HipChat.</small>

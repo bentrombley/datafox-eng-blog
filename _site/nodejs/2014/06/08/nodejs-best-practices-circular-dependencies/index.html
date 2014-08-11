@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>DataFox Tech Blog</title>
+    <title>NodeJs Best Practices: Avoiding Circular Dependencies</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="DataFox Tech Blog">
-    <link rel="canonical" href="http://datafox.co/">
+    <link rel="canonical" href="http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-circular-dependencies/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
@@ -53,48 +53,61 @@
 
     <div class="page-content">
       <div class="wrap">
-      <div class="home">
+      <div class="post">
 
-  <h1>Posts</h1>
+  <header class="post-header">
+    <h1>NodeJs Best Practices: Avoiding Circular Dependencies</h1>
+    <p class="meta">Jun 8, 2014</p>
+  </header>
 
-  <ul class="posts">
-    
-      <li>
-        <span class="post-date">Aug 9, 2014</span>
-        <a class="post-link" href="/hipchat/2014/08/09/hipchat/">Automate Everything Using Hipchat</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Aug 2, 2014</span>
-        <a class="post-link" href="/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/">NodeJs Best Practices: Event Emitting and Async Callbacks</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-streams/">NodeJs Best Practices: Streams</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-circular-dependencies/">NodeJs Best Practices: Avoiding Circular Dependencies</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-callbacks/">NodeJS Best Practices: Callbacks</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-avoid-optional-parameters/">NodeJs Best Practices: Avoid Optional Parameters</a>
-      </li>
-    
-  </ul>
+  <article class="post-content">
+  <h2 id="avoid-circular-requires-in-nodejs">Avoid Circular Requires in NodeJS</h2>
 
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+<p>I recently ran into this error: “getUser is not defined”.</p>
+
+<p>My code looked this:</p>
+
+<pre><code>UserService = require(‘./user’);
+
+module.exports = function CompanyService() {
+
+  this.getCompaniesForUser = function() {
+    userService = new UserService;
+    userService.getUser(...);
+  }
+</code></pre>
+
+<p>Nothing looks wrong.  After debugging I found that <code>UserService = {}</code>.  What?</p>
+
+<p>The issue turns out to be a circular dependency.  If you have two files that require each other like:</p>
+
+<pre><code>B = require('./file_b');
+module.exports = ...
+</code></pre>
+
+<p>and</p>
+
+<pre><code>A = require('./file_a');
+// A == {}
+
+module.exports = ...
+</code></pre>
+
+<p>When B tries to require A, A is not initialized, so you actually import an empty object!  I’m curious if there is a good explanation for this silent failure, but it seems like a serious design flaw to me.</p>
+
+<p>The solution is to either avoid the circular import if possible, or to lazy-require the files.  For example:</p>
+
+<pre><code>getB = function() {
+  B = require('./file_b');
+  return new B;
+}
+</code></pre>
+
+<p>(Note that NodeJS modules are cached, so it’s okay to call the function repeatedly.)</p>
+
+  </article>
 
 </div>
-
       </div>
     </div>
 
