@@ -7,6 +7,157 @@
     <atom:link href="http://datafox.co/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Edit CoffeeScript like a Pro in 6 Minutes</title>
+        <description>&lt;p&gt;&lt;img src=&quot;/img/sublime-lint-errors.png&quot; style=&quot;width: 100%&quot; /&gt;
+&lt;small&gt;&lt;b&gt;Pictured Above:&lt;/b&gt; See errors and inconsistencies in your code as you type.&lt;/small&gt;&lt;/p&gt;
+
+&lt;p&gt;There are tons of articles explaining how great CoffeeScript is as a language (which is true), but few that actually talk about how you should set up your dev environment to write it.  As a CoffeeScript shop, this is how we do it at DataFox.&lt;/p&gt;
+
+&lt;h2 id=&quot;sublime-text-editor&quot;&gt;Sublime Text Editor&lt;/h2&gt;
+
+&lt;p&gt;To start, I tried to use my favorite tools, &lt;a href=&quot;http://www.vim.org/&quot;&gt;vim&lt;/a&gt; and &lt;a href=&quot;http://www.jetbrains.com/idea/&quot;&gt;IntelliJ&lt;/a&gt;.  However, while IntelliJ is great at Python, Java, Scala, and PHP, its CoffeeScript plugin is woefully lacking.  Vim, meanwhile, takes extensive configuration to support advanced features like linting, and can be a polarizing choice when hiring engineers used to IDE or emacs.&lt;/p&gt;
+
+&lt;p&gt;Fortunately, &lt;a href=&quot;http://www.sublimetext.com/&quot;&gt;Sublime&lt;/a&gt; is a fanastic text editor with much of the power of an IDE without the bloat.  Plus, it comes with a solid Vim plugin that approaches the full functionality of the real thing.&lt;/p&gt;
+
+&lt;h2 id=&quot;set-up-sublime-for-coffeescript-6-min&quot;&gt;Set up Sublime for CoffeeScript (6 min)&lt;/h2&gt;
+
+&lt;h3 id=&quot;install-sublime-text-3httpwwwsublimetextcom3-60s&quot;&gt;Install &lt;a href=&quot;http://www.sublimetext.com/3&quot;&gt;Sublime Text 3&lt;/a&gt; (60s)&lt;/h3&gt;
+&lt;p&gt;Don’t install Sublime Text 2 or the plugins won’t work.&lt;/p&gt;
+
+&lt;h3 id=&quot;install-package-controlhttpssublimewbondnetinstallation-30s&quot;&gt;Install &lt;a href=&quot;https://sublime.wbond.net/installation&quot;&gt;Package Control&lt;/a&gt; (30s)&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://sublime.wbond.net/installation&quot;&gt;Package Control&lt;/a&gt; makes installing plugins virtually instantaneous.  Follow the instructions on the page.&lt;/p&gt;
+
+&lt;h3 id=&quot;install-plugins-120s&quot;&gt;Install Plugins (120s)&lt;/h3&gt;
+&lt;p&gt;Access the “Package Control: Install Package” command by opening the &lt;a href=&quot;http://docs.sublimetext.info/en/sublime-text-3/extensibility/command_palette.html&quot;&gt;command pallette&lt;/a&gt; (&lt;code&gt;shift-cmd-p&lt;/code&gt; on Mac, &lt;code&gt;shift-ctrl-p&lt;/code&gt; on Windows) and typing “install”.&lt;/p&gt;
+
+&lt;p&gt;Then use the autocomplete to quickly install thse plugins:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;git&lt;/li&gt;
+  &lt;li&gt;git gutter&lt;/li&gt;
+  &lt;li&gt;Better CoffeeScript&lt;/li&gt;
+  &lt;li&gt;sidebar enhancements&lt;/li&gt;
+  &lt;li&gt;SublimeLinter&lt;/li&gt;
+  &lt;li&gt;SublimeLinter-coffeelint&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And include these plugins if you use any of these languages:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;LESS&lt;/li&gt;
+  &lt;li&gt;Handlebars&lt;/li&gt;
+  &lt;li&gt;Jade&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Sublime is awesome and will install the plugins without any restart.&lt;/p&gt;
+
+&lt;h3 id=&quot;update-your-settings-30s&quot;&gt;Update Your Settings (30s)&lt;/h3&gt;
+
+&lt;p&gt;CoffeeScript relies on consistent indentation, so update your settings to enforce it (&lt;em&gt;and make sure your team does the same!&lt;/em&gt;).  Indentation is an oddly personal matter, so modify as needed.  Edit the settings (&lt;code&gt;cmd+,&lt;/code&gt;) and paste in:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &quot;auto_indent&quot;: true,
+  &quot;color_scheme&quot;: &quot;Packages/User/Monokai (SL).tmTheme&quot;,
+  &quot;detect_indentation&quot;: false,
+  &quot;file_exclude_patterns&quot;:
+  [
+  ],
+  &quot;ignored_packages&quot;:
+  [
+  ],
+  &quot;smart_indent&quot;: false,
+  &quot;tab_size&quot;: 2,
+  &quot;translate_tabs_to_spaces&quot;: true,
+  &quot;trim_trailing_white_space_on_save&quot;: true
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The important thing is to standardize your spacing/tabbing and disable the automatic indentation which can cause bugs.&lt;/p&gt;
+
+&lt;h3 id=&quot;setup-linting-120s&quot;&gt;Setup Linting (120s)&lt;/h3&gt;
+
+&lt;p&gt;CoffeeScript is a very “expressive” untyped language which really means it is very ambiguous language with lots of easy-to-make mistakes. Linting takes one minute to setup. Seriously, just do it.&lt;/p&gt;
+
+&lt;h4 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h4&gt;
+&lt;p&gt;I assume you have Node and npm installed already.&lt;/p&gt;
+
+&lt;h4 id=&quot;install-coffeelint&quot;&gt;Install Coffeelint&lt;/h4&gt;
+&lt;p&gt;Note it must be installed globally for Sublime to call it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  npm install -g coffeelint
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Test that it works by running it on a file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  coffeelint path/to/a/file.coffee
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;optional-configure-lint-rules&quot;&gt;(Optional) Configure Lint Rules&lt;/h4&gt;
+
+&lt;p&gt;Createa &lt;code&gt;coffeelint.json&lt;/code&gt; file in your project by running:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  cd &amp;lt;project root&amp;gt;
+  coffeelint --makeconfig &amp;gt; coffeelint.json
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Edit the file to turn on/off the rules, which are all &lt;a href=&quot;http://www.coffeelint.org/#options&quot;&gt;clearly documented&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;optional-fix-nvm--zsh&quot;&gt;(Optional) Fix nvm + zsh&lt;/h4&gt;
+&lt;p&gt;You may need to also do these steps, taken from the &lt;a href=&quot;https://github.com/SublimeLinter/SublimeLinter-coffeelint&quot;&gt;coffeelint documentation&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;If you are using &lt;code&gt;nvm&lt;/code&gt; and &lt;code&gt;zsh&lt;/code&gt;, ensure that the line to load nvm is in &lt;code&gt;.zshenv&lt;/code&gt; and not &lt;code&gt;.zshrc&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;In order for &lt;code&gt;coffeelint&lt;/code&gt; to be executed by SublimeLinter, you must ensure that its path is available to SublimeLinter. Before going any further, please read and follow the steps in &lt;a href=&quot;http://sublimelinter.readthedocs.org/en/latest/troubleshooting.html#finding-a-linter-executable&quot;&gt;“Finding a linter executable”&lt;/a&gt; through “Validating your PATH” in the documentation.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;On Mac, this means you should open terminal and type &lt;code&gt;which coffeelint&lt;/code&gt; which will give you a path like &lt;strong&gt;/usr/local/bin/&lt;/strong&gt;coffeelint.  Then type &lt;code&gt;echo $PATH&lt;/code&gt; and if you don’t see &lt;strong&gt;/usr/local/bin&lt;/strong&gt; (or whatever you see) add it by editing &lt;code&gt;~/.bashrc&lt;/code&gt; or &lt;code&gt;~/.zshrc&lt;/code&gt; with the line &lt;code&gt;export PATH=$PATH:/usr/local/bin&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;optional-enforce-linting-as-a-git-hook&quot;&gt;(Optional) Enforce Linting as a Git Hook&lt;/h4&gt;
+
+&lt;p&gt;To enforce your new linting rules, create a pre-commit git hook by editing &lt;code&gt;.git/hooks/pre-commit&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;exitCode=0
+for file in `git diff --cached --name-only | grep &quot;\.coffee$&quot;`; do
+  # ignore files that were deleted/moved as part of the commit
+  if [ -e ${file} ]
+  then
+    coffeelint ${file}
+    exitCode=$((${exitCode} + $?))
+  fi
+done
+
+if [[ exitCode -ne 0 ]];
+then
+  echo &quot;Coffee linting has failed, please fix the error(s).  If this is an incorrect error, either fix our linting rules (in coffeelint.json) or in this case commit with the --no-verify flag.&quot; 1&amp;gt;&amp;amp;2;
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will run the linter on all edited files when you commit.  I don’t believe in tying developers’ hands, so you can always skip this rule by running &lt;code&gt;git commit --no-verify&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;It is also a good idea to symlink &lt;code&gt;.git/hooks&lt;/code&gt; to a directory in your repo so you can easily share hooks across your team.&lt;/p&gt;
+
+&lt;h4 id=&quot;restart-sublime&quot;&gt;Restart Sublime&lt;/h4&gt;
+
+&lt;h4 id=&quot;customize-sublimelinter&quot;&gt;Customize SublimeLinter&lt;/h4&gt;
+
+&lt;p&gt;Edit the SublimeLinter rules, by opening the context menu (right-click) and modifying:
+    - Lint Mode &amp;gt; Background
+    - Mark Style &amp;gt; No Column Highlights Line
+    - Mark Style &amp;gt; Stippled Underline&lt;/p&gt;
+
+&lt;p&gt;This will lint your files as you work and show errors with red underlines (of course, you can change this).&lt;/p&gt;
+
+&lt;h4 id=&quot;test-it-out&quot;&gt;Test It Out&lt;/h4&gt;
+&lt;p&gt;Open a .coffee file and behold!&lt;/p&gt;
+
+&lt;p&gt;It took a lot of trial-and-error to arrive at this setup, so I hope it is helpful.  If you have any other tips or feedback please share them with us: ops [at] datafox.co.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 23 Aug 2014 00:00:00 -0700</pubDate>
+        <link>http://datafox.co/coffeescript/2014/08/23/sublime-for-coffeescript/</link>
+        <guid isPermaLink="true">http://datafox.co/coffeescript/2014/08/23/sublime-for-coffeescript/</guid>
+      </item>
+    
+      <item>
         <title>Automate Everything Using Hipchat</title>
         <description>&lt;p&gt;We’re huge fans of &lt;a href=&quot;https://www.hipchat.com/&quot;&gt;HipChat&lt;/a&gt; here at DataFox and it has rapidly become our central means of communication.&lt;/p&gt;
 
