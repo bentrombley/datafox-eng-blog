@@ -5,7 +5,7 @@ date:   2014-09-01
 categories: nodejs
 ---
 
-I've wasted more time than I care to admit reinventing this stuff and I didn't even do as well. These utilities are all small and well documented.  Just use them.
+I've wasted more time than I care to admit reinventing these wheels. These utilities are all small and well documented.  Just use them.
 
 
 ## 1.  [NumeralJS](http://numeraljs.com/)
@@ -35,12 +35,12 @@ Or better still:
     var trialMessage = "Your trial expires in " + moment(expirationDate).fromNow();
     // "Your trial expires in 14 days"
 
-MomentJS also has support for localization when you need it.
+MomentJS also has support for localization so you can delight your international customers like a pro.
 
 
 ## 3. [UnderscoreJS](http://underscorejs.org/)
 
-Underscore is a great way to avoid boilerplate code when manipulating arrays and objects.  Some examples:
+Underscore is a great way to avoid boilerplate code when manipulating arrays and objects.  For example:
 
     // remove duplicate values
     values = _.uniq(values);
@@ -53,6 +53,8 @@ Underscore is a great way to avoid boilerplate code when manipulating arrays and
 
     // get all of the values from an object
     var values = _.values(myObject);
+
+Nothing complicated, just the sort of code you shouldn't bother reinventing.
 
 ## 4. [async](https://github.com/caolan/async)
 
@@ -155,12 +157,13 @@ To quickly check your site's security headers and settings, try the free [Extens
     var processUser = function (user, callback) { ... };
     StreamWorker(stream, CONCURRENCY, processUser, callback);
 
-StreamWorker handles the `pause()` and `resume()` in the stream as well as handling any errors (including thrown Exceptions).
+StreamWorker handles the `pause()` and `resume()` in the stream as well as handling any errors, including thrown Exceptions.
 
 
 ## 9.  [Colors](https://github.com/Marak/colors.js)
 
 <img src="/img/nyan-cat-console.png" style="width: 100%" />
+<small>Running tests is always fun with nyan cat!</small>
 
 Okay, you may not _need_ to add colors to your console output, but it's definitely fun.  [Colors](https://github.com/Marak/colors.js) saves you the hassle of dealing with ANSI color codes:
 
@@ -168,7 +171,26 @@ Okay, you may not _need_ to add colors to your console output, but it's definite
     console.error("make this text red".red);
 
 
-## 10.
+## 10.  [ShouldJS](https://github.com/shouldjs/should.js)
+
+ShouldJS helps you add clear assert statements to your unit tests while eliminiating lots of boilerplate.  Some examples:
+
+    functionToTest(function(err, user) {
+
+      // easy static asserts
+      should.not.exist(err);
+      should.exist(user);
+
+      // and easy object-oriented checks
+      user.should.have.property('name', 'Expected Name');
+
+      // assertions can easily be chained in a nice readable format
+      user.age.should.be.greaterThan(18).and.lessThan(25);
+
+      ...
+    });
+
+[ShouldJS](https://github.com/shouldjs/should.js) plugs smoothly into test frameworks like [mocha](http://visionmedia.github.io/mocha/) and you can choose whether to write simple asserts or fully English-like semantic assertions.
 
 
 

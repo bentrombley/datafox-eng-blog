@@ -7,6 +7,206 @@
     <atom:link href="http://datafox.co/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>10 Great JavaScript Utils You Should Stop Reinventing</title>
+        <description>&lt;p&gt;I’ve wasted more time than I care to admit reinventing these wheels. These utilities are all small and well documented.  Just use them.&lt;/p&gt;
+
+&lt;h2 id=&quot;numeraljshttpnumeraljscom&quot;&gt;1.  &lt;a href=&quot;http://numeraljs.com/&quot;&gt;NumeralJS&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;Ever written code to format 31235892 as “31,235,892” or “$31.2m”?  This is a simple as:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var numeral = require(&#39;numeral&#39;);
+numeral(31235892).format(&#39;$0.0a&#39;);  // $31.2m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://numeraljs.com/&quot;&gt;NumeralJS&lt;/a&gt; has support for localization and can parse strings like “32m” back into numbers.&lt;/p&gt;
+
+&lt;h2 id=&quot;momentjshttpmomentjscom&quot;&gt;2.  &lt;a href=&quot;http://momentjs.com/&quot;&gt;MomentJS&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;Formatting and manipulating dates creates confusing and bug-ridden code like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://momentjs.com/&quot;&gt;MomentJS&lt;/a&gt; makes this all ridiculously easy:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var yesterday = moment().subtract(1, &#39;days&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Or better still:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var trialMessage = &quot;Your trial expires in &quot; + moment(expirationDate).fromNow();
+// &quot;Your trial expires in 14 days&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;MomentJS also has support for localization so you can delight your international customers like a pro.&lt;/p&gt;
+
+&lt;h2 id=&quot;underscorejshttpunderscorejsorg&quot;&gt;3. &lt;a href=&quot;http://underscorejs.org/&quot;&gt;UnderscoreJS&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;Underscore is a great way to avoid boilerplate code when manipulating arrays and objects.  For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// remove duplicate values
+values = _.uniq(values);
+
+// sort by all the user objects by the &#39;name&#39; field
+users = _.sortBy(users, &#39;name&#39;);
+
+// remove null/empty values from the list
+names = _.compact(names);
+
+// get all of the values from an object
+var values = _.values(myObject);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nothing complicated, just the sort of code you shouldn’t bother reinventing.&lt;/p&gt;
+
+&lt;h2 id=&quot;asynchttpsgithubcomcaolanasync&quot;&gt;4. &lt;a href=&quot;https://github.com/caolan/async&quot;&gt;async&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;Async simplifies many common node practices like calling functions in parallel or series and handling their errors.  For example we can simplify this indentation pyramid:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;User.findOne({name: &#39;Helen&#39;}, function(err, user) {
+  if (err) {
+    callback(err);
+  } else {
+    Account.findOne({user_id: user._id}, function(err, account) {
+    if (err) {
+      callback(err);
+    } else {
+      makeAnApiCall(account, function(err, response) {
+        if (err) {
+          callback(err);
+        } else {
+          callback(null, response);
+        }
+      }
+    }
+    })
+  }
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;to a simple list &lt;code&gt;async.waterfall&lt;/code&gt; call:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;async.waterfall([
+  function(next) {
+     User.findOne({name: &#39;Helen&#39;}, next);
+  },
+
+  function(user, next) {
+    Account.findOne({user_id: user._id}, next);
+  },
+
+  function(account, next) {
+    makeAnApiCall(account, next);
+  }
+], callback);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;commanderhttpsgithubcomvisionmediacommanderjs&quot;&gt;5. &lt;a href=&quot;https://github.com/visionmedia/commander.js&quot;&gt;Commander&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;Add proper command-line arguments to your scripts in Node:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Commander = require(&#39;commander&#39;);
+Commander
+  .option(&#39;--user-id &amp;lt;id&amp;gt;&#39;, &#39;user id to retrieve&#39;)
+  .parse(process.argv);
+
+userId = Commander.userId;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/visionmedia/commander.js&quot;&gt;Commander&lt;/a&gt; automatically fills in the –help:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ coffee my_script.coffee --help
+
+Usage: my_script.coffee [options]
+
+Options:
+
+  -h, --help         output usage information
+  --user-id &amp;lt;id&amp;gt;     user id to retrieve
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;requesthttpsgithubcommikealrequest&quot;&gt;6.  &lt;a href=&quot;https://github.com/mikeal/request&quot;&gt;Request&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/mikeal/request&quot;&gt;Request&lt;/a&gt; is more than a nice-to-have, it’s practically a requirement for making HTTP requests in Node.  The library lets you make simple GET requests easily:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var request = require(&#39;request&#39;);
+request(&#39;http://www.google.com&#39;, function (error, response, body) {
+  ...
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And it supports advanced options like multi-part POSTs, streaming, and more.&lt;/p&gt;
+
+&lt;h2 id=&quot;helmethttpsgithubcomevilpackethelmet&quot;&gt;7.  &lt;a href=&quot;https://github.com/evilpacket/helmet&quot;&gt;Helmet&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/evilpacket/helmet&quot;&gt;Helmet&lt;/a&gt; adds security best practices to your Express app painlessly, without requiring you to muck with headers and the various browser compatibility.  For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var helmet = require(&#39;helmet&#39;);
+app = express();
+
+// use default security settings
+app.use(helmet());
+
+// or enable one at a time
+app.use(helmet.hsts());  // HTTP Strict Transport Security
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To quickly check your site’s security headers and settings, try the free &lt;a href=&quot;https://chrome.google.com/webstore/detail/recx-security-analyser/ljafjhbjenhgcgnikniijchkngljgjda&quot;&gt;ExtensionRecx Security Analyser Chrome Extension&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;stream-workerhttpsgithubcomgoodeggsstream-worker&quot;&gt;8. &lt;a href=&quot;https://github.com/goodeggs/stream-worker&quot;&gt;Stream Worker&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/goodeggs/stream-worker&quot;&gt;Stream Worker&lt;/a&gt; simplifies the routine task of processing a Node stream.  For example, iterating over a large results from MongoDB:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// stream over all users
+var stream = Users.find().stream();
+var CONCURRENCY = 5;
+var processUser = function (user, callback) { ... };
+StreamWorker(stream, CONCURRENCY, processUser, callback);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;StreamWorker handles the &lt;code&gt;pause()&lt;/code&gt; and &lt;code&gt;resume()&lt;/code&gt; in the stream as well as handling any errors, including thrown Exceptions.&lt;/p&gt;
+
+&lt;h2 id=&quot;colorshttpsgithubcommarakcolorsjs&quot;&gt;9.  &lt;a href=&quot;https://github.com/Marak/colors.js&quot;&gt;Colors&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/nyan-cat-console.png&quot; style=&quot;width: 100%&quot; /&gt;
+&lt;small&gt;Running tests is always fun with nyan cat!&lt;/small&gt;&lt;/p&gt;
+
+&lt;p&gt;Okay, you may not &lt;em&gt;need&lt;/em&gt; to add colors to your console output, but it’s definitely fun.  &lt;a href=&quot;https://github.com/Marak/colors.js&quot;&gt;Colors&lt;/a&gt; saves you the hassle of dealing with ANSI color codes:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var colors = require(&#39;colors&#39;);
+console.error(&quot;make this text red&quot;.red);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;shouldjshttpsgithubcomshouldjsshouldjs&quot;&gt;10.  &lt;a href=&quot;https://github.com/shouldjs/should.js&quot;&gt;ShouldJS&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;ShouldJS helps you add clear assert statements to your unit tests while eliminiating lots of boilerplate.  Some examples:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;functionToTest(function(err, user) {
+
+  // easy static asserts
+  should.not.exist(err);
+  should.exist(user);
+
+  // and easy object-oriented checks
+  user.should.have.property(&#39;name&#39;, &#39;Expected Name&#39;);
+
+  // assertions can easily be chained in a nice readable format
+  user.age.should.be.greaterThan(18).and.lessThan(25);
+
+  ...
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/shouldjs/should.js&quot;&gt;ShouldJS&lt;/a&gt; plugs smoothly into test frameworks like &lt;a href=&quot;http://visionmedia.github.io/mocha/&quot;&gt;mocha&lt;/a&gt; and you can choose whether to write simple asserts or fully English-like semantic assertions.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 01 Sep 2014 00:00:00 -0700</pubDate>
+        <link>http://datafox.co/nodejs/2014/09/01/10-great-js-utils-you-should-stop-reinventing/</link>
+        <guid isPermaLink="true">http://datafox.co/nodejs/2014/09/01/10-great-js-utils-you-should-stop-reinventing/</guid>
+      </item>
+    
+      <item>
         <title>Edit CoffeeScript like a Pro in 6 Minutes</title>
         <description>&lt;p&gt;&lt;img src=&quot;/img/sublime-lint-errors.png&quot; style=&quot;width: 100%&quot; /&gt;
 &lt;small&gt;&lt;b&gt;Pictured Above:&lt;/b&gt; See errors and inconsistencies in your code as you type.&lt;/small&gt;&lt;/p&gt;
