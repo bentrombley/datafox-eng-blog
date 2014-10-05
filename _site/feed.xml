@@ -7,6 +7,132 @@
     <atom:link href="http://datafox.co/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Protect Your Database with .mongorc</title>
+        <description>&lt;p&gt;Your database is the most import piece of your infrastructure and also your most vulnerable.  When it’s down, everything is down.  Anything you can do to protect against errors or mistakes is worth the effort.&lt;/p&gt;
+
+&lt;p&gt;Here is one simple step, courtesy of &lt;a href=&quot;http://shop.oreilly.com/product/0636920001096.do&quot;&gt;MongoDB: the Definitive Guide&lt;/a&gt;, that protects you from accidentally typing a dangerous command from the mongo command line: use your &lt;code&gt;~/.mongorc.js&lt;/code&gt; file to disable dangerous operations.  For example add this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// disable dropDatabase
+db.dropDatabase = DB.prototype.dropDatabase = function() {
+  print(&quot;dropDatabase is disabled on this environment&quot;);
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So you can’t accidentally drop your database while connecting from the command-line:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;some-db&amp;gt; db.dropDatabase()
+dropDatabase is disabled on this environment
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can also disable other potentially dangerous commands like &lt;code&gt;dropCollection&lt;/code&gt; or &lt;code&gt;dropIndex&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you have multiple users you can apply this setting globally by editing the &lt;code&gt;/etc/mongorc.js&lt;/code&gt; file instead.  At DataFox we use &lt;a href=&quot;http://www.ansible.com/&quot;&gt;ansible&lt;/a&gt;, so we have a simple task to apply this protection to all servers:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- name: Update /etc/mongorc.js
+template:
+  src: mongorc.js
+  dest: /etc/mongorc.js
+  mode: 0644
+sudo: yes
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Of course, this is not a replacement for best-practices like &lt;a href=&quot;http://docs.mongodb.org/manual/core/security-introduction/#role-based-access-control&quot;&gt;user roles that respect the “principle of least privilege.”&lt;/a&gt; or backing up your system (I highly recommend &lt;a href=&quot;https://mms.mongodb.com/&quot;&gt;MMS&lt;/a&gt;), but it can still save you from a very costly mistake.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 05 Oct 2014 00:00:00 -0700</pubDate>
+        <link>http://datafox.co/mongodb/2014/10/05/mongodb-protect-your-database-with-mongorc/</link>
+        <guid isPermaLink="true">http://datafox.co/mongodb/2014/10/05/mongodb-protect-your-database-with-mongorc/</guid>
+      </item>
+    
+      <item>
+        <title>NodeJs Best Practices: Environment-Specific Configuration</title>
+        <description>&lt;p&gt;When you find yourself writing code like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if (NODE_ENV === &#39;production&#39;) {
+  stripeApiKey = &#39;prod-abc-123&#39;;
+} else {
+  stripeApiKey = &#39;dev-def-456&#39;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;it’s a bad sign because you’re probably duplicating this if statement every time you need this api key, violating
+the DRY principle.  And you’re also making your code less clear because you’ve just stuck some environment logic
+in the middle of payment code, violating the single responsibility principle.  And what happens when you now
+want to add a staging environment?&lt;/p&gt;
+
+&lt;p&gt;It’s time to refactor your configuration code to be separate from your logic.&lt;/p&gt;
+
+&lt;p&gt;There are plenty of solutions, like environment variables and .conf files, but these are probably overkill unless
+you have a large ops team. A simpler solution is to add a &lt;code&gt;conf&lt;/code&gt; directory like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;conf/
+  index.js
+  development.js
+  staging.js
+  production.js
+
+src/
+lib/
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Your conf files are simply JS objects.  For example, &lt;code&gt;development.js&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;module.exports = {
+
+  # api keys and secrets
+  STRIPE_API_KEY: &#39;dev-def-456&#39;,
+  ...
+
+  # control flags
+  logLevel: &#39;debug&#39;
+  ...
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This works because when you &lt;code&gt;require&lt;/code&gt; a directory, Node will automatically load the &lt;code&gt;index.js&lt;/code&gt;
+file, which then requires the appropriate config for the environment:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;switch (process.env.NODE_ENV) {
+  case &#39;development&#39;:
+    module.exports = require(&#39;./development&#39;);
+    break;
+  case &#39;staging&#39;:
+    module.exports = require(&#39;./staging&#39;);
+    break;
+  case &#39;production&#39;:
+    module.exports = require(&#39;./production&#39;);
+    break;
+  default:
+    console.error(&quot;Unrecognized NODE_ENV: &quot; + process.env.NODE_ENV);
+    process.exit(1);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now conf values are all in place (DRY) and your code is much cleaner:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Conf = require(&#39;../conf&#39;);
+stripeApiKey = Conf.STRIPE_API_KEY;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This also makes it easy to support new environments like testing and staging.  For us staging
+should look exactly like production, except it uses a different database.  Our staging conf “inherits” from production:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;config = require(&#39;./production&#39;);
+
+# override specific values
+config.DB_URL = &quot;mongodb://staging-db.datafox.co&quot;;
+
+module.exports = config;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can do the same to create dev-testing and staging-testing setups without making your code messy.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 28 Sep 2014 00:00:00 -0700</pubDate>
+        <link>http://datafox.co/nodejs/2014/09/28/nodejs-config-best-practices/</link>
+        <guid isPermaLink="true">http://datafox.co/nodejs/2014/09/28/nodejs-config-best-practices/</guid>
+      </item>
+    
+      <item>
         <title>10 Great JavaScript Utils You Should Stop Reinventing</title>
         <description>&lt;p&gt;I’ve wasted more time than I care to admit reinventing these wheels. These utilities are all small and well documented.  Just use them.&lt;/p&gt;
 
