@@ -7,6 +7,95 @@
     <atom:link href="http://datafox.co/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Polymorphism in Ember Data</title>
+        <description>&lt;p&gt;One of the core powers of DataFox is our ability to show you a customized feed
+of recent events affecting companies you care about.  For example, this morning
+I can see that a company in our space, &lt;a href=&quot;https://datafox.co/lytics&quot;&gt;Lytics&lt;/a&gt;, just
+raised $7m in funding so I should check them out.  And my friends who work at
+&lt;a href=&quot;https://datafox.co/apartmentlist&quot;&gt;Apartment List&lt;/a&gt; probably should be aware that
+&lt;a href=&quot;https://datafox.co/redfin&quot;&gt;Redfin&lt;/a&gt; just bought &lt;a href=&quot;https://datafox.co/walkscore&quot;&gt;Walk Score&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/events-feed-10-26-14.png&quot; style=&quot;width: 100%&quot; /&gt;
+&lt;small&gt;My events feed on 10/26/14&lt;/small&gt;&lt;/p&gt;
+
+&lt;p&gt;When it comes to displaying an event in our app we create a new Ember data model:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var Event = DS.Model.extend({
+  title: DS.attr(&#39;string&#39;),
+  date: DS.attr(&#39;date&#39;),
+  ... ??? ...
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and my template would look like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  &amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;
+  &amp;lt;p&amp;gt;Date: &amp;lt;/p&amp;gt;
+  ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But what if I want each event to have different display data and behavior (which they do)?
+This is a classic case of polymorphism: we need a base &lt;code&gt;Event&lt;/code&gt; class for the common behavior
+and lots of sublcasses like &lt;code&gt;CompanyFundingEvent&lt;/code&gt; and &lt;code&gt;CompanyAcquisitionEvent&lt;/code&gt; that define
+the specific data and actions of that event type.  Ember doesn’t explain how to handle this
+common case, so what do we do?&lt;/p&gt;
+
+&lt;p&gt;Fortunately, a friend in the Ember core team pointed us to an undocumented &lt;code&gt;polymorphic&lt;/code&gt; parameter
+in Ember data that does exactly what we need:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var Event = DS.Model.extend({
+  title: DS.attr(&#39;string&#39;),
+  date: DS.attr(&#39;date&#39;),
+  object: DS.belongsTo(&#39;eventData&#39;, {polymorphic: true});
+  ...
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The corresponding JSON response looks like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  events: [
+    {
+      id: 12345,
+      date: &quot;2014-10-26T06:01:28.700Z&quot;,
+      object: {
+        id: 456789,
+        type: CompanyAcquisitionEvent
+      }
+    },
+    ...
+  ]
+
+  company_acquisition_events: [
+    {
+      id: 456789
+      acquirer: ...
+      ...
+    }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ember data automatically wires up the &lt;code&gt;id&lt;/code&gt; and &lt;code&gt;type&lt;/code&gt; fields so the &lt;code&gt;event.object&lt;/code&gt; points directly to
+the corresponding &lt;code&gt;CompanyAcquisition&lt;/code&gt; model.  And we can update our generic event template to include
+specific rendering for each event by adding a &lt;code&gt;template&lt;/code&gt; variable to each model we define*:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  &amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;
+  &amp;lt;p&amp;gt;Date: &amp;lt;/p&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;small&gt;
+* normally it would be incorrect to define a view (the template) in a model under MVC, but Ember’s actually
+follows MVVM, so it’s a bit confusing.  In my judgment, this is the clearest solution.
+&lt;/small&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 26 Oct 2014 00:00:00 -0700</pubDate>
+        <link>http://datafox.co/emberjs/2014/10/26/emberjs-polymorphism/</link>
+        <guid isPermaLink="true">http://datafox.co/emberjs/2014/10/26/emberjs-polymorphism/</guid>
+      </item>
+    
+      <item>
         <title>Protect Your Database with .mongorc</title>
         <description>&lt;p&gt;Your database is the most import piece of your infrastructure and also your most vulnerable.  When it’s down, everything is down.  Anything you can do to protect against errors or mistakes is worth the effort.&lt;/p&gt;
 
@@ -649,6 +738,88 @@ Company.on(&#39;new company&#39;, function(company) {
         <pubDate>Sat, 02 Aug 2014 00:00:00 -0700</pubDate>
         <link>http://datafox.co/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/</link>
         <guid isPermaLink="true">http://datafox.co/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/</guid>
+      </item>
+    
+      <item>
+        <title>NodeJs Best Practices: Streams</title>
+        <description>&lt;h2 id=&quot;streams-are-better-in-theory-than-practice&quot;&gt;Streams are better in theory than practice&lt;/h2&gt;
+
+&lt;p&gt;Streams are an elegant and powerful idea in NodeJS, allowing you to process large data sets efficiently without loading them all into memory at once.  You can even pipe streams like unix, to chain together processing.&lt;/p&gt;
+
+&lt;p&gt;The only issue is that while Node v.10 vastly improved streams, the libraries (e.g. MongooseJS and csv-node) have not caught up.  To use a simple example, this is how you should be to process millions of collections:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// users is a massive table with millions of documents
+stream = Users.find().stream();
+stream.on(‘data’, function(user) {
+  stream.pause();
+  doSomethingExpensive(user, function() {
+    stream.resume();
+  });
+});
+stream.on(‘end’, function() {
+  // all done, disconnect from the db
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;…except the stream.pause() function is “strictly advisory” and therefore doesn’t work :(.  I’ve experienced the same problems in other libraries.&lt;/p&gt;
+
+&lt;p&gt;I hope this is rapidly solved as the libraries mature, because this is a much better way to think about data problems.  However, I will reserve judgment until then.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 08 Jun 2014 05:03:49 -0700</pubDate>
+        <link>http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-streams/</link>
+        <guid isPermaLink="true">http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-streams/</guid>
+      </item>
+    
+      <item>
+        <title>NodeJs Best Practices: Avoiding Circular Dependencies</title>
+        <description>&lt;h2 id=&quot;avoid-circular-requires-in-nodejs&quot;&gt;Avoid Circular Requires in NodeJS&lt;/h2&gt;
+
+&lt;p&gt;I recently ran into this error: “getUser is not defined”.&lt;/p&gt;
+
+&lt;p&gt;My code looked this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;UserService = require(‘./user’);
+
+module.exports = function CompanyService() {
+
+  this.getCompaniesForUser = function() {
+    userService = new UserService;
+    userService.getUser(...);
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nothing looks wrong.  After debugging I found that &lt;code&gt;UserService = {}&lt;/code&gt;.  What?&lt;/p&gt;
+
+&lt;p&gt;The issue turns out to be a circular dependency.  If you have two files that require each other like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;B = require(&#39;./file_b&#39;);
+module.exports = ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;A = require(&#39;./file_a&#39;);
+// A == {}
+
+module.exports = ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When B tries to require A, A is not initialized, so you actually import an empty object!  I’m curious if there is a good explanation for this silent failure, but it seems like a serious design flaw to me.&lt;/p&gt;
+
+&lt;p&gt;The solution is to either avoid the circular import if possible, or to lazy-require the files.  For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;getB = function() {
+  B = require(&#39;./file_b&#39;);
+  return new B;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;(Note that NodeJS modules are cached, so it’s okay to call the function repeatedly.)&lt;/p&gt;
+</description>
+        <pubDate>Sun, 08 Jun 2014 05:03:49 -0700</pubDate>
+        <link>http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-circular-dependencies/</link>
+        <guid isPermaLink="true">http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-circular-dependencies/</guid>
       </item>
     
       <item>
