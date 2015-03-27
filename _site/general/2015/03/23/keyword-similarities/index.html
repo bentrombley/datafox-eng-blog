@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Keyword-Based Company Similarity</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="DataFox Tech Blog">
+    <link rel="canonical" href="http://datafox.co/general/2015/03/23/keyword-similarities/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap">
+
+    <a class="site-title" href="/">DataFox Tech Blog</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
+          <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+          <a class="page-link" href="/about/">About</a>
+        
+          <a class="page-link" href="/feed.xml"></a>
+        
+          <a class="page-link" href="/"></a>
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>Keyword-Based Company Similarity</h1>
+    <p class="meta">Mar 23, 2015</p>
+  </header>
+
+  <article class="post-content">
+  <h2 id="finding-similar-companies">Finding Similar Companies</h2>
+
+<p>One of the features of our product that many of our customers love is our
+“Related Companies” module. On the profile of any company in our database, we
+provide our users with a list of other companies that we suggest might be
+related. A lot goes into these suggestions, including both some manual effort
+and a lot of machine learning. An army of analysts could not comb through
+our half million companies and come up with a good list of related companies for
+each from the other half million (minus one) companies. And we don’t want to
+spend our time doing that either, so we apply a combination of engineering and
+machine power to the problem.</p>
+
+<p>Our related companies algorithm takes a number of inputs into account (company
+sector, company size, news co-mentions, etc), but here we will focus on one aspect
+of the algorithm: company keywords. Every company we have in our database is
+associated with some list of keywords, most of which we scraped from their
+home pages. Since this is how a company describes itself, mostly with the purpose
+of luring visitors from organic web searches, it is an accurate list of words
+to summarize the company’s product and/or industry. By looking at the keywords
+listed on a company’s home page, we can more accurately triangulate similar
+companies by comparing their keywords.</p>
+
+<p>However, comparing two lists of keywords is not entirely obvious. We could look
+at some metric based upon exact matches between keyword lists, such as Jaccard
+similarity or cosine similarity, but keywords are a very sparse feature. Out of
+the thousands of keywords in our database, any given company will list only about
+a dozen. To deal with this, we want to be able to harness a measure of similarity
+between keywords. After all, if company A lists “cloud storage” as a keyword,
+then we should have more confidence they are related to a company listing
+“file sharing” as a keyword than a company listing “mobile payments” as a
+keyword.</p>
+
+<p>While it can be hard to determine how to compare two keywords, we all know many 
+ways to compare two vectors, whether by Euclidean (\(L_2\)) distance, Manhattan
+(\(L_1\)) distance, cosine distance, or any other crazy metric you want to
+come up with. If only we could translate our keywords to vectors…</p>
+
+<h2 id="word2vec">word2vec</h2>
+
+<!-- word2vec default dims? -->
+<!-- NIPS year? -->
+<!-- word2vec examples? -->
+<p>A very interesting recent project out of <a href="https://datafox.co/google">Google</a> does
+just that. Training a neural network on word-context occurrences in a huge corpus
+of text, <em><a href="https://code.google.com/p/word2vec/">word2vec</a></em> encodes words as vectors.
+The basics are described at the
+<a href="https://code.google.com/p/word2vec/">Google Code repository</a>
+for their Python implementation, and you can find more detail in a
+<a href="http://arxiv.org/pdf/1301.3781.pdf">series</a> <a href="http://arxiv.org/pdf/1310.4546.pdf">of</a> <a href="http://research.microsoft.com/pubs/189726/rvecs.pdf">papers</a>
+linked to from the word2vec Google code page.
+The vector encodings they produce have some surprising and desirable arithmetic
+properties. Using an implementation trained on the Google News data set, they
+provide a couple of interesting examples of how arithmetic operations on the
+vectors capture some semantic meaning:</p>
+
+<ul>
+  <li><code>word2vec('king') - word2vec('man') + word2vec('woman')</code> is close in cosine
+similarity to <code>word2vec('queen')</code></li>
+  <li><code>word2vec('france')</code> is close in cosine similarity to <code>word2vec('spain')</code>,
+<code>word2vec('belgium')</code>, etc.</li>
+</ul>
+
+<p>It would be great if we could harness these same ideas in our context.
+Unfortunately, using the default <em>word2vec</em> implementation directly is not
+optimal because the data it is trained is too broad and misses out on the
+nuances of domain-specific training data.
+<!--
+for a couple of reasons: (a) the data it is trained on is too broad
+and misses out on the nuances of a domain-specific approach, and (b) the default
+implementation only considers single words, whereas keywords are often multiple
+words or short phrases (e.g. "mobile payments" or "cloud storage").
+--></p>
+
+<h2 id="neural-networks-or-matrix-factorization">Neural Networks, or Matrix Factorization</h2>
+
+<!-- look at word2vec docs on implementation... -->
+<p>We want to train a “<em>keyword2vec</em>” model so we can more robustly compare both
+keywords themselves and companies based on their listed keywords.
+The <em>word2vec</em> project provides
+a way to train using a new data set, but training neural networks is never easy:
+they are sensitive to parameter tuning (step-size schedules for stochastic gradient
+descent, number of hidden layers, number of hidden units in each layer, etc.),
+they are not very interpretable, and they are often slow to train.</p>
+
+<p>A recent paper from NIPS 2014,
+<a href="http://papers.nips.cc/paper/5477-neural-word-embedding-as-implicit-matrix-factorization.pdf">Neural Word Embedding as Implicit Matrix Factorization</a>, shows
+that the neural
+network implementation of <em>word2vec</em> is actually very similar to a low-rank
+factorization of a certain matrix. In particular, the word vectors represent
+the loadings found in a matrix factorization of a positive
+<a href="http://en.wikipedia.org/wiki/Pointwise_mutual_information">pointwise mutual information</a> (\(PPMI\)) matrix
+\(P \in \mathbb{R}^{V \times V}\), where</p>
+
+<script type="math/tex; mode=display">P_{w,v} = PPMI(w,v) = \max\left\{0, PMI(w,v)\right\},\;\;\;
+PMI(w,v) = \log \frac{p(w,v)}{p(w)p(v)}</script>
+
+<p>in which \(V\) is the size of the vocabulary, \(w\) and \(v\) are words,
+\(p(w)\) is the probability of seeing word \(w\),
+and \(p(w,v)\) is the probability of seeing words \(w\) and \(v\)
+together.</p>
+
+<p>In our setting, we find \(p(w,v)\) by counting co-occurrences of words \(w\)
+and \(v\) in a company’s keywords set, while \(p(w)\) and \(p(v)\) are
+found from total occurrences across all companies’ keywords.</p>
+
+<p>To obtain our word vectors, we now factorize the \(PPMI\) matrix. Provided a
+desired dimension \(d\) for the word vectors, we find a factorization of
+\(P\) so that</p>
+
+<script type="math/tex; mode=display">P \approx W W^T</script>
+
+<p>where \(W \in \mathbb{R}^{V \times d}\). Notice that we can motivate a
+factorization of this form (\(W W^T\)) because \(P\) is a symmetric matrix
+– i.e. \(P_{w,v} = P_{v,w}\). As it turns out, finding an optimal solution
+in terms of the \(L_2\) norm is feasible by taking the
+<a href="http://en.wikipedia.org/wiki/Singular_value_decomposition">singular value decomposition</a> (SVD) of the matrix,
+\(P = U \Lambda U^T\), and keeping only the first \(d\) dimensions of the
+diagonal matrix \(\Lambda\). It turns out that
+\(\tilde{P} = U \tilde\Lambda U^T\), where \(\tilde\Lambda\) contains only
+the first \(d\) elements of the diagonal matrix \(\Lambda\), is the
+rank-\(d\) matrix that minimizes the Frobenius norm of the difference between
+\(P\) and any other rank-\(d\) matrix – i.e.</p>
+
+<script type="math/tex; mode=display">\tilde{P} \in \arg\min_{\hat{P}\;:\;\textrm{rank}(\hat{P}) = d} ||P - \hat{P}||_F</script>
+
+<p>Using this, we go back to our earlier problem of finding \(W\) so that
+\(P \approx W W^T\). If we take</p>
+
+<script type="math/tex; mode=display">W = U \tilde{\Lambda}^{1/2}</script>
+
+<p>we now have a matrix \(W\) such that \(WW^T = U \tilde\Lambda U^T\) is very
+close to our original
+\(PPMI\) matrix \(P\). Furthemore, each row of \(W\) can now be used as a
+vector representing the corresponding word – i.e. \(W_{i\cdot}\) is the
+\(d\)-dimensional vector corresponding to the \(i^{th}\) word. And, it turns
+out, these vectors have similar properties with the vectors obtained from
+<em>word2vec</em>.</p>
+
+<h2 id="using-the-keyword-vectors">Using the Keyword Vectors</h2>
+
+<p>Now that we have our own trained vectors for the keywords obtained for our
+companies, we can have some fun!</p>
+
+<h1 id="similar-keywords">Similar Keywords</h1>
+
+<p>We can find similar keywords by comparing the vector representation of one
+keyword to the vector representations of all other keywords. Looking, for
+example, at the keyword  <strong>cloud storage</strong>, we find that the closest other
+keywords in terms of cosine similarity are</p>
+
+<!-- TODO: a table would be nice, but then have to mess w/ the css -->
+<!-- TODO: choose one, or another one entirely (also, can cherry-pick...) -->
+<ul>
+  <li><strong>flash storage</strong>: 0.981116179237997</li>
+  <li><strong>idrive</strong>: 0.978347988316545</li>
+  <li><strong>online file sync</strong>: 0.977817384377984</li>
+  <li><strong>your external hard drive in the cloud</strong>: 0.973818440471018</li>
+  <li><strong>backup online</strong>: 0.973174935235816</li>
+  <li><strong>online storage</strong>: 0.970892387415698</li>
+  <li><strong>free online storage</strong>: 0.970609131103706</li>
+  <li><strong>online backup solutions</strong>: 0.969503062603722</li>
+  <li><strong>online file backup</strong>: 0.968670947689898</li>
+  <li><strong>online sync</strong>: 0.965037194231968</li>
+  <li>etc…</li>
+</ul>
+
+<p>and for the keyword <strong>mobile payments</strong>,</p>
+
+<ul>
+  <li><strong>mobile payment</strong>: 0.985906495453295</li>
+  <li><strong>payments</strong>: 0.982129350125816</li>
+  <li><strong>android payments</strong>: 0.979123374750015</li>
+  <li><strong>ivr payments</strong>: 0.978475369212524</li>
+  <li><strong>mwallet</strong>: 0.977912206702434</li>
+  <li><strong>fintech   payments</strong>: 0.977378781616218</li>
+  <li><strong>mobile payment enabler</strong>: 0.974429434165879</li>
+  <li><strong>mobile payment solution</strong>: 0.974288467923257</li>
+  <li><strong>credit cards &amp; transaction processing</strong>: 0.974219772716241</li>
+  <li><strong>card payments</strong>: 0.972751346246811</li>
+  <li>etc…</li>
+</ul>
+
+<h1 id="similar-companies">Similar Companies</h1>
+
+<p>Although we incorporate much more into our “Related Companies” algorithm, the
+keywords alone can provide pretty good similarity scores. If we encode each
+company as the mean of its keyword vectors, we can look again at the cosine
+similarity between each company and all other companies.</p>
+
+<p>Some examples are, for <a href="https://datafox.co/dropbox">Dropbox</a> (staying with the
+cloud storage / collaboration theme),</p>
+
+<ul>
+  <li><a href="https://datafox.co/box">Box</a>: 0.988772243220449</li>
+  <li><a href="https://datafox.co/sugarsync">SugarSync</a>: 0.973269196861258</li>
+  <li><a href="https://datafox.co/hightail">Hightail</a>: 0.972030152842286</li>
+  <li><a href="https://datafox.co/skydox">SkyDox</a>: 0.964419747675301</li>
+  <li><a href="https://datafox.co/filobite">filobite</a>: 0.961857655119854</li>
+  <li><a href="https://datafox.co/firedrive-media">Firedrive Media</a>: 0.959809673680361</li>
+  <li><a href="https://datafox.co/yakimbi">Yakimbi</a>: 0.958234583938729</li>
+  <li><a href="https://datafox.co/mediafire">Mediafire</a>: 0.956988047920301</li>
+  <li><a href="https://datafox.co/filesgateway-com">Filesgateway.com</a>: 0.956174150033562</li>
+  <li><a href="https://datafox.co/zoolz">Zoolz</a>: 0.955439684268182</li>
+  <li>etc…</li>
+</ul>
+
+<p>and, for <a href="https://datafox.co/boku">BOKU</a> (staying with the mobile payments
+theme),</p>
+
+<ul>
+  <li><a href="https://datafox.co/payanywhere">PayAnywhere</a>: 0.967311639462488</li>
+  <li><a href="https://datafox.co/zong">Zong</a>: 0.966622717338347</li>
+  <li><a href="https://datafox.co/square">Square</a>: 0.962493155772685</li>
+  <li><a href="https://datafox.co/verifone">VeriFone</a>: 0.957852113994113</li>
+  <li><a href="https://datafox.co/fortumo">Fortumo</a>: 0.956916229626648</li>
+  <li><a href="https://datafox.co/qfpay">QFPay</a>: 0.956654558103476</li>
+  <li><a href="https://datafox.co/onebip">Onebip</a> (acquired by <a href="https://datafox.co/neomobile">Neomobile</a>): 0.9550171271087</li>
+  <li><a href="https://datafox.co/paybyme">PaybyMe</a>: 0.954839544810337</li>
+  <li><a href="https://datafox.co/zaypay">Zaypay.com</a>: 0.953663005838281</li>
+  <li><a href="https://datafox.co/obopay">obopay</a>: 0.953425806463978</li>
+  <li>etc…</li>
+</ul>
+
+<!-- ALSO: could plot vectors in first 2 dimensions for various keywords / companies -->
+
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+    <h2 class="footer-heading">DataFox Tech Blog</h2>
+
+    <div class="footer-col-1 column">
+      <ul>
+        <li>DataFox Tech Blog</li>
+        <li><a href="mailto:"></a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col-2 column">
+      <ul>
+        <li>
+          <a href="https://github.com/">
+            <span class="icon github">
+              <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#C2C2C2" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+                c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+                c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+                c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+                C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+                c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+                c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+                c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+                c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+            <span class="username"></span>
+          </a>
+        </li>
+        <li>
+          <a href="https://twitter.com/">
+            <span class="icon twitter">
+              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+              </svg>
+            </span>
+            <span class="username"></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col-3 column">
+      <p class="text">DataFox Tech Blog</p>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    </body>
+</html>
