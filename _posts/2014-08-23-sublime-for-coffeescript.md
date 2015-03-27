@@ -28,7 +28,7 @@ Don't install Sublime Text 2 or the plugins won't work.
 ### Install Plugins (120s)
 Access the "Package Control: Install Package" command by opening the [command pallette](http://docs.sublimetext.info/en/sublime-text-3/extensibility/command_palette.html) (`shift-cmd-p` on Mac, `shift-ctrl-p` on Windows) and typing "install".
 
-Then use the autocomplete to quickly install thse plugins:
+Then use the autocomplete to quickly install these plugins:
 
   - git
   - git gutter
