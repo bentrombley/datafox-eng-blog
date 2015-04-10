@@ -8,25 +8,30 @@ categories: general
 Finding Similar Companies
 -------------------------
 
-One of the features of our product that many of our customers love is our
+One of the features of our product that our customers love is our
 "Related Companies" module. On the profile of any company in our database, we
 provide our users with a list of other companies that we suggest might be
 related. A lot goes into these suggestions, including both some manual effort
 and a lot of machine learning. An army of analysts could not comb through
 our half million companies and come up with a good list of related companies for
-each from the other half million (minus one) companies. And we don't want to
-spend our time doing that either, so we apply a combination of engineering and
+each from the other half million (minus one) companies. And with an ever
+increasing number of companies in our database, we knew it was a problem fit
+for computer science, so we apply a combination of engineering and
 machine power to the problem.
 
 Our related companies algorithm takes a number of inputs into account (company
-sector, company size, news co-mentions, etc), but here we will focus on one aspect
+sector, company size, news co-mentions, participation in conferences, etc), but
+here we will focus on one aspect
 of the algorithm: company keywords. Every company we have in our database is
-associated with some list of keywords, most of which we scraped from their
-home pages. Since this is how a company describes itself, mostly with the purpose
-of luring visitors from organic web searches, it is an accurate list of words
-to summarize the company's product and/or industry. By looking at the keywords
-listed on a company's home page, we can more accurately triangulate similar
-companies by comparing their keywords.
+associated with some list of keywords, which we index from their
+home pages, infer from their presence in news articles and directories, and
+collect from the training lists our analysts build in house. By using a blend of
+how a company describes itself, mostly with the purpose
+of luring visitors from organic web searches, and how others classify the company,
+it is a useful array of words
+to summarize the company's product and/or industry. By
+comparing any pair of companies based on this array of keywords,
+we can create a highly useful facet for our overall related companies algorithm.
 
 However, comparing two lists of keywords is not entirely obvious. We could look
 at some metric based upon exact matches between keyword lists, such as Jaccard
@@ -235,6 +240,19 @@ theme),
 * [Zaypay.com](https://datafox.co/zaypay): 0.953663005838281
 * [obopay](https://datafox.co/obopay): 0.953425806463978
 * etc...
+
+Using these methods, we can build a set of similar company weights for a single
+company. The engineering feat of running this portion of the algorithm across our
+more than 500,000 companies is an another feat entirely, which started in
+CoffeeScript, then re-wrote in Scala, and then re-wrote in R, but that's a subject
+for a separate blog post. Similarly, the algorithm for determining how to weight
+the keyword similarity compared with the other facets we use in the overall
+algorithm has been an interesting process. 
+
+Here, we have shown how we are able to to use some fun frameworks and an
+interesting use of NLP and matrix factorization to feed clusters of related
+companies into our application to help our customers identify new prospects and
+competitors for any company in our database. 
 
 <!-- ALSO: could plot vectors in first 2 dimensions for various keywords / companies -->
 
