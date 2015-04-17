@@ -7,117 +7,33 @@
     <atom:link href="http://datafox.co/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Our Customer Feedback Meeting</title>
-        <description>&lt;p&gt;Startups love to talk about being “customer focused” and “delighting users”, but too often this talk has little to do with what engineers do in their day-to-day work.&lt;/p&gt;
-
-&lt;p&gt;We operate differently.&lt;/p&gt;
-
-&lt;h2 id=&quot;the-way-it-usually-works&quot;&gt;The Way It Usually Works&lt;/h2&gt;
-
-&lt;p&gt;Most companies create a role like “product manager” that is in charge of digesting feedback into product specifications.&lt;/p&gt;
-
-&lt;p&gt;This is deeply flawed.&lt;/p&gt;
-
-&lt;p&gt;To the person in charge of distilling feedback into requirements the job is overwhelming.  They are asked to “advocate for the customer” so engineers build what people actually need.  At the same time they’re asked to respect technical trade-offs and explain to the sales team what we can and cannot build.&lt;/p&gt;
-
-&lt;p&gt;The only way this works is if everyone has the utmost respect for this person.&lt;/p&gt;
-
-&lt;p&gt;In reality, the engineers feel like the decisions are arbitrary and not really grounded on real feedback.  “Why aren’t we running A/B tests?” they ask.  Sales meanwhile fumes that they can’t close deals when we aren’t building what they ask.&lt;/p&gt;
-
-&lt;p&gt;The system is almost designed to antagonize the teams with the unfortunate PM left in the middle to sort it all out.&lt;/p&gt;
-
-&lt;h2 id=&quot;the-way-it-works-at-datafox&quot;&gt;The Way It Works at DataFox&lt;/h2&gt;
-&lt;p&gt;Last summer when we received frequent requests to allow searching for companies by mutually-exclusive sectors like “agriculture” or “automotive”.  It was clear we needed to build a solution.&lt;/p&gt;
-
-&lt;p&gt;However, the engineers knew from experience that we couldn’t build a classifier because sectors are too subjective.  Take Google: is it a search company or an advertising company?  Is “search” even a sector or is that too specific?  What about all that other stuff like Google Docs and Nest and self-driving cars?&lt;/p&gt;
-
-&lt;p&gt;In most organizations, these questions would be confined to engineering as a technical challenge.  Either they find a way to build to spec or the project never happens.&lt;/p&gt;
-
-&lt;p&gt;But things go differently in the customer feedback meeting.  With everyone in the room engineers could ask why users were requesting this search and why our current keyword-based searching wasn’t sufficient.  That week when a customer requested sector-based search, our sales team probed deeper on those questions.  What we discovered was that the real concern was that users worried that searching by a keyword like “mobile security” they might miss important companies because they didn’t know to search for similar terms like like “mobile device management”.&lt;/p&gt;
-
-&lt;p&gt;This insight was key because similar keywords is a problem we had already solved as part of our similar company algorithm.  The solution we built instead was to suggest keywords as you searched so you could build a comprehensive list of all mobile security companies.  This was a nuanced solution that never would have occurred without engineering and customer-facing roles being in the same room.&lt;/p&gt;
-
-&lt;h2 id=&quot;how-to-make-customer-feedback-work&quot;&gt;How to Make Customer Feedback Work&lt;/h2&gt;
-&lt;p&gt;An effective customer feedback loop doesn’t happen by accident.  We follow these steps:&lt;/p&gt;
-
-&lt;h3 id=&quot;step-1-record-everything-your-customers-say&quot;&gt;Step 1: Record Everything Your Customers Say&lt;/h3&gt;
-&lt;p&gt;Our CEO, Bastiaan, is obsessive about recording everything.  Every meeting, phone call, and thought goes into Evernote so he can find it later.  Even before we started DataFox he started a document with all customer interviews and findings, which at last count is over 300 pages long.&lt;/p&gt;
-
-&lt;p&gt;His example has spread to the rest of the team, leading to a culture of note taking and sharing.  Any time someone interacts with a customer or potential customer, they take notes and copy them into a Google Doc.  Feedback isn’t left to a PM, and we make it clear to our sales team that gathering feedback is part of how they’re evaluated.&lt;/p&gt;
-
-&lt;p&gt;We include everything whether good, bad, random or even self-contradictory.  The goal is to just collect all of the unfiltered data so we can avoid bias.&lt;/p&gt;
-
-&lt;h3 id=&quot;step-2-invite-everyone-to-the-meeting&quot;&gt;Step 2: Invite &lt;em&gt;Everyone&lt;/em&gt; to the Meeting&lt;/h3&gt;
-&lt;p&gt;We believe in avoiding meetings and bureaucracy, but we make an exception for one meeting each week: customer feedback.  Everyone from sales to engineers to data analysts is invited – &lt;em&gt;and all of them come&lt;/em&gt; –
-because it is key to doing their job well.&lt;/p&gt;
-
-&lt;p&gt;For engineers the meeting is a chance to question salespeople about the details and context of feature requests, bugs, etc.  This in turn gives salespeople insight into what matters for engineers, and encourages better notes in the future. The result is a positive feedback loop where teams feel connected.&lt;/p&gt;
-
-&lt;h3 id=&quot;step-3-keep-the-meeting-short-and-focused&quot;&gt;Step 3: Keep the Meeting Short and Focused&lt;/h3&gt;
-&lt;p&gt;12 people attend the meeting now, and this will continue to grow.  But it’s still effective because we follow rigid rules:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Only allow clarifying questions are allowed – no discussions about solutions!&lt;/li&gt;
-  &lt;li&gt;The person who recorded the feedback reads it and provides any context.&lt;/li&gt;
-  &lt;li&gt;Stay brief: you have 60 seconds.&lt;/li&gt;
-  &lt;li&gt;Assign roles:
-    - one person runs the meeting and keeps it moving
-    - one person tallies requests
-    - one person files bugs&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;step-4-tally-feedback&quot;&gt;Step 4: Tally Feedback&lt;/h3&gt;
-&lt;p&gt;We use a simple Google spreadsheet and add a check every time a request comes in.  The system is rough but effective.  It quickly becomes clear that some requests happen at 10x the volume of others.&lt;/p&gt;
-
-&lt;p&gt;The key here is that the entire team decides how to translate the user’s request into a vote for a new feature or bug.  This can be very subjective, but that’s okay as long as it’s transparent.  We aren’t relying on a PM or the CEO to filter the feedback so the team trusts the numbers.&lt;/p&gt;
-
-&lt;h3 id=&quot;step-5-constantly-review-the-tallies&quot;&gt;Step 5: Constantly Review the Tallies&lt;/h3&gt;
-&lt;p&gt;When every person on the team knows the top 10 requests, suddenly planning and prioritization is a breeze.  There are no heated discussions or questions about why we’re building X (and why we’re not building Y).  Everyone can see the list and has heard customer after customer request the feature.&lt;/p&gt;
-
-&lt;p&gt;Of course, not all feedback is equal, and we still decide which features are worth prioritizing and which should be deferred.  However, the customer feedback meeting is the perfect time to explain why we are making this choice.  It’s also the perfect time for the team to challenge that decision using the data.  We’ve often changed our minds after seeing that a “niche” request is actually one of the most common.&lt;/p&gt;
-
-&lt;h2 id=&quot;why-its-worth-the-effort&quot;&gt;Why It’s Worth the Effort&lt;/h2&gt;
-&lt;p&gt;Being “customer-focused” has become startup gosepl, but it’s still important to explain why it’s worth the time and effort to run this meeting.&lt;/p&gt;
-
-&lt;p&gt;First and foremost, the meeting keeps the entire team aligned. Debates don’t feel like arbitrary opinions when everyone has seen the data and knows the counts.&lt;/p&gt;
-
-&lt;p&gt;For us as engineers, the meeting connects what we’re building to real customer needs.  It’s not about debugging an annoying bug in MongoDB, it’s about the customer who is unable to upload a large spreadsheet.&lt;/p&gt;
-
-&lt;p&gt;For our sales and support teams on the front lines, the meeting shows them that the engineers and analysts care about their experience and are fixing problems.  They learn which questions to ask customers so engineers can directly address their concerns.&lt;/p&gt;
-
-&lt;p&gt;For our customers, having everyone see their feedback and understand their needs means they get the best solutions.&lt;/p&gt;
-
-&lt;p&gt;The overall result is a tight feedback cycle where we can iterate faster and delight our customers.  And that is what “customer focused” means to us.&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 27 Mar 2015 00:00:00 -0700</pubDate>
-        <link>http://datafox.co/customer/feedback/2015/03/27/customer-feedback-meeting/</link>
-        <guid isPermaLink="true">http://datafox.co/customer/feedback/2015/03/27/customer-feedback-meeting/</guid>
-      </item>
-    
-      <item>
         <title>Keyword-Based Company Similarity</title>
         <description>&lt;h2 id=&quot;finding-similar-companies&quot;&gt;Finding Similar Companies&lt;/h2&gt;
 
-&lt;p&gt;One of the features of our product that many of our customers love is our
+&lt;p&gt;One of the features of our product that our customers love is our
 “Related Companies” module. On the profile of any company in our database, we
 provide our users with a list of other companies that we suggest might be
 related. A lot goes into these suggestions, including both some manual effort
 and a lot of machine learning. An army of analysts could not comb through
 our half million companies and come up with a good list of related companies for
-each from the other half million (minus one) companies. And we don’t want to
-spend our time doing that either, so we apply a combination of engineering and
+each from the other half million (minus one) companies. And with an ever
+increasing number of companies in our database, we knew it was a problem fit
+for computer science, so we apply a combination of engineering and
 machine power to the problem.&lt;/p&gt;
 
 &lt;p&gt;Our related companies algorithm takes a number of inputs into account (company
-sector, company size, news co-mentions, etc), but here we will focus on one aspect
+sector, company size, news co-mentions, participation in conferences, etc), but
+here we will focus on one aspect
 of the algorithm: company keywords. Every company we have in our database is
-associated with some list of keywords, most of which we scraped from their
-home pages. Since this is how a company describes itself, mostly with the purpose
-of luring visitors from organic web searches, it is an accurate list of words
-to summarize the company’s product and/or industry. By looking at the keywords
-listed on a company’s home page, we can more accurately triangulate similar
-companies by comparing their keywords.&lt;/p&gt;
+associated with some list of keywords, which we index from their
+home pages, infer from their presence in news articles and directories, and
+collect from the training lists our analysts build in house. By using a blend of
+how a company describes itself, mostly with the purpose
+of luring visitors from organic web searches, and how others classify the company,
+it is a useful array of words
+to summarize the company’s product and/or industry. By
+comparing any pair of companies based on this array of keywords,
+we can create a highly useful facet for our overall related companies algorithm.&lt;/p&gt;
 
 &lt;p&gt;However, comparing two lists of keywords is not entirely obvious. We could look
 at some metric based upon exact matches between keyword lists, such as Jaccard
@@ -320,376 +236,114 @@ theme),&lt;/p&gt;
   &lt;li&gt;etc…&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;p&gt;Using these methods, we can build a set of similar company weights for a single
+company. The engineering feat of running this portion of the algorithm across our
+more than 500,000 companies is an another feat entirely, which started in
+CoffeeScript, then re-wrote in Scala, and then re-wrote in R, but that’s a subject
+for a separate blog post. Similarly, the algorithm for determining how to weight
+the keyword similarity compared with the other facets we use in the overall
+algorithm has been an interesting process.&lt;/p&gt;
+
+&lt;p&gt;Here, we have shown how we are able to to use some fun frameworks and an
+interesting use of NLP and matrix factorization to feed clusters of related
+companies into our application to help our customers identify new prospects and
+competitors for any company in our database.&lt;/p&gt;
+
 &lt;!-- ALSO: could plot vectors in first 2 dimensions for various keywords / companies --&gt;
 
 </description>
-        <pubDate>Mon, 23 Mar 2015 00:00:00 -0700</pubDate>
-        <link>http://datafox.co/general/2015/03/23/keyword-similarities/</link>
-        <guid isPermaLink="true">http://datafox.co/general/2015/03/23/keyword-similarities/</guid>
+        <pubDate>Fri, 17 Apr 2015 00:00:00 -0700</pubDate>
+        <link>http://datafox.co/general/2015/04/17/keyword-similarities/</link>
+        <guid isPermaLink="true">http://datafox.co/general/2015/04/17/keyword-similarities/</guid>
       </item>
     
       <item>
-        <title>The Hackers Guide to Interviewing</title>
-        <description>&lt;h1 id=&quot;interviewing-is-the-highest-leverage-use-of-your-time&quot;&gt;Interviewing is the Highest Leverage Use of Your Time&lt;/h1&gt;
+        <title>Our Customer Feedback Meeting</title>
+        <description>&lt;p&gt;Startups love to talk about being “customer focused” and “delighting users”, but too often this talk has little to do with what engineers do in their day-to-day work.&lt;/p&gt;
 
-&lt;p&gt;Hacking is all about leverage.  In startups, we only build a feature if
-we know customers need it, and then we only build the “minimum viable” amount.
-In growth hacking you focus on the quickest, cheapest ways to get viral adoption.  Great startup
-employees thrive on making difficult choices and focusing on only the most critical tasks.&lt;/p&gt;
+&lt;p&gt;We operate differently.&lt;/p&gt;
 
-&lt;p&gt;But when it comes to the single highest-leverage, most-critical job, most of us fall short: interviewing.&lt;/p&gt;
+&lt;h2 id=&quot;the-way-it-usually-works&quot;&gt;The Way It Usually Works&lt;/h2&gt;
 
-&lt;p&gt;Think about it: a good engineer can do iOS development, but a great iOS engineer builds an elegant
-app users love. That’s what companies mean when they look for a “10X” engineer: their skill
-translates into 10 times the user adoption and revenue – that’s the difference between being WhatsApp
-and whatever else.&lt;/p&gt;
+&lt;p&gt;Most companies create a role like “product manager” that is in charge of digesting feedback into product specifications.&lt;/p&gt;
 
-&lt;p&gt;But if a great iOS engineer is worth 10 times a good engineer, then if you can hire great iOS developers
-you are worth an order magnitude more, even if you aren’t an iOS developer.  Being a great interviewer can make
-you a 100X engineer.&lt;/p&gt;
+&lt;p&gt;This is deeply flawed.&lt;/p&gt;
 
-&lt;p&gt;That’s not just hyperbole: assembling a small team of outstanding engineers is probably the highest
-leverage work any engineer can do, and it can prove the difference between being Instagram and all the
-other also-rans.  (Of course, great engineers are necessary but not sufficient to success, just look at
-Four Square).&lt;/p&gt;
+&lt;p&gt;To the person in charge of distilling feedback into requirements the job is overwhelming.  They are asked to “advocate for the customer” so engineers build what people actually need.  At the same time they’re asked to respect technical trade-offs and explain to the sales team what we can and cannot build.&lt;/p&gt;
 
-&lt;p&gt;Just as important, firing bad hires is an enormous drain in every sense.&lt;/p&gt;
+&lt;p&gt;The only way this works is if everyone has the utmost respect for this person.&lt;/p&gt;
 
-&lt;h1 id=&quot;why-interviewing-sucks&quot;&gt;Why Interviewing Sucks&lt;/h1&gt;
+&lt;p&gt;In reality, the engineers feel like the decisions are arbitrary and not really grounded on real feedback.  “Why aren’t we running A/B tests?” they ask.  Sales meanwhile fumes that they can’t close deals when we aren’t building what they ask.&lt;/p&gt;
 
-&lt;p&gt;So if interviewing is important, why is it not a priority?&lt;/p&gt;
+&lt;p&gt;The system is almost designed to antagonize the teams with the unfortunate PM left in the middle to sort it all out.&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;Interviewing is a chore&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h2 id=&quot;the-way-it-works-at-datafox&quot;&gt;The Way It Works at DataFox&lt;/h2&gt;
+&lt;p&gt;Last summer when we received frequent requests to allow searching for companies by mutually-exclusive sectors like “agriculture” or “automotive”.  It was clear we needed to build a solution.&lt;/p&gt;
 
-&lt;p&gt;In my experience, interviewing is a chore for most engineers that ranks somewhere between filling out TPS reports and
-debugging errors in IE6.  You check your calendar and audibly sigh as you see your pristine afternoon
-interrupted by an interview.  When the time arrives, you’re in the middle of doing something important, and
-this is the last thing you want to do.  You suffer through it, fill out whatever paperwork is required, and get back
-to your real work.&lt;/p&gt;
+&lt;p&gt;However, the engineers knew from experience that we couldn’t build a classifier because sectors are too subjective.  Take Google: is it a search company or an advertising company?  Is “search” even a sector or is that too specific?  What about all that other stuff like Google Docs and Nest and self-driving cars?&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;Interviewing is not rewarded&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;In most organizations, these questions would be confined to engineering as a technical challenge.  Either they find a way to build to spec or the project never happens.&lt;/p&gt;
 
-&lt;p&gt;I’ve never worked in a place that rewarded engineers for being great interviewers and devoting time.  Sure,
-there are sizable bonuses for recruiting your friends, but there is no reward for devoting substantial
-time each week to interviewing or to being a reliable judge of candidate quality.  Good managers certainly
-appreciae these skills and might go so far as to commend someone privately, but I’ve never seen interviewing
-on the list of skills an engineer is evaluated on.&lt;/p&gt;
+&lt;p&gt;But things go differently in the customer feedback meeting.  With everyone in the room engineers could ask why users were requesting this search and why our current keyword-based searching wasn’t sufficient.  That week when a customer requested sector-based search, our sales team probed deeper on those questions.  What we discovered was that the real concern was that users worried that searching by a keyword like “mobile security” they might miss important companies because they didn’t know to search for similar terms like like “mobile device management”.&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;Interviewing is not regarded as a skill&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;This insight was key because similar keywords is a problem we had already solved as part of our similar company algorithm.  The solution we built instead was to suggest keywords as you searched so you could build a comprehensive list of all mobile security companies.  This was a nuanced solution that never would have occurred without engineering and customer-facing roles being in the same room.&lt;/p&gt;
 
-&lt;p&gt;Engineers thrive on respect for their skills.  You get respect for solving a complex backend issue,
-or for designing an elegant UI, or simply for automating an obnoxious manual process.  That respect is
-valuable because it took effort to master those skills, and creates an incentive for others to learn it.
-Being a great interiewer rarely comes up in this context – at best the hiring managers appreciates
-it.&lt;/p&gt;
+&lt;h2 id=&quot;how-to-make-customer-feedback-work&quot;&gt;How to Make Customer Feedback Work&lt;/h2&gt;
+&lt;p&gt;An effective customer feedback loop doesn’t happen by accident.  We follow these steps:&lt;/p&gt;
+
+&lt;h3 id=&quot;step-1-record-everything-your-customers-say&quot;&gt;Step 1: Record Everything Your Customers Say&lt;/h3&gt;
+&lt;p&gt;Our CEO, Bastiaan, is obsessive about recording everything.  Every meeting, phone call, and thought goes into Evernote so he can find it later.  Even before we started DataFox he started a document with all customer interviews and findings, which at last count is over 300 pages long.&lt;/p&gt;
+
+&lt;p&gt;His example has spread to the rest of the team, leading to a culture of note taking and sharing.  Any time someone interacts with a customer or potential customer, they take notes and copy them into a Google Doc.  Feedback isn’t left to a PM, and we make it clear to our sales team that gathering feedback is part of how they’re evaluated.&lt;/p&gt;
+
+&lt;p&gt;We include everything whether good, bad, random or even self-contradictory.  The goal is to just collect all of the unfiltered data so we can avoid bias.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-2-invite-everyone-to-the-meeting&quot;&gt;Step 2: Invite &lt;em&gt;Everyone&lt;/em&gt; to the Meeting&lt;/h3&gt;
+&lt;p&gt;We believe in avoiding meetings and bureaucracy, but we make an exception for one meeting each week: customer feedback.  Everyone from sales to engineers to data analysts is invited – &lt;em&gt;and all of them come&lt;/em&gt; –
+because it is key to doing their job well.&lt;/p&gt;
+
+&lt;p&gt;For engineers the meeting is a chance to question salespeople about the details and context of feature requests, bugs, etc.  This in turn gives salespeople insight into what matters for engineers, and encourages better notes in the future. The result is a positive feedback loop where teams feel connected.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-3-keep-the-meeting-short-and-focused&quot;&gt;Step 3: Keep the Meeting Short and Focused&lt;/h3&gt;
+&lt;p&gt;12 people attend the meeting now, and this will continue to grow.  But it’s still effective because we follow rigid rules:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Engineers don’t do sales&lt;/li&gt;
+  &lt;li&gt;Only allow clarifying questions are allowed – no discussions about solutions!&lt;/li&gt;
+  &lt;li&gt;The person who recorded the feedback reads it and provides any context.&lt;/li&gt;
+  &lt;li&gt;Stay brief: you have 60 seconds.&lt;/li&gt;
+  &lt;li&gt;Assign roles:
+    - one person runs the meeting and keeps it moving
+    - one person tallies requests
+    - one person files bugs&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Honestly, many engineers are introverts, and that’s fine.  But you
-expect great engineers to do things outside their comfort zone whether it’s configuring nginx or adopting
-pair programmming.  (Which bring us back to the importance of interviewing: why would you hire someone
-who can’t adapt?)&lt;/p&gt;
+&lt;h3 id=&quot;step-4-tally-feedback&quot;&gt;Step 4: Tally Feedback&lt;/h3&gt;
+&lt;p&gt;We use a simple Google spreadsheet and add a check every time a request comes in.  The system is rough but effective.  It quickly becomes clear that some requests happen at 10x the volume of others.&lt;/p&gt;
 
-&lt;p&gt;An extremely important part of interviewing is selling yourself to the candidate.  But this is not the same
-as sales.  You’re pitching your team to an engineer: explain why you are excited.  People recognize genuine
-enthusiasm and passion, and they’re rare.  If you’re not genuinely excited, then maybe it’s time to move.&lt;/p&gt;
+&lt;p&gt;The key here is that the entire team decides how to translate the user’s request into a vote for a new feature or bug.  This can be very subjective, but that’s okay as long as it’s transparent.  We aren’t relying on a PM or the CEO to filter the feedback so the team trusts the numbers.&lt;/p&gt;
 
-&lt;h1 id=&quot;how-to-make-interviewing-your-companys-competitive-advantage&quot;&gt;How to Make Interviewing Your Company’s Competitive Advantage&lt;/h1&gt;
+&lt;h3 id=&quot;step-5-constantly-review-the-tallies&quot;&gt;Step 5: Constantly Review the Tallies&lt;/h3&gt;
+&lt;p&gt;When every person on the team knows the top 10 requests, suddenly planning and prioritization is a breeze.  There are no heated discussions or questions about why we’re building X (and why we’re not building Y).  Everyone can see the list and has heard customer after customer request the feature.&lt;/p&gt;
 
-&lt;p&gt;Let’s start with a simple fact: interviewing is hard.  Really, really hard.  And no one is very good at it [citation needed].
-Most people might call that fact depressing, but as a startup it means opportunity.  If you nail interviewing,
-you have an enormous advantage over your competitors, and one they’re unlikely to imitate.&lt;/p&gt;
+&lt;p&gt;Of course, not all feedback is equal, and we still decide which features are worth prioritizing and which should be deferred.  However, the customer feedback meeting is the perfect time to explain why we are making this choice.  It’s also the perfect time for the team to challenge that decision using the data.  We’ve often changed our minds after seeing that a “niche” request is actually one of the most common.&lt;/p&gt;
 
-&lt;p&gt;So how do you do it?&lt;/p&gt;
+&lt;h2 id=&quot;why-its-worth-the-effort&quot;&gt;Why It’s Worth the Effort&lt;/h2&gt;
+&lt;p&gt;Being “customer-focused” has become startup gosepl, but it’s still important to explain why it’s worth the time and effort to run this meeting.&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;Be on time&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;First and foremost, the meeting keeps the entire team aligned. Debates don’t feel like arbitrary opinions when everyone has seen the data and knows the counts.&lt;/p&gt;
 
-&lt;p&gt;It’s amazing to me that companies are willing to pay a recruiter $25k or more for a hire, but when someone comes in to interview
-they’re left sitting alone in a room while the interviewers run late.&lt;/p&gt;
+&lt;p&gt;For us as engineers, the meeting connects what we’re building to real customer needs.  It’s not about debugging an annoying bug in MongoDB, it’s about the customer who is unable to upload a large spreadsheet.&lt;/p&gt;
 
-&lt;p&gt;The message is clear: interviewing is not a priority here, and we don’t have our act together.&lt;/p&gt;
+&lt;p&gt;For our sales and support teams on the front lines, the meeting shows them that the engineers and analysts care about their experience and are fixing problems.  They learn which questions to ask customers so engineers can directly address their concerns.&lt;/p&gt;
 
-&lt;p&gt;The solution is simple: there’s no excuse for being late.&lt;/p&gt;
+&lt;p&gt;For our customers, having everyone see their feedback and understand their needs means they get the best solutions.&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;You don’t need to be anxious&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;It’s nerve-wracking the first time you’re on the other side of the table asking the questions.  I felt like an
-imposter, and worried that the candidate would call me out for not knowing what I was talking about.&lt;/p&gt;
-
-&lt;p&gt;Let’s just be clear: this never happens.  The person being interviewed is far more nervous than you are as the
-interviewer, and they want to make a good impression.  Yes, I have had candidates badger me about why our company
-does this or chose that, but really it only proved that they would not be terrible to work with.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;You can interview people who are smarter and more experienced than you&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;The whole goal is to hire people better than you.  This is intimidating, but that doesn’t matter (see previous point).&lt;/p&gt;
-
-&lt;p&gt;If you can pick a dentist or an auto-mechanic, you can tell who is a machine learning expert or great iOS engineer.  When
-someone starts going over your head on a topic, just probe with questions like:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Why did you pick that solution?  What are the trade-offs?&lt;/li&gt;
-  &lt;li&gt;How would (did) you scale this?&lt;/li&gt;
-  &lt;li&gt;How would (did) you test this?&lt;/li&gt;
-  &lt;li&gt;Great, now if I change this requirement, what has to change?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;You can tell when someone knows what they’re talking about, and when they’re just bluffing based on something they read.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Let them do the talking&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;“When you’re speaking you’re not learning,” as the saying goes.&lt;/p&gt;
-
-&lt;p&gt;You can learn a lot when the candidate gets stuck.  Can they step back and reassess the problem?  Do they ask good questions?  Or
-do they get frustrated and quit?  You know which type of person you’d like to work with.&lt;/p&gt;
-
-&lt;p&gt;Just as importantly, people like talking about themselves and will like you more for it [citation].  Effective sales people spend most of their time
-asking questions, not pitching the product.  Great teachers lead you to the answer, they don’t just state it.&lt;/p&gt;
-
-&lt;p&gt;Note that this works just as well in reverse: if your interviewer spends most of the time talking about themself,
-you will likely get a glowing review.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;You have to make a decision&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;We use a dead-simple system: rate the candidate 1-4 where 1 is “I will argue against the hire” and 4 is “I will argue for the hire.”
-The key is that &lt;em&gt;you cannot be 2.5 in the middle&lt;/em&gt;.  You have to leave the interview with a decision of whether or not you want to
-work with this person.  It will always be tempting to not decide, but it’s not an option.&lt;/p&gt;
-
-&lt;h2 id=&quot;so-what-do-you-ask&quot;&gt;So What Do You Ask?&lt;/h2&gt;
-
-&lt;p&gt;Good questions take a long time to develop and are constantly being approved.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Know why you are asking a question&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;This sounds obvious, but few interviewers seem to be asking a question because they have to ask something.  That’s why so many
-people still ask brain teasers, despite the ample evidence that these questions do not predict job performance [citation needed].&lt;/p&gt;
-
-&lt;p&gt;The appeal of asking a riddle is that it has a nice clear answer you can evaluate.  The problem is that getting the answer right doesn’t mean much.&lt;/p&gt;
-
-&lt;p&gt;Let’s be clear: &lt;em&gt;your mission is to walk out of the interview knowing if you should hire this person or not&lt;/em&gt;.  If you just know
-that they can solve your question, you’ve wasted everyone’s time.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Don’t ask algorithms questions&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;This is controversial because so many engineers love algorithm-based questions, but here’s why I think they’re damaging:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;They reward recent college graduates who just took an algorithms class over experienced engineers who have solved real
-problems.&lt;/li&gt;
-  &lt;li&gt;These questions often focus on obscure data structures or intricate big-O notation, when in practice you’d really want them
-to just use a simple hash table or sorting library.&lt;/li&gt;
-  &lt;li&gt;Yes, algorithms are part of coding, but so is security, networking, user interaction, debugging, localization, etc. Why
-prioritize algorithms?&lt;/li&gt;
-  &lt;li&gt;Algorithm questions are too often all-or-nothing puzzles that punish good candidates that don’t happen to get the solution.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;In my experience, interviewers ask about algorithms because they personally enjoy them, not because they are a
-sign of doing well on the job.  And that’s not fair.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Make your questions fair&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Let’s start with the worst interview question you can think of.  Mine is: “I’m thinking of a number
-in my head, what is it?”&lt;/p&gt;
-
-&lt;p&gt;Obviously, it’s ridiculous, but why is it so bad?  It’s
-arbitrary and unfairly punishes someone for guessing wrong.  It leaves the candidate feeling foolish and you’ve learned
-nothing about them except.&lt;/p&gt;
-
-&lt;p&gt;The problem with many questions, and particularly puzzle or algorithm questions, is that they have
-all of these qualities.&lt;/p&gt;
-
-&lt;p&gt;First, be really clear what you care about in an answer.  If this is a question about concurrency then say so.
-If what you actually care about is clean code, then say so.  If you’re testing for knowledge of iOS libraries
-and best practices then say so.  It’s obvious to you when you say “sort a linked list” that you mean “implement
-a highly performant implementation from scratch,” but another interviewer means “use the LinkedList sort method, like in
-real life.”  Don’t punish someone for guessing wrong.&lt;/p&gt;
-
-&lt;p&gt;Second, make sure your question is nuanced enough to test the full range of candidates.  “Guess a number” questions have
-black-or-white answers, so you can’t tell if someone is okay or great or in between.  A great question starts simply
-and increases in complexity as the candidate works through it.  For example, ask them to design a scheduler
-starting with something simple like a queue, then introducing concurrency or memory constraints.  Exceptional candidates
-not only answer the question, but discuss trade-offs between different solutions and dive into advanced topics
-like scaling and testing.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Interview for testing&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Which brings us to a great question virtually no one asks in interviews: how would you test this?  Testing is poorly
-taught in school yet is one of the most important skills that distinguish great engineers from mediocre ones.  You spend
-far more time reading and testing code then you spend writing it, no matter whether you’re doing frontend design or
-low-level assembly.&lt;/p&gt;
-
-&lt;p&gt;Hiring someone without a question on testing is like hiring a chauffeur without asking if they can drive.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Make your question interesting by making it real&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Again, half the point of the interview is to sell the candidate on the position.  Asking generic questions about data modeling
-misses the chance to explain why the problems you are solving are hard and interesting.   You can get the same data
-from discussing a real problem you’ve solved.  Or it can even be a problem you haven’t solved yet – maybe they’ll give you
-some new ideas.  A great candidate should engage with the problem and get excited about what you’re working on, and you’ll get
-a more realistic idea what they would be like to work with.&lt;/p&gt;
-
-&lt;h1 id=&quot;or-dont-ask-anything&quot;&gt;Or Don’t Ask Anything&lt;/h1&gt;
-
-&lt;p&gt;It’s a mistake to view the hiring process as just a series of questions.  One radical option is to eschew all questions and simply
-ask the engineer to work on a job as a contractor.  Or a scaled-back version is to ask them to come in for a day and pair-program
-with you.  This benefit of this approach is that you get to see how someone performs in the actual job they will have.  However, you
-should expect this approach will take a serious investment in time before you have a standardized way to compare candidates.  This
-also works best if you can expect the candidate to know the language and tools.&lt;/p&gt;
-
-&lt;p&gt;So far, we’ve had luck working with engineers on a project-basis to see how they perform on real tasks, but haven’t figured out the
-best way to do peer-programming with our particular environment.&lt;/p&gt;
-
-&lt;h1 id=&quot;get-constantly-better&quot;&gt;Get Constantly Better&lt;/h1&gt;
-
-&lt;p&gt;Apply some lean methodology to your interviewing by building in feedback.&lt;/p&gt;
-
-&lt;p&gt;First, you should leave every interview asking yourself, “What could I have asked to be more sure about my decision?”  This is
-especially apt when you really aren’t sure if this person is a good fit.  For example, you think someone is smart but might
-not be resourceful and self-sufficient enough for a startup environment – could you have asked about a time they had to be resourceful
-at their last job?  Or can they talk about an experience where they went outside their comfort zone?  Make this question part
-of your team’s interview.&lt;/p&gt;
-
-&lt;p&gt;Second, have other engineers shadow you and do likewise for them.  It feels awkward, but do it anyway.  You’ll never know how
-you are coming across if you don’t get feedback.  Your peers can also share what works and what doesn’t when evaluating candidates.&lt;/p&gt;
-
-&lt;h2 id=&quot;dont-let-results-be-skewed-by-bias&quot;&gt;Don’t Let Results Be Skewed by Bias&lt;/h2&gt;
-
-&lt;p&gt;Be aware that there is a strong bias in interviewing to be negative about a candidate.  When you are a positive about someone and hire them,
-you might learn that they were a bad fit.  But if you were negative and don’t hire the candidate, no one will know if they would have
-been a great fit.  Moreover, it’s always safer to be critical than to put yourself out there in a group discussion.&lt;/p&gt;
-
-&lt;p&gt;You can’t avoid this bias, but you can prevent it from paralyzing your interview process being aware of it.  Don’t interviewers to be
-negative of all candidates, and don’t reward post-hoc analysis that punishes someone for being decisive.  If anything, you should reward
-people who recognize great hires even when they others were skeptical.&lt;/p&gt;
-
-&lt;h2 id=&quot;be-metrics-driven&quot;&gt;Be Metrics-Driven&lt;/h2&gt;
-
-&lt;p&gt;It’s shocking how companies that pride themselves on their analysis and metrics fall flat when it comes to interviewing. Even those that do collect metrics, often prove only that their (system does not work)[http://mobile.nytimes.com/2013/06/20/business/in-head-hunting-big-data-may-not-be-such-a-big-deal.html].&lt;/p&gt;
-
-&lt;p&gt;Collecting metrics on interviewing is hard, but that’s not an excuse to not do so.  You should understand your interview pipeline just as well as your sales pipeline,
-and be constantly improving its weak points.&lt;/p&gt;
+&lt;p&gt;The overall result is a tight feedback cycle where we can iterate faster and delight our customers.  And that is what “customer focused” means to us.&lt;/p&gt;
 
 </description>
-        <pubDate>Sat, 29 Nov 2014 00:00:00 -0800</pubDate>
-        <link>http://datafox.co/general/2014/11/29/interviewing/</link>
-        <guid isPermaLink="true">http://datafox.co/general/2014/11/29/interviewing/</guid>
-      </item>
-    
-      <item>
-        <title>Polymorphism in Ember Data</title>
-        <description>&lt;p&gt;One of the core powers of DataFox is our ability to show you a customized feed
-of recent events affecting companies you care about.  For example, this morning
-I can see that a company in our space, &lt;a href=&quot;https://datafox.co/lytics&quot;&gt;Lytics&lt;/a&gt;, just
-raised $7m in funding so I should check them out.  And my friends who work at
-&lt;a href=&quot;https://datafox.co/apartmentlist&quot;&gt;Apartment List&lt;/a&gt; probably should be aware that
-&lt;a href=&quot;https://datafox.co/redfin&quot;&gt;Redfin&lt;/a&gt; just bought &lt;a href=&quot;https://datafox.co/walkscore&quot;&gt;Walk Score&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/events-feed-10-26-14.png&quot; style=&quot;width: 100%&quot; /&gt;
-&lt;small&gt;My events feed on 10/26/14&lt;/small&gt;&lt;/p&gt;
-
-&lt;p&gt;When it comes to displaying an event in our app we create a new Ember data model:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var Event = DS.Model.extend({
-  title: DS.attr(&#39;string&#39;),
-  date: DS.attr(&#39;date&#39;),
-  ... ??? ...
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;and my template would look like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  &amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;
-  &amp;lt;p&amp;gt;Date: &amp;lt;/p&amp;gt;
-  ...
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;But what if I want each event to have different display data and behavior (which they do)?
-This is a classic case of polymorphism: we need a base &lt;code&gt;Event&lt;/code&gt; class for the common behavior
-and lots of sublcasses like &lt;code&gt;CompanyFundingEvent&lt;/code&gt; and &lt;code&gt;CompanyAcquisitionEvent&lt;/code&gt; that define
-the specific data and actions of that event type.  Ember doesn’t explain how to handle this
-common case, so what do we do?&lt;/p&gt;
-
-&lt;p&gt;Fortunately, a friend in the Ember core team pointed us to an undocumented &lt;code&gt;polymorphic&lt;/code&gt; parameter
-in Ember data that does exactly what we need:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var Event = DS.Model.extend({
-  title: DS.attr(&#39;string&#39;),
-  date: DS.attr(&#39;date&#39;),
-  object: DS.belongsTo(&#39;eventData&#39;, {polymorphic: true});
-  ...
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The corresponding JSON response looks like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  events: [
-    {
-      id: 12345,
-      date: &quot;2014-10-26T06:01:28.700Z&quot;,
-      object: {
-        id: 456789,
-        type: CompanyAcquisitionEvent
-      }
-    },
-    ...
-  ]
-
-  company_acquisition_events: [
-    {
-      id: 456789
-      acquirer: ...
-      ...
-    }
-  ]
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Ember data automatically wires up the &lt;code&gt;id&lt;/code&gt; and &lt;code&gt;type&lt;/code&gt; fields so the &lt;code&gt;event.object&lt;/code&gt; points directly to
-the corresponding &lt;code&gt;CompanyAcquisition&lt;/code&gt; model.  And we can update our generic event template to include
-specific rendering for each event by adding a &lt;code&gt;template&lt;/code&gt; variable to each model we define*:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  &amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;
-  &amp;lt;p&amp;gt;Date: &amp;lt;/p&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;small&gt;
-* normally it would be incorrect to define a view (the template) in a model under MVC, but Ember’s actually
-follows MVVM, so it’s a bit confusing.  In my judgment, this is the clearest solution.
-&lt;/small&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 26 Oct 2014 00:00:00 -0700</pubDate>
-        <link>http://datafox.co/emberjs/2014/10/26/emberjs-polymorphism/</link>
-        <guid isPermaLink="true">http://datafox.co/emberjs/2014/10/26/emberjs-polymorphism/</guid>
+        <pubDate>Fri, 27 Mar 2015 00:00:00 -0700</pubDate>
+        <link>http://datafox.co/customer/feedback/2015/03/27/customer-feedback-meeting/</link>
+        <guid isPermaLink="true">http://datafox.co/customer/feedback/2015/03/27/customer-feedback-meeting/</guid>
       </item>
     
       <item>
@@ -1335,6 +989,96 @@ Company.on(&#39;new company&#39;, function(company) {
         <pubDate>Sat, 02 Aug 2014 00:00:00 -0700</pubDate>
         <link>http://datafox.co/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/</link>
         <guid isPermaLink="true">http://datafox.co/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/</guid>
+      </item>
+    
+      <item>
+        <title>NodeJS Best Practices: Callbacks</title>
+        <description>&lt;p&gt;As an experienced programmer, I’ve found that NodeJS is easy to learn with many tutorials to cover the basics.  However, I was (and still am) unclear about what are the best practices for NodeJS. Here are a few of the things I’ve learned so far about callbacks:&lt;/p&gt;
+
+&lt;h2 id=&quot;everything-in-node-should-be-done-with-callbacks&quot;&gt;&lt;em&gt;Everything&lt;/em&gt; in Node should be done with callbacks.&lt;/h2&gt;
+
+&lt;p&gt;It can be tempting to write functions that just return results like:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;calculateScore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;someInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;…&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;But that’s generally a bad idea because you’ve closely tied your interface to your implementation.  That means if you decide to change your implementation to do something asynchronous, like fetching a cached value, you now have to change all of your callers.  In practice you’ll run into a lot of bugs where the function actually returns nothing (undefined) or fails to call a callback, making your program hang.&lt;/p&gt;
+
+&lt;p&gt;NodeJS requires you to invert the usual sequential way of solving problems into an asynchronous set of callbacks.  Embrace it.  Once you wrap your head around this inverted idea, it’s actually a lot of fun and powerful.  Have you ever tried to run parallel database queries in PHP?&lt;/p&gt;
+
+&lt;h2 id=&quot;use-the-async-library-to-organize-your-callbacks&quot;&gt;Use the async library to organize your callbacks&lt;/h2&gt;
+
+&lt;p&gt;There are some lots of ways to prevent “callback soup,” but here’s what worked for me in practice:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Move most of your anonymous callbacks to clearly named functions, following good object-oriented design.&lt;/li&gt;
+  &lt;li&gt;Use the awesome &lt;a href=&quot;https://github.com/caolan/async&quot;&gt;async library&lt;/a&gt; to handle all of your common practices like calling functions in parallel or in a series.  Promises and generators are both cool ideas that falter in practice.  Async just works.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;callbacks-should-have-exactly-two-arguments&quot;&gt;Callbacks should have &lt;strong&gt;exactly two&lt;/strong&gt; arguments&lt;/h2&gt;
+
+&lt;p&gt;What’s wrong with this code?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;fs.exists(&#39;/etc/passwd&#39;, function (err, exists) {
+  util.debug(exists ? &quot;it&#39;s there&quot; : &quot;no passwd!&quot;);
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;fs.exists&lt;/code&gt; doesn’t follow the convention of invoking a callback with an &lt;code&gt;err&lt;/code&gt; parameter so &lt;code&gt;exists&lt;/code&gt; is undefined and silently cast to false. Oops.&lt;/p&gt;
+
+&lt;p&gt;One of my biggest frustrations is how unpredictable callbacks are in NodeJS, because the number of arguments is arbitrary. While most authors respect the convention that the first argument is an error (or null), you can’t rely on it.  The problem is compounded if you use the async library, which expects the standard (err, data) format:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;async.waterfall([
+  function(next) {
+    fs.exists(&#39;/etc/passwd&#39;, next);
+  },
+  function(next) {
+    // next is undefined and the script hangs...
+  }
+], ...);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Furthermore, I believe strongly that you should pass the actual response as one argument.  This is the same reason you should not return multiple values from a function.  For example this is bad practice in Python:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# changing this array will probably break callers
+return [users, total_users]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This happens often enough in Node libraries to be infuriating.  For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// mongoose js model
+user.save(function(err, user, num) {
+  ...
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The real reason this is a problem is that you are violating the &lt;strong&gt;Single Responsibility Principle&lt;/strong&gt;: your function returns multiple arguments because it’s trying to do more than one thing.  The awkward callback is a symptom of OO design that needs rethinking.  In this case it would really be better to return some type of Response object that encapsulates the saved model, number saved, etc.  In the future you can add information like query time without breaking the contract.&lt;/p&gt;
+
+&lt;p&gt;In practice this ambiguity has caused more bugs for me than anything else.  For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;async.waterfall([
+  function(callback) {
+    user.save(callback);
+  },
+  function(user, callback) {
+   // oops, next is actually a number, so there is an error or the script just hangs
+  },
+  ...
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Rigidly sticking with the convention of &lt;code&gt;callback(err, data)&lt;/code&gt; saves a lot of headache.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;NodeJS is awesome, but the best practices are stilling emerging.  I hope these thoughts are helpful to others who are adopting NodeJS and I’d love to hear more about other best practices.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 08 Jun 2014 05:03:49 -0700</pubDate>
+        <link>http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-callbacks/</link>
+        <guid isPermaLink="true">http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-callbacks/</guid>
       </item>
     
   </channel>
