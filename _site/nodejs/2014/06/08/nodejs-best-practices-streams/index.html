@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>DataFox Tech Blog</title>
+    <title>NodeJs Best Practices: Streams</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="DataFox Tech Blog">
-    <link rel="canonical" href="http://datafox.co/">
+    <link rel="canonical" href="http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-streams/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
@@ -54,93 +54,41 @@
 
     <div class="page-content">
       <div class="wrap">
-      <div class="home">
+      <div class="post">
 
-  <h1>Posts</h1>
+  <header class="post-header">
+    <h1>NodeJs Best Practices: Streams</h1>
+    <p class="meta">Jun 8, 2014</p>
+  </header>
 
-  <ul class="posts">
-    
-      <li>
-        <span class="post-date">Jun 1, 2015</span>
-        <a class="post-link" href="/mongoose/2015/06/01/what-we-wish-we-had-known-about-mongoose/">What We Wish We Had Known About Mongoose</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Apr 17, 2015</span>
-        <a class="post-link" href="/general/2015/04/17/keyword-similarities/">Keyword-Based Company Similarity</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Mar 27, 2015</span>
-        <a class="post-link" href="/customer/feedback/2015/03/27/customer-feedback-meeting/">Our Customer Feedback Meeting</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Nov 29, 2014</span>
-        <a class="post-link" href="/general/2014/11/29/interviewing/">The Hackers Guide to Interviewing</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Oct 26, 2014</span>
-        <a class="post-link" href="/emberjs/2014/10/26/emberjs-polymorphism/">Polymorphism in Ember Data</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Oct 5, 2014</span>
-        <a class="post-link" href="/mongodb/2014/10/05/mongodb-protect-your-database-with-mongorc/">Protect Your Database with .mongorc</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Sep 28, 2014</span>
-        <a class="post-link" href="/nodejs/2014/09/28/nodejs-config-best-practices/">NodeJs Best Practices: Environment-Specific Configuration</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Sep 1, 2014</span>
-        <a class="post-link" href="/nodejs/2014/09/01/10-great-js-utils-you-should-stop-reinventing/">10 Great JavaScript Utils You Should Stop Reinventing</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Aug 23, 2014</span>
-        <a class="post-link" href="/coffeescript/2014/08/23/sublime-for-coffeescript/">Edit CoffeeScript like a Pro in 6 Minutes</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Aug 9, 2014</span>
-        <a class="post-link" href="/hipchat/2014/08/09/hipchat/">Automate Everything Using Hipchat</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Aug 2, 2014</span>
-        <a class="post-link" href="/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/">NodeJs Best Practices: Event Emitting and Async Callbacks</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-streams/">NodeJs Best Practices: Streams</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-circular-dependencies/">NodeJs Best Practices: Avoiding Circular Dependencies</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-callbacks/">NodeJS Best Practices: Callbacks</a>
-      </li>
-    
-      <li>
-        <span class="post-date">Jun 8, 2014</span>
-        <a class="post-link" href="/nodejs/2014/06/08/nodejs-best-practices-avoid-optional-parameters/">NodeJs Best Practices: Avoid Optional Parameters</a>
-      </li>
-    
-  </ul>
+  <article class="post-content">
+  <h2 id="streams-are-better-in-theory-than-practice">Streams are better in theory than practice</h2>
 
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+<p>Streams are an elegant and powerful idea in NodeJS, allowing you to process large data sets efficiently without loading them all into memory at once.  You can even pipe streams like unix, to chain together processing.</p>
+
+<p>The only issue is that while Node v.10 vastly improved streams, the libraries (e.g. MongooseJS and csv-node) have not caught up.  To use a simple example, this is how you should be to process millions of collections:</p>
+
+<pre><code>// users is a massive table with millions of documents
+stream = Users.find().stream();
+stream.on(‘data’, function(user) {
+  stream.pause();
+  doSomethingExpensive(user, function() {
+    stream.resume();
+  });
+});
+stream.on(‘end’, function() {
+  // all done, disconnect from the db
+});
+</code></pre>
+
+<p>…except the stream.pause() function is “strictly advisory” and therefore doesn’t work :(.  I’ve experienced the same problems in other libraries.</p>
+
+<p>I hope this is rapidly solved as the libraries mature, because this is a much better way to think about data problems.  However, I will reserve judgment until then.</p>
+
+
+  </article>
 
 </div>
-
       </div>
     </div>
 

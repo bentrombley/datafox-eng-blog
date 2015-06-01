@@ -7,6 +7,144 @@
     <atom:link href="http://datafox.co/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>What We Wish We Had Known About Mongoose</title>
+        <description>&lt;p&gt;At DataFox we use &lt;a href=&quot;http://mongoosejs.com/&quot;&gt;mongoose&lt;/a&gt; as an ORM layer that abstracts our MongoDB calls. Generally, we benefit from cleaner, more modular code that hides the nitty-gritty details of the MongoDB driver - but mongoose isn’t perfect and it certainly doesn’t abstract all of the problems that can occur when using MongoDB.&lt;/p&gt;
+
+&lt;p&gt;As such, we decided to collect a list of “gotchas” that might be useful to others beginning to use mongoose in a production environment…&lt;/p&gt;
+
+&lt;h2 id=&quot;beware-of-ensureindex&quot;&gt;Beware of ensureIndex()&lt;/h2&gt;
+
+&lt;p&gt;One major benefit to using Mongoose is that you can define the schema for your collections (i.e. SQL tables) in code, making it easy to modify the schema without a database migration. Mongoose further adds support for defining indexes in code like so:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nv&quot;&gt;schema = &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mongoose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# index on name&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;module.exports = &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;mongoose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Company&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Mongoose supports all of the advanced index parameters, so you can create unique indexes, compound indexes and indexes on subdocuments or arrays.&lt;/p&gt;
+
+&lt;p&gt;In practice this works because Mongoose automatically calls &lt;code&gt;ensureIndex()&lt;/code&gt; when the module is required. If the index exists, the call is ignored, but if the index is new, MongoDB will immediately build the index and replicate the command to all secondaries.&lt;/p&gt;
+
+&lt;p&gt;In most cases this is fine, but on a large table the command will lock all writes for a significant amount of time. Furthermore if you are applying a unique index to a field that is not currently unique, the command will fail – or if a duplicate occurs on the secondary the entire database will shut down.&lt;/p&gt;
+
+&lt;p&gt;The drastic solution is to disable ensureIndex on production environments like:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({...},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;autoIndex: &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;A compromise (while you’re small) is to simply expect the call as part of a code deployment and ensure it happens in off-peak hours after testing.&lt;/p&gt;
+
+&lt;h2 id=&quot;ensure-index-can-fail-silently&quot;&gt;Ensure Index Can Fail Silently&lt;/h2&gt;
+
+&lt;p&gt;A far more insidious problem, however, is that when a call to &lt;code&gt;ensureIndex()&lt;/code&gt; fails the error is swallowed, leading to bizarre behavior where &lt;code&gt;find()&lt;/code&gt; queries return truncated results. There is an open &lt;a href=&quot;https://github.com/Automattic/mongoose/issues/609&quot;&gt;mongoose issue&lt;/a&gt; for this and it points to the root cause as this as-yet unresolved &lt;a href=&quot;https://jira.mongodb.org/browse/SERVER-4462&quot;&gt;MongoDB issue&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;catch-connection-failures&quot;&gt;Catch Connection Failures&lt;/h2&gt;
+
+&lt;p&gt;Be careful to subscribe to the error hooks when you connect to the database, or you’ll be stuck with silent failures.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nv&quot;&gt;dbInstance = &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mongoose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Mongoose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;dbInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DB_URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;dbInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;error&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;(err) -&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# log error...&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;prevent-cpu-spikes-by-using-lean-models&quot;&gt;Prevent CPU Spikes by Using Lean Models&lt;/h2&gt;
+&lt;p&gt;By default when you call a method like &lt;code&gt;find()&lt;/code&gt; or &lt;code&gt;findOne()&lt;/code&gt;, Mongoose returns a full model complete with mongoose methods and virtuals. For example:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;findOne&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;email: &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;data@datafox.co&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;(err, user) =&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;user.status = &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# save() method works&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This works in most cases, but in bulk the work of constructing thousands of mongoose objects from the database, results can become CPU-bound, causing CPU thrashing which blocks Node (and everything else on the server).&lt;/p&gt;
+
+&lt;p&gt;The solution in most cases is to add the &lt;code&gt;lean()&lt;/code&gt; parameter to your query so mongoose returns only the raw JS object. For example:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Company&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;(err, allTheCompanies) =&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You no longer can call methods like &lt;code&gt;save()&lt;/code&gt; or use virtuals\ fields, but in most bulk cases this is acceptable.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, this means sacrificing some the encapsulation afforded by defining methods on your models, but in the long run it’s better to treat mongoose models as simple MongoDB documents, rather than full-blown classes.&lt;/p&gt;
+
+&lt;h2 id=&quot;learn-to-love-streams&quot;&gt;Learn to Love Streams&lt;/h2&gt;
+
+&lt;p&gt;Streams are one of the best parts of NodeJS, allowing you to process large data sets efficiently, but it remains buggy and awkward in many libraries… including Mongoose. Here’s how to make it work:&lt;/p&gt;
+
+&lt;h3 id=&quot;use-streamworker&quot;&gt;Use StreamWorker&lt;/h3&gt;
+
+&lt;p&gt;StreamWorker makes using streams trivial by hiding the awkward query hooks. To improve our previous example:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nv&quot;&gt;stream = &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Company&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# note that the lean() command works here too&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;PARALLELISM = &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;StreamWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;PARALLELISM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;processOneCompany&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can define a callback like &lt;code&gt;processOneCompany&lt;/code&gt; which will handle the companies one-at-a-time, and StreamWorker will handle the annoying on finish hooks.&lt;/p&gt;
+
+&lt;h3 id=&quot;prevent-timeouts&quot;&gt;Prevent Timeouts&lt;/h3&gt;
+
+&lt;p&gt;One disastrous and silent error can occur when processing a very long streaming query: a timeout. This can happen at either the network level or the database level, so you need to guard against both.&lt;/p&gt;
+
+&lt;p&gt;First when connecting to the database specify the “keepAlive” parameter to prevent a network disconnect on a long-running query.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nv&quot;&gt;mongooseInstance = &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mongoose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Mongoose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;options = &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;user: &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DB_USER&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;pass: &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DB_PASS&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;server: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;socketOptions: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;keepAlive: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}}&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;replset: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;socketOptions: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;keepAlive: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;mongooseInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DB_URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Second and just as importantly, don’t forget to set the &lt;code&gt;timeout&lt;/code&gt; parameter to false.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;timeout: &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that you may still run into configurations in MongoDB or your network that can cause similar disconnect issues, but this will solve most cases.&lt;/p&gt;
+
+&lt;h3 id=&quot;dont-forget-to-catch-errors&quot;&gt;Don’t Forget to Catch Errors&lt;/h3&gt;
+
+&lt;p&gt;You must subscribe to the stream’s &lt;code&gt;on(&#39;error&#39;)&lt;/code&gt; or you can experience silent failures as the error is caught and never returned to the callback.&lt;/p&gt;
+
+&lt;h2 id=&quot;use-schema-plugins-to-add-created-and-updated-timestamps&quot;&gt;Use Schema Plugins to add Created and Updated Timestamps&lt;/h2&gt;
+
+&lt;p&gt;Mongoose supports “plugins” which behave like a mixin or trait. This let’s you easily define methods and attributes across all of your models. One of the most useful, in our experience, is automatically saving the created and last-modified times on all models, which makes debugging vastly simpler.&lt;/p&gt;
+
+&lt;p&gt;Here is is the plugin:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# plugin for mtime/ctime&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;module.exports.timestamps = &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;(schema, options) -&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ctime: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;type: &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}})&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;mtime: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;type: &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}})&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;save&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;(next) -&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;vi&quot;&gt;@ctime = &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;@isNew&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;@ctime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;?&lt;/span&gt;
+    &lt;span class=&quot;vi&quot;&gt;@mtime = &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Use it like so:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nv&quot;&gt;plugins = &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;plugins&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;plugin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;plugins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;timestamps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;We hope you found these mongoose gotchyas and solutions useful. Both mongo and mongoose are evolving and hopefully it will become easier and easier for new users to employ best practices which avoid some of the pitfalls mentioned above. Please feel free to contact us if you have any other’s that you’d like to share!&lt;/p&gt;
+</description>
+        <pubDate>Mon, 01 Jun 2015 00:00:00 -0700</pubDate>
+        <link>http://datafox.co/mongoose/2015/06/01/what-we-wish-we-had-known-about-mongoose/</link>
+        <guid isPermaLink="true">http://datafox.co/mongoose/2015/06/01/what-we-wish-we-had-known-about-mongoose/</guid>
+      </item>
+    
+      <item>
         <title>Keyword-Based Company Similarity</title>
         <description>&lt;h2 id=&quot;finding-similar-companies&quot;&gt;Finding Similar Companies&lt;/h2&gt;
 
@@ -106,8 +244,10 @@ the loadings found in a matrix factorization of a positive
 &lt;a href=&quot;http://en.wikipedia.org/wiki/Pointwise_mutual_information&quot;&gt;pointwise mutual information&lt;/a&gt; (\(PPMI\)) matrix
 \(P \in \mathbb{R}^{V \times V}\), where&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{w,v} = PPMI(w,v) = \max\left\{0, PMI(w,v)\right\},\;\;\;
-PMI(w,v) = \log \frac{p(w,v)}{p(w)p(v)}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;
+P_{w,v} = PPMI(w,v) = \max\left\{0, PMI(w,v)\right\},\;\;\;
+PMI(w,v) = \log \frac{p(w,v)}{p(w)p(v)}
+&lt;/script&gt;
 
 &lt;p&gt;in which \(V\) is the size of the vocabulary, \(w\) and \(v\) are words,
 \(p(w)\) is the probability of seeing word \(w\),
@@ -122,11 +262,13 @@ found from total occurrences across all companies’ keywords.&lt;/p&gt;
 desired dimension \(d\) for the word vectors, we find a factorization of
 \(P\) so that&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;P \approx W W^T&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;
+P \approx W W^T
+&lt;/script&gt;
 
 &lt;p&gt;where \(W \in \mathbb{R}^{V \times d}\). Notice that we can motivate a
 factorization of this form (\(W W^T\)) because \(P\) is a symmetric matrix
-– i.e. \(P_{w,v} = P_{v,w}\). As it turns out, finding an optimal solution
+– i.e. \(P&lt;em&gt;{w,v} = P&lt;/em&gt;{v,w}\). As it turns out, finding an optimal solution
 in terms of the \(L_2\) norm is feasible by taking the
 &lt;a href=&quot;http://en.wikipedia.org/wiki/Singular_value_decomposition&quot;&gt;singular value decomposition&lt;/a&gt; (SVD) of the matrix,
 \(P = U \Lambda U^T\), and keeping only the first \(d\) dimensions of the
@@ -136,12 +278,16 @@ the first \(d\) elements of the diagonal matrix \(\Lambda\), is the
 rank-\(d\) matrix that minimizes the Frobenius norm of the difference between
 \(P\) and any other rank-\(d\) matrix – i.e.&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\tilde{P} \in \arg\min_{\hat{P}\;:\;\textrm{rank}(\hat{P}) = d} ||P - \hat{P}||_F&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;
+\tilde{P} \in \arg\min_{\hat{P}\;:\;\textrm{rank}(\hat{P}) = d} ||P - \hat{P}||_F
+&lt;/script&gt;
 
 &lt;p&gt;Using this, we go back to our earlier problem of finding \(W\) so that
 \(P \approx W W^T\). If we take&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;W = U \tilde{\Lambda}^{1/2}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;
+W = U \tilde{\Lambda}^{1/2}
+&lt;/script&gt;
 
 &lt;p&gt;we now have a matrix \(W\) such that \(WW^T = U \tilde\Lambda U^T\) is very
 close to our original
@@ -242,12 +388,12 @@ more than 500,000 companies is an another feat entirely, which started in
 CoffeeScript, then re-wrote in Scala, and then re-wrote in R, but that’s a subject
 for a separate blog post. Similarly, the algorithm for determining how to weight
 the keyword similarity compared with the other facets we use in the overall
-algorithm has been an interesting process.&lt;/p&gt;
+algorithm has been an interesting process. &lt;/p&gt;
 
 &lt;p&gt;Here, we have shown how we are able to to use some fun frameworks and an
 interesting use of NLP and matrix factorization to feed clusters of related
 companies into our application to help our customers identify new prospects and
-competitors for any company in our database.&lt;/p&gt;
+competitors for any company in our database. &lt;/p&gt;
 
 &lt;!-- ALSO: could plot vectors in first 2 dimensions for various keywords / companies --&gt;
 
@@ -344,6 +490,370 @@ because it is key to doing their job well.&lt;/p&gt;
         <pubDate>Fri, 27 Mar 2015 00:00:00 -0700</pubDate>
         <link>http://datafox.co/customer/feedback/2015/03/27/customer-feedback-meeting/</link>
         <guid isPermaLink="true">http://datafox.co/customer/feedback/2015/03/27/customer-feedback-meeting/</guid>
+      </item>
+    
+      <item>
+        <title>The Hackers Guide to Interviewing</title>
+        <description>&lt;h1 id=&quot;interviewing-is-the-highest-leverage-use-of-your-time&quot;&gt;Interviewing is the Highest Leverage Use of Your Time&lt;/h1&gt;
+
+&lt;p&gt;Hacking is all about leverage.  In startups, we only build a feature if
+we know customers need it, and then we only build the “minimum viable” amount.
+In growth hacking you focus on the quickest, cheapest ways to get viral adoption.  Great startup
+employees thrive on making difficult choices and focusing on only the most critical tasks.&lt;/p&gt;
+
+&lt;p&gt;But when it comes to the single highest-leverage, most-critical job, most of us fall short: interviewing.&lt;/p&gt;
+
+&lt;p&gt;Think about it: a good engineer can do iOS development, but a great iOS engineer builds an elegant
+app users love. That’s what companies mean when they look for a “10X” engineer: their skill
+translates into 10 times the user adoption and revenue – that’s the difference between being WhatsApp
+and whatever else.&lt;/p&gt;
+
+&lt;p&gt;But if a great iOS engineer is worth 10 times a good engineer, then if you can hire great iOS developers
+you are worth an order magnitude more, even if you aren’t an iOS developer.  Being a great interviewer can make
+you a 100X engineer.&lt;/p&gt;
+
+&lt;p&gt;That’s not just hyperbole: assembling a small team of outstanding engineers is probably the highest
+leverage work any engineer can do, and it can prove the difference between being Instagram and all the
+other also-rans.  (Of course, great engineers are necessary but not sufficient to success, just look at
+Four Square).&lt;/p&gt;
+
+&lt;p&gt;Just as important, firing bad hires is an enormous drain in every sense.&lt;/p&gt;
+
+&lt;h1 id=&quot;why-interviewing-sucks&quot;&gt;Why Interviewing Sucks&lt;/h1&gt;
+
+&lt;p&gt;So if interviewing is important, why is it not a priority?&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Interviewing is a chore&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In my experience, interviewing is a chore for most engineers that ranks somewhere between filling out TPS reports and
+debugging errors in IE6.  You check your calendar and audibly sigh as you see your pristine afternoon
+interrupted by an interview.  When the time arrives, you’re in the middle of doing something important, and
+this is the last thing you want to do.  You suffer through it, fill out whatever paperwork is required, and get back
+to your real work.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Interviewing is not rewarded&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I’ve never worked in a place that rewarded engineers for being great interviewers and devoting time.  Sure,
+there are sizable bonuses for recruiting your friends, but there is no reward for devoting substantial
+time each week to interviewing or to being a reliable judge of candidate quality.  Good managers certainly
+appreciae these skills and might go so far as to commend someone privately, but I’ve never seen interviewing
+on the list of skills an engineer is evaluated on.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Interviewing is not regarded as a skill&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Engineers thrive on respect for their skills.  You get respect for solving a complex backend issue,
+or for designing an elegant UI, or simply for automating an obnoxious manual process.  That respect is
+valuable because it took effort to master those skills, and creates an incentive for others to learn it.
+Being a great interiewer rarely comes up in this context – at best the hiring managers appreciates
+it.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Engineers don’t do sales&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Honestly, many engineers are introverts, and that’s fine.  But you
+expect great engineers to do things outside their comfort zone whether it’s configuring nginx or adopting
+pair programmming.  (Which bring us back to the importance of interviewing: why would you hire someone
+who can’t adapt?)&lt;/p&gt;
+
+&lt;p&gt;An extremely important part of interviewing is selling yourself to the candidate.  But this is not the same
+as sales.  You’re pitching your team to an engineer: explain why you are excited.  People recognize genuine
+enthusiasm and passion, and they’re rare.  If you’re not genuinely excited, then maybe it’s time to move.&lt;/p&gt;
+
+&lt;h1 id=&quot;how-to-make-interviewing-your-companys-competitive-advantage&quot;&gt;How to Make Interviewing Your Company’s Competitive Advantage&lt;/h1&gt;
+
+&lt;p&gt;Let’s start with a simple fact: interviewing is hard.  Really, really hard.  And no one is very good at it [citation needed].
+Most people might call that fact depressing, but as a startup it means opportunity.  If you nail interviewing,
+you have an enormous advantage over your competitors, and one they’re unlikely to imitate.&lt;/p&gt;
+
+&lt;p&gt;So how do you do it?&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Be on time&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;It’s amazing to me that companies are willing to pay a recruiter $25k or more for a hire, but when someone comes in to interview
+they’re left sitting alone in a room while the interviewers run late.&lt;/p&gt;
+
+&lt;p&gt;The message is clear: interviewing is not a priority here, and we don’t have our act together.&lt;/p&gt;
+
+&lt;p&gt;The solution is simple: there’s no excuse for being late.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;You don’t need to be anxious&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;It’s nerve-wracking the first time you’re on the other side of the table asking the questions.  I felt like an
+imposter, and worried that the candidate would call me out for not knowing what I was talking about.&lt;/p&gt;
+
+&lt;p&gt;Let’s just be clear: this never happens.  The person being interviewed is far more nervous than you are as the
+interviewer, and they want to make a good impression.  Yes, I have had candidates badger me about why our company
+does this or chose that, but really it only proved that they would not be terrible to work with.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;You can interview people who are smarter and more experienced than you&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The whole goal is to hire people better than you.  This is intimidating, but that doesn’t matter (see previous point).&lt;/p&gt;
+
+&lt;p&gt;If you can pick a dentist or an auto-mechanic, you can tell who is a machine learning expert or great iOS engineer.  When
+someone starts going over your head on a topic, just probe with questions like:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Why did you pick that solution?  What are the trade-offs?&lt;/li&gt;
+  &lt;li&gt;How would (did) you scale this?&lt;/li&gt;
+  &lt;li&gt;How would (did) you test this?&lt;/li&gt;
+  &lt;li&gt;Great, now if I change this requirement, what has to change?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You can tell when someone knows what they’re talking about, and when they’re just bluffing based on something they read.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Let them do the talking&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;“When you’re speaking you’re not learning,” as the saying goes.&lt;/p&gt;
+
+&lt;p&gt;You can learn a lot when the candidate gets stuck.  Can they step back and reassess the problem?  Do they ask good questions?  Or
+do they get frustrated and quit?  You know which type of person you’d like to work with.&lt;/p&gt;
+
+&lt;p&gt;Just as importantly, people like talking about themselves and will like you more for it [citation].  Effective sales people spend most of their time
+asking questions, not pitching the product.  Great teachers lead you to the answer, they don’t just state it.&lt;/p&gt;
+
+&lt;p&gt;Note that this works just as well in reverse: if your interviewer spends most of the time talking about themself,
+you will likely get a glowing review.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;You have to make a decision&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;We use a dead-simple system: rate the candidate 1-4 where 1 is “I will argue against the hire” and 4 is “I will argue for the hire.”
+The key is that &lt;em&gt;you cannot be 2.5 in the middle&lt;/em&gt;.  You have to leave the interview with a decision of whether or not you want to
+work with this person.  It will always be tempting to not decide, but it’s not an option.&lt;/p&gt;
+
+&lt;h2 id=&quot;so-what-do-you-ask&quot;&gt;So What Do You Ask?&lt;/h2&gt;
+
+&lt;p&gt;Good questions take a long time to develop and are constantly being approved.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Know why you are asking a question&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This sounds obvious, but few interviewers seem to be asking a question because they have to ask something.  That’s why so many
+people still ask brain teasers, despite the ample evidence that these questions do not predict job performance [citation needed].&lt;/p&gt;
+
+&lt;p&gt;The appeal of asking a riddle is that it has a nice clear answer you can evaluate.  The problem is that getting the answer right doesn’t mean much.&lt;/p&gt;
+
+&lt;p&gt;Let’s be clear: &lt;em&gt;your mission is to walk out of the interview knowing if you should hire this person or not&lt;/em&gt;.  If you just know
+that they can solve your question, you’ve wasted everyone’s time.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Don’t ask algorithms questions&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This is controversial because so many engineers love algorithm-based questions, but here’s why I think they’re damaging:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;They reward recent college graduates who just took an algorithms class over experienced engineers who have solved real
+problems.&lt;/li&gt;
+  &lt;li&gt;These questions often focus on obscure data structures or intricate big-O notation, when in practice you’d really want them
+to just use a simple hash table or sorting library.&lt;/li&gt;
+  &lt;li&gt;Yes, algorithms are part of coding, but so is security, networking, user interaction, debugging, localization, etc. Why
+prioritize algorithms?&lt;/li&gt;
+  &lt;li&gt;Algorithm questions are too often all-or-nothing puzzles that punish good candidates that don’t happen to get the solution.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In my experience, interviewers ask about algorithms because they personally enjoy them, not because they are a
+sign of doing well on the job.  And that’s not fair.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Make your questions fair&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Let’s start with the worst interview question you can think of.  Mine is: “I’m thinking of a number
+in my head, what is it?”&lt;/p&gt;
+
+&lt;p&gt;Obviously, it’s ridiculous, but why is it so bad?  It’s
+arbitrary and unfairly punishes someone for guessing wrong.  It leaves the candidate feeling foolish and you’ve learned
+nothing about them except.&lt;/p&gt;
+
+&lt;p&gt;The problem with many questions, and particularly puzzle or algorithm questions, is that they have
+all of these qualities.&lt;/p&gt;
+
+&lt;p&gt;First, be really clear what you care about in an answer.  If this is a question about concurrency then say so.
+If what you actually care about is clean code, then say so.  If you’re testing for knowledge of iOS libraries
+and best practices then say so.  It’s obvious to you when you say “sort a linked list” that you mean “implement
+a highly performant implementation from scratch,” but another interviewer means “use the LinkedList sort method, like in
+real life.”  Don’t punish someone for guessing wrong.&lt;/p&gt;
+
+&lt;p&gt;Second, make sure your question is nuanced enough to test the full range of candidates.  “Guess a number” questions have
+black-or-white answers, so you can’t tell if someone is okay or great or in between.  A great question starts simply
+and increases in complexity as the candidate works through it.  For example, ask them to design a scheduler
+starting with something simple like a queue, then introducing concurrency or memory constraints.  Exceptional candidates
+not only answer the question, but discuss trade-offs between different solutions and dive into advanced topics
+like scaling and testing.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Interview for testing&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Which brings us to a great question virtually no one asks in interviews: how would you test this?  Testing is poorly
+taught in school yet is one of the most important skills that distinguish great engineers from mediocre ones.  You spend
+far more time reading and testing code then you spend writing it, no matter whether you’re doing frontend design or
+low-level assembly.&lt;/p&gt;
+
+&lt;p&gt;Hiring someone without a question on testing is like hiring a chauffeur without asking if they can drive.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Make your question interesting by making it real&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Again, half the point of the interview is to sell the candidate on the position.  Asking generic questions about data modeling
+misses the chance to explain why the problems you are solving are hard and interesting.   You can get the same data
+from discussing a real problem you’ve solved.  Or it can even be a problem you haven’t solved yet – maybe they’ll give you
+some new ideas.  A great candidate should engage with the problem and get excited about what you’re working on, and you’ll get
+a more realistic idea what they would be like to work with.&lt;/p&gt;
+
+&lt;h1 id=&quot;or-dont-ask-anything&quot;&gt;Or Don’t Ask Anything&lt;/h1&gt;
+
+&lt;p&gt;It’s a mistake to view the hiring process as just a series of questions.  One radical option is to eschew all questions and simply
+ask the engineer to work on a job as a contractor.  Or a scaled-back version is to ask them to come in for a day and pair-program
+with you.  This benefit of this approach is that you get to see how someone performs in the actual job they will have.  However, you
+should expect this approach will take a serious investment in time before you have a standardized way to compare candidates.  This
+also works best if you can expect the candidate to know the language and tools.&lt;/p&gt;
+
+&lt;p&gt;So far, we’ve had luck working with engineers on a project-basis to see how they perform on real tasks, but haven’t figured out the
+best way to do peer-programming with our particular environment.&lt;/p&gt;
+
+&lt;h1 id=&quot;get-constantly-better&quot;&gt;Get Constantly Better&lt;/h1&gt;
+
+&lt;p&gt;Apply some lean methodology to your interviewing by building in feedback.&lt;/p&gt;
+
+&lt;p&gt;First, you should leave every interview asking yourself, “What could I have asked to be more sure about my decision?”  This is
+especially apt when you really aren’t sure if this person is a good fit.  For example, you think someone is smart but might
+not be resourceful and self-sufficient enough for a startup environment – could you have asked about a time they had to be resourceful
+at their last job?  Or can they talk about an experience where they went outside their comfort zone?  Make this question part
+of your team’s interview.&lt;/p&gt;
+
+&lt;p&gt;Second, have other engineers shadow you and do likewise for them.  It feels awkward, but do it anyway.  You’ll never know how
+you are coming across if you don’t get feedback.  Your peers can also share what works and what doesn’t when evaluating candidates.&lt;/p&gt;
+
+&lt;h2 id=&quot;dont-let-results-be-skewed-by-bias&quot;&gt;Don’t Let Results Be Skewed by Bias&lt;/h2&gt;
+
+&lt;p&gt;Be aware that there is a strong bias in interviewing to be negative about a candidate.  When you are a positive about someone and hire them,
+you might learn that they were a bad fit.  But if you were negative and don’t hire the candidate, no one will know if they would have
+been a great fit.  Moreover, it’s always safer to be critical than to put yourself out there in a group discussion.&lt;/p&gt;
+
+&lt;p&gt;You can’t avoid this bias, but you can prevent it from paralyzing your interview process being aware of it.  Don’t interviewers to be
+negative of all candidates, and don’t reward post-hoc analysis that punishes someone for being decisive.  If anything, you should reward
+people who recognize great hires even when they others were skeptical.&lt;/p&gt;
+
+&lt;h2 id=&quot;be-metrics-driven&quot;&gt;Be Metrics-Driven&lt;/h2&gt;
+
+&lt;p&gt;It’s shocking how companies that pride themselves on their analysis and metrics fall flat when it comes to interviewing. Even those that do collect metrics, often prove only that their (system does not work)[http://mobile.nytimes.com/2013/06/20/business/in-head-hunting-big-data-may-not-be-such-a-big-deal.html].&lt;/p&gt;
+
+&lt;p&gt;Collecting metrics on interviewing is hard, but that’s not an excuse to not do so.  You should understand your interview pipeline just as well as your sales pipeline,
+and be constantly improving its weak points.&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 29 Nov 2014 00:00:00 -0800</pubDate>
+        <link>http://datafox.co/general/2014/11/29/interviewing/</link>
+        <guid isPermaLink="true">http://datafox.co/general/2014/11/29/interviewing/</guid>
+      </item>
+    
+      <item>
+        <title>Polymorphism in Ember Data</title>
+        <description>&lt;p&gt;One of the core powers of DataFox is our ability to show you a customized feed
+of recent events affecting companies you care about.  For example, this morning
+I can see that a company in our space, &lt;a href=&quot;https://datafox.co/lytics&quot;&gt;Lytics&lt;/a&gt;, just
+raised $7m in funding so I should check them out.  And my friends who work at
+&lt;a href=&quot;https://datafox.co/apartmentlist&quot;&gt;Apartment List&lt;/a&gt; probably should be aware that
+&lt;a href=&quot;https://datafox.co/redfin&quot;&gt;Redfin&lt;/a&gt; just bought &lt;a href=&quot;https://datafox.co/walkscore&quot;&gt;Walk Score&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/events-feed-10-26-14.png&quot; style=&quot;width: 100%&quot; /&gt;
+&lt;small&gt;My events feed on 10/26/14&lt;/small&gt;&lt;/p&gt;
+
+&lt;p&gt;When it comes to displaying an event in our app we create a new Ember data model:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var Event = DS.Model.extend({
+  title: DS.attr(&#39;string&#39;),
+  date: DS.attr(&#39;date&#39;),
+  ... ??? ...
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and my template would look like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  &amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;
+  &amp;lt;p&amp;gt;Date: &amp;lt;/p&amp;gt;
+  ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But what if I want each event to have different display data and behavior (which they do)?
+This is a classic case of polymorphism: we need a base &lt;code&gt;Event&lt;/code&gt; class for the common behavior
+and lots of sublcasses like &lt;code&gt;CompanyFundingEvent&lt;/code&gt; and &lt;code&gt;CompanyAcquisitionEvent&lt;/code&gt; that define
+the specific data and actions of that event type.  Ember doesn’t explain how to handle this
+common case, so what do we do?&lt;/p&gt;
+
+&lt;p&gt;Fortunately, a friend in the Ember core team pointed us to an undocumented &lt;code&gt;polymorphic&lt;/code&gt; parameter
+in Ember data that does exactly what we need:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var Event = DS.Model.extend({
+  title: DS.attr(&#39;string&#39;),
+  date: DS.attr(&#39;date&#39;),
+  object: DS.belongsTo(&#39;eventData&#39;, {polymorphic: true});
+  ...
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The corresponding JSON response looks like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  events: [
+    {
+      id: 12345,
+      date: &quot;2014-10-26T06:01:28.700Z&quot;,
+      object: {
+        id: 456789,
+        type: CompanyAcquisitionEvent
+      }
+    },
+    ...
+  ]
+
+  company_acquisition_events: [
+    {
+      id: 456789
+      acquirer: ...
+      ...
+    }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ember data automatically wires up the &lt;code&gt;id&lt;/code&gt; and &lt;code&gt;type&lt;/code&gt; fields so the &lt;code&gt;event.object&lt;/code&gt; points directly to
+the corresponding &lt;code&gt;CompanyAcquisition&lt;/code&gt; model.  And we can update our generic event template to include
+specific rendering for each event by adding a &lt;code&gt;template&lt;/code&gt; variable to each model we define*:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  &amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;
+  &amp;lt;p&amp;gt;Date: &amp;lt;/p&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;small&gt;
+* normally it would be incorrect to define a view (the template) in a model under MVC, but Ember’s actually
+follows MVVM, so it’s a bit confusing.  In my judgment, this is the clearest solution.
+&lt;/small&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 26 Oct 2014 00:00:00 -0700</pubDate>
+        <link>http://datafox.co/emberjs/2014/10/26/emberjs-polymorphism/</link>
+        <guid isPermaLink="true">http://datafox.co/emberjs/2014/10/26/emberjs-polymorphism/</guid>
       </item>
     
       <item>
@@ -938,147 +1448,6 @@ then exec &quot;/var/hipchat/hipchat_cli.py
         <pubDate>Sat, 09 Aug 2014 00:00:00 -0700</pubDate>
         <link>http://datafox.co/hipchat/2014/08/09/hipchat/</link>
         <guid isPermaLink="true">http://datafox.co/hipchat/2014/08/09/hipchat/</guid>
-      </item>
-    
-      <item>
-        <title>NodeJs Best Practices: Event Emitting and Async Callbacks</title>
-        <description>&lt;h2 id=&quot;the-issue&quot;&gt;The Issue&lt;/h2&gt;
-
-&lt;p&gt;There is a very unfortunate inconsistency at the heart of NodeJS.  As you’ve probably read, everything in Node is non-blocking, which can be extremely efficient without multithreading.  At the same time, JavaScript is built around event emitting, which is a powerful way to decouple code, whether you want to call it Pub/Sub or whatever.&lt;/p&gt;
-
-&lt;p&gt;The issue is that doing…&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;myObject.emit(&quot;some notification...&quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;…is a blocking operation while all listeners respond.&lt;/p&gt;
-
-&lt;p&gt;I’ve talked to core contributors that argue this is a fundamental design flaw in Node, and are arguing to change it.  I’ve also read good arguments that the listeners should be blocking, otherwise there is no guarantee they’ll have a chance to respond to the event before it’s too late.  The important point is that you should be aware of this inconsistency and plan accordingly.  Which brings me to my next point:&lt;/p&gt;
-
-&lt;h2 id=&quot;most-nodejs-examples-assume-a-persistent-server&quot;&gt;Most NodeJS Examples Assume a Persistent Server&lt;/h2&gt;
-
-&lt;p&gt;A related problem I have encountered with events is that Node tutorials tend to assume that you are working with a persistent instance, like a web server, so all events and callbacks will have unlimited time to complete.  This assumption falls apart when you start to write background scripts that are intended to run and shutdown, releasing resources like DB connections.&lt;/p&gt;
-
-&lt;p&gt;My issue occurred because I want to emit and listen for events (to keep my code nicely decoupled), while ensuring that any subsequent asynchronous behavior completes.  To make this more concrete:&lt;/p&gt;
-
-&lt;p&gt;When you create a company in &lt;a href=&quot;http://www.datafox.co&quot;&gt;DataFox&lt;/a&gt;, we trigger many background jobs like crawling the corporation’s website and hitting various APIs.  Rather than have my &lt;code&gt;Company&lt;/code&gt; class know about all of these ever-changing jobs, I have it emit a “new company” event, which those jobs can listen for.  So for example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;// in WebsiteCrawler
-Company.on(&#39;new company&#39;, function(company) {
-  // the request is non-blocking.
-  request.get(company.url, function(err, response) {
-    // process the response and write to the db...
-  }
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;So what happens if my script completes before the http response gets back?  Yes, Node will not terminate running while there are outstanding callbacks, but I can still have issues if I’ve disconnected from the database.&lt;/p&gt;
-
-&lt;h2 id=&quot;my-solution&quot;&gt;My Solution&lt;/h2&gt;
-
-&lt;p&gt;The solution is to avoid doing any real work (asynchronous calls) in an event listener.  For me this means a listener should enqueue the work to be done, using &lt;a href=&quot;https://github.com/caolan/async#queue&quot;&gt;async.queue&lt;/a&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;fetchUrlQueue = async.queue(functionThatWillFetchUrl);
-Company.on(&#39;new company&#39;, function(company) {
-  fetchUrlQueue.push({url: company.url});
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Then I can check that this queue is drained before disconnecting from the database, etc. and shutting down my script.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 02 Aug 2014 00:00:00 -0700</pubDate>
-        <link>http://datafox.co/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/</link>
-        <guid isPermaLink="true">http://datafox.co/nodejs/2014/08/02/nodejs-best-practices-event-emitting-and-async/</guid>
-      </item>
-    
-      <item>
-        <title>NodeJS Best Practices: Callbacks</title>
-        <description>&lt;p&gt;As an experienced programmer, I’ve found that NodeJS is easy to learn with many tutorials to cover the basics.  However, I was (and still am) unclear about what are the best practices for NodeJS. Here are a few of the things I’ve learned so far about callbacks:&lt;/p&gt;
-
-&lt;h2 id=&quot;everything-in-node-should-be-done-with-callbacks&quot;&gt;&lt;em&gt;Everything&lt;/em&gt; in Node should be done with callbacks.&lt;/h2&gt;
-
-&lt;p&gt;It can be tempting to write functions that just return results like:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;calculateScore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;someInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;err&quot;&gt;…&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;But that’s generally a bad idea because you’ve closely tied your interface to your implementation.  That means if you decide to change your implementation to do something asynchronous, like fetching a cached value, you now have to change all of your callers.  In practice you’ll run into a lot of bugs where the function actually returns nothing (undefined) or fails to call a callback, making your program hang.&lt;/p&gt;
-
-&lt;p&gt;NodeJS requires you to invert the usual sequential way of solving problems into an asynchronous set of callbacks.  Embrace it.  Once you wrap your head around this inverted idea, it’s actually a lot of fun and powerful.  Have you ever tried to run parallel database queries in PHP?&lt;/p&gt;
-
-&lt;h2 id=&quot;use-the-async-library-to-organize-your-callbacks&quot;&gt;Use the async library to organize your callbacks&lt;/h2&gt;
-
-&lt;p&gt;There are some lots of ways to prevent “callback soup,” but here’s what worked for me in practice:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Move most of your anonymous callbacks to clearly named functions, following good object-oriented design.&lt;/li&gt;
-  &lt;li&gt;Use the awesome &lt;a href=&quot;https://github.com/caolan/async&quot;&gt;async library&lt;/a&gt; to handle all of your common practices like calling functions in parallel or in a series.  Promises and generators are both cool ideas that falter in practice.  Async just works.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;callbacks-should-have-exactly-two-arguments&quot;&gt;Callbacks should have &lt;strong&gt;exactly two&lt;/strong&gt; arguments&lt;/h2&gt;
-
-&lt;p&gt;What’s wrong with this code?&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;fs.exists(&#39;/etc/passwd&#39;, function (err, exists) {
-  util.debug(exists ? &quot;it&#39;s there&quot; : &quot;no passwd!&quot;);
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code&gt;fs.exists&lt;/code&gt; doesn’t follow the convention of invoking a callback with an &lt;code&gt;err&lt;/code&gt; parameter so &lt;code&gt;exists&lt;/code&gt; is undefined and silently cast to false. Oops.&lt;/p&gt;
-
-&lt;p&gt;One of my biggest frustrations is how unpredictable callbacks are in NodeJS, because the number of arguments is arbitrary. While most authors respect the convention that the first argument is an error (or null), you can’t rely on it.  The problem is compounded if you use the async library, which expects the standard (err, data) format:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;async.waterfall([
-  function(next) {
-    fs.exists(&#39;/etc/passwd&#39;, next);
-  },
-  function(next) {
-    // next is undefined and the script hangs...
-  }
-], ...);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Furthermore, I believe strongly that you should pass the actual response as one argument.  This is the same reason you should not return multiple values from a function.  For example this is bad practice in Python:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# changing this array will probably break callers
-return [users, total_users]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This happens often enough in Node libraries to be infuriating.  For example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;// mongoose js model
-user.save(function(err, user, num) {
-  ...
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The real reason this is a problem is that you are violating the &lt;strong&gt;Single Responsibility Principle&lt;/strong&gt;: your function returns multiple arguments because it’s trying to do more than one thing.  The awkward callback is a symptom of OO design that needs rethinking.  In this case it would really be better to return some type of Response object that encapsulates the saved model, number saved, etc.  In the future you can add information like query time without breaking the contract.&lt;/p&gt;
-
-&lt;p&gt;In practice this ambiguity has caused more bugs for me than anything else.  For example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;async.waterfall([
-  function(callback) {
-    user.save(callback);
-  },
-  function(user, callback) {
-   // oops, next is actually a number, so there is an error or the script just hangs
-  },
-  ...
-)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Rigidly sticking with the convention of &lt;code&gt;callback(err, data)&lt;/code&gt; saves a lot of headache.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;NodeJS is awesome, but the best practices are stilling emerging.  I hope these thoughts are helpful to others who are adopting NodeJS and I’d love to hear more about other best practices.&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 08 Jun 2014 05:03:49 -0700</pubDate>
-        <link>http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-callbacks/</link>
-        <guid isPermaLink="true">http://datafox.co/nodejs/2014/06/08/nodejs-best-practices-callbacks/</guid>
       </item>
     
   </channel>
