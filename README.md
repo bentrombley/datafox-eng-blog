@@ -5,7 +5,7 @@ To create and edit blog posts:
 ## Initial Setup
 
 - git clone this repo locally
-- install jekyll
+- [install jekyll](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/)
 
 ### Running locally:
 
