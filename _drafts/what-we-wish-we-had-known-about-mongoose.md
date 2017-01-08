@@ -154,4 +154,4 @@ schema.plugin(plugins.timestamps)
 
 ## Conclusion
 
-We hope you found these mongoose gotchyas and solutions useful. Both mongo and mongoose are evolving and hopefully it will become easier and easier for new users to employ best practices which avoid some of the pitfalls mentioned above. Please feel free to contact us if you have any other's that you'd like to share!
+We hope you found these mongoose gotchyas and solutions useful. Both mongo and mongoose are evolving and hopefully it will become easier and easier for new users to employ best practices which avoid some of the pitfalls mentioned above. Please feel free to contact us if you have any others that you'd like to share!

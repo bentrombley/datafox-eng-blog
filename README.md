@@ -24,7 +24,7 @@ At the top add a section
     layout: post
     title:  "My Blog Post Title"
     date:   2017-01-08
-    categories: css, clean code
+    categories: css
     ---
 
 Add any images to the `img` directory and reference like this in your post:
