@@ -9,6 +9,6 @@ url: "http://datafox.co"
 markdown: kramdown
 permalink: pretty
 
-highlighter: pygments
+highlighter: rouge
 
 exclude: ["Gemfile", "Gemfile.lock"]
