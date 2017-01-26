@@ -48,6 +48,10 @@ a:visited { color: #205caa; }
   padding-bottom: 15px;
 }
 
+.nav-link {
+  padding-right: 15px;
+}
+
 .site-title,
 .site-title:hover,
 .site-title:visited {
@@ -130,6 +134,11 @@ a:visited { color: #205caa; }
   height: 16px;
   position: relative;
   top: 3px;
+}
+
+.muted {
+  font-size: 12px;
+  color: #818181;
 }
 
 
