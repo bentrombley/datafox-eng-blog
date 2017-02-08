@@ -6,6 +6,7 @@ To create and edit blog posts:
 
 - git clone this repo locally
 - [install jekyll](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/)
+- `bundle install` to install dependencies
 
 ### Running locally:
 
