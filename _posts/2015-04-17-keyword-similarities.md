@@ -3,6 +3,7 @@ layout: post
 title:  "Keyword-Based Company Similarity"
 date:   2015-04-17
 categories: general
+uuid: f35a8781-a12b-49a1-8896-ad596f76780d
 ---
 
 Finding Similar Companies

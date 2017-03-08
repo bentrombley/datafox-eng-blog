@@ -3,6 +3,7 @@ layout: post
 title:  "Edit CoffeeScript like a Pro in 6 Minutes"
 date:   2014-08-23
 categories: coffeescript
+uuid: 73102c01-fccc-4774-9716-4c9c97ae43f8
 ---
 
 

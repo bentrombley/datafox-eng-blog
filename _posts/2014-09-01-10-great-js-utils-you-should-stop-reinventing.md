@@ -3,6 +3,7 @@ layout: post
 title:  "10 Great JavaScript Utils You Should Stop Reinventing"
 date:   2014-09-01
 categories: nodejs
+uuid: bfd880de-7ee4-4912-a144-266d2ab57666
 ---
 
 I've wasted more time than I care to admit reinventing these wheels. These utilities are all small and well documented.  Just use them.

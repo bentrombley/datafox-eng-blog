@@ -3,6 +3,7 @@ layout: post
 title:  "Polymorphism in Ember Data"
 date:   2017-03-07
 categories: emberjs
+uuid: 0f8caf84-9204-421b-bdc1-1b6706091801
 ---
 
 One of the core powers of DataFox is our ability to show you a customized feed

@@ -3,6 +3,7 @@ layout: post
 title:  "NodeJs Best Practices: Environment-Specific Configuration"
 date:   2014-09-28
 categories: nodejs
+uuid: 497214c7-8a26-471c-968b-c1f1f8bb4295
 ---
 
 When you find yourself writing code like:

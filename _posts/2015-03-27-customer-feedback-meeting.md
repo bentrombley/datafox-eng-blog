@@ -3,6 +3,7 @@ layout: post
 title:  "Our Customer Feedback Meeting"
 date:   2015-03-27
 categories: customer feedback
+uuid: ed781183-69a3-481f-bcc6-75bd8acf1936
 ---
 
 Startups love to talk about being “customer focused” and “delighting users”, but too often this talk has little to do with what engineers do in their day-to-day work.

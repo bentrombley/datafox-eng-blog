@@ -3,6 +3,7 @@ layout: post
 title:  "What We Wish We Had Known About Mongoose"
 date:   2017-02-22
 categories: mongoose
+uuid: a508a6b5-03f7-4a51-a31a-30c725c83a5e
 ---
 
 At DataFox we use [mongoose](http://mongoosejs.com/) as an ORM layer that abstracts our MongoDB calls. Overall, we recommend using it because it improves code clarity and effectively adds schemas to MongoDB without the overhead of table migrations.  However, we've learned a few things that you should be aware of when using in production, particularly at scale.
