@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Polymorphism in Ember Data"
-date:   2017-02-24
+date:   2017-03-07
 categories: emberjs
 ---
 
