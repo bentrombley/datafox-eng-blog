@@ -29,7 +29,7 @@ At the top add a section
     uuid: aa97bb06-6a2f-4759-9dce-2a26666a50ff
     ---
 
-Make sure to generate a new UUID each time. The `uuid` field is necessary to provide a unique ID to each post for our Disqus threads.
+Make sure to generate a new UUID each time (use v4 if you're wondering). The `uuid` field is necessary to provide a unique ID to each post for our Disqus threads.
 
 Add any images to the `img` directory and reference like this in your post:
 
