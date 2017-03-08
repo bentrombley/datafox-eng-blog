@@ -135,13 +135,20 @@ module.exports.timestamps = function(schema, options) {
   schema.add({ctime: {type: Date}});
   schema.add({mtime: {type: Date}});
 
-  schema.pre('save', funtion(next) {
+  schema.pre('save', function(next) {
     if (this.isNew and !this.ctime) {
       this.ctime = new Date();
     }
     this.mtime = new Date()
     next();
-  );
+  });
+
+  // Update the mtime on update.
+  var updateHandler = function() {
+    this.update({}, {$set: {mtime: new Date()}});
+  };
+  schema.pre('update', updateHandler);
+  schema.pre('findOneAndUpdate', updateHandler);
 };
 {% endhighlight %}
 
