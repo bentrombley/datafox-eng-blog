@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "What We Wish We Had Known About Mongoose"
-date:   2017-02-15
+date:   2017-03-07
 categories: mongoose
 ---
 
@@ -13,8 +13,7 @@ By default when you call a method like `find()` or `findOne()`, Mongoose returns
 
 {% highlight javascript %}
 User.findOne({email: "data@datafox.co"}, function(err, user) {
-  ...
-  user.status = 1;
+  user.status = 'active';
   user.save(callback);
 });
 {% endhighlight %}
@@ -43,18 +42,19 @@ In the above example, if you call `Company.find()` on a big collection you will 
 [StreamWorker](https://github.com/goodeggs/stream-worker) makes using streams trivial by hiding the awkward query hooks. To improve our previous example:
 
 {% highlight javascript %}
-let stream = Company.find().lean().stream(); // note that the lean() command works here too
+// note that the lean() command works here too
+let stream = Company.find().lean().stream();
 const PARALLELISM = 5;
 StreamWorker(stream, PARALLELISM, processOneCompany, callback);
 {% endhighlight %}
 
-Now we can define a callback like `processOneCompany` which will handle the companies one at atime, and StreamWorker will handle the annoying onFinish hooks.
+Now we can define a function like `processOneCompany` which will handle the companies one at a time, and StreamWorker will handle the annoying onFinish hooks.
 
 ### Prevent Timeouts
 
 One disastrous and silent error can occur when processing a very long streaming query: a timeout. This can happen at either the network level or the database level, so you need to guard against both.
 
-First when connecting to the database specify the "keepAlive" parameter to prevent a network disconnect on a long-running query.
+First when connecting to the database specify the `keepAlive` parameter to prevent a network disconnect on a long-running query.
 
 {% highlight javascript %}
 mongooseInstance = new mongoose.Mongoose();
@@ -67,7 +67,7 @@ options = {
 mongooseInstance.connect(config.DB_URL, options);
 {% endhighlight %}
 
-Second, and just as importantly, don’t forget to set the `timeout` parameter to `true` (the name "timeout" is an unconscionable shorthand for "noCursorTimeout" in MongoDB).
+Second, and just as importantly, don’t forget to set the `timeout` parameter to `true` (the name "timeout" is an unforgivable shorthand for "noCursorTimeout" in MongoDB).
 
 {% highlight javascript %}
 User.find().setOptions({timeout: true});
@@ -124,7 +124,7 @@ getShortStackTrace = function() {
 
 ## Use Schema Plugins to add Created and Updated Timestamps
 
-Mongoose supports "plugins" which behave like a mixin or trait. This let's you easily define methods and attributes across all of your models. One of the most useful, in our experience, is automatically saving the created and last-modified times on all models, which makes debugging vastly simpler.
+Mongoose supports "plugins" which behave like a mixin or trait. This lets you easily define methods and attributes across all of your models. One of the most useful in our experience is automatically saving the created and last-modified times on all models to help in debugging and reporting.
 
 Here is is the plugin:
 
