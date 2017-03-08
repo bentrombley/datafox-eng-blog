@@ -26,7 +26,10 @@ At the top add a section
     title:  "My Blog Post Title"
     date:   2017-01-08
     categories: css
+    uuid: aa97bb06-6a2f-4759-9dce-2a26666a50ff
     ---
+
+Make sure to generate a new UUID each time. The `uuid` field is necessary to provide a unique ID to each post for our Disqus threads.
 
 Add any images to the `img` directory and reference like this in your post:
 
@@ -37,7 +40,7 @@ You can preview your post by visiting [localhost:4000](http://localhost:4000) in
 
 ## Submitting for Review
 
-Commit your new file in the `_drafts` folder and push to the repo or Phabricator for others to see.
+Commit your new file in the `_drafts` folder and push to the repo or Phabricator (`arc diff`) for others to see.
 
 
 ## Publishing
