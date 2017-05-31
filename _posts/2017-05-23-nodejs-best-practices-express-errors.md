@@ -1,19 +1,18 @@
 ---
 layout: post
 title:  "NodeJS Best Practices: Error Handling in Express"
-date:   2017-03-01
+date:   2017-05-29
 categories: nodejs
 ---
 
 There are already many great articles about how to do error handling in NodeJS.  They boil down to this:
 
-  - _Never_ throw an exception, since this will break all asynchronous code
+  - _Never_ throw an exception, since this can't be caught correctly with asynchronous code
   - Use promises to handle errors
   - _Always_ use `Error` objects to return errors, not strings or objects
   - Callbacks should always include an error or null as the first parameter
 
 However, if you're creating an API using Express, this is only a start.  Any good API returns clear status codes and error messages.  For example, if the user lacks permission to perform an action they should receive a 403 status code, while a missing parameter should return a 400 status code with a nice message pointing them to the appropriate documentation.
-
 
 This is easier said than done.  The key is to build proper error handling into your entire system.
 
@@ -29,12 +28,9 @@ Rather than reinvent the wheel, I suggest you start by adding the `common-errors
 
 ### Or Better: Fork Common-Errors
 
-[we should publish our fork]
-
-
 The Common Errors library is great, but it unfortunately hard-codes a lot of behavior that may not match up with your requirements.  We ended up forking common-errors to support our own needs.  In our version all errors have this standard format:
 
-    new Error(message, errorCode, data);
+    new Error(message, errorCode, data)
 
 Where `errorCode` and `data` are optional.  The intention is that they include information you would need to display back to the user.  For example, on a `NotPermittedError` `errorCode` could be `account_disabled` and `data` could be `{account: <account Id>, disable_reason: "credit card expired"}`.
 
@@ -58,7 +54,7 @@ If the call to `getUsers()` errors, we should return an error status.  The tempt
     app.get('/users', function(res, req, next) {
       getUsers(function(err, users) {
         if (err) {
-          // something went wrong, send a 500 status code...
+          // something went wrong, I guess we'll send a 500 status code...
           return res.send(500);
         }
         res.json(users);
@@ -86,6 +82,7 @@ One massive benefit is that you can eliminate almost all error handling code in 
 If you are using the `common-errors` library you can leverage it's error handler to automatically translate your errors into the correct HTTP status codes with generic messages by adding this in your Express app after you define your routes:
 
     app.use(errors.middleware.errorHandler);
+
 
 ### Rolling Your Own
 
@@ -137,5 +134,7 @@ Error handling is a deceptively-simple topic, and there are more ways you can im
 
 First, you can add an error handler to handle uncaught errors and gracefully return a 500 error.  I suggest you also use a crash reporting tool to alert you when your code is crashing.  We use [Bugsnag](https://www.bugsnag.com/) and I recommend it.
 
-Next, design your application to fail gracefully.
+Next, design your application to fail gracefully.  For example, add a global error handler in your frontend code to tell the user if they don't have permission to perform an action or the item could not be found.  Similarly, on the backend design your code with the expectation that other systems will fail -- your application shouldn't crash just because the e-mail server went down.
+
+Lastly, make error handling a key part of your design process.  When you are building systems and services, think about how they will fail, not just how they will succeed.  And when things do go wrong, learn from your mistakes with in-depth fixes rather than patching the superficial problem.  Add logging so you can quickly detect and debug future issues.  But most importantly, emphasize that errors are as much a part of engineering as any feature specification.
 
