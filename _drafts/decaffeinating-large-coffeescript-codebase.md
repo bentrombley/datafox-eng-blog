@@ -9,14 +9,14 @@ uuid: 60588087-597e-4502-8f05-223752c08dfb
 
 When DataFox was first founded in 2013, [CoffeeScript][]<sup>†</sup> was chosen over ECMAScript 5 for improved developer productivity.
 It did a great job at smoothing over some of the [bad parts of JavaScript](https://arcturo.github.io/library/coffeescript/07_the_bad_parts.html) and provided syntax to make common patterns more idiomatic: class definitions, fat arrow functions, and more.
-It’s now 2017 and a lot has changed in the world of JavaScript, many of these changes being improvements to the language itself.
+Four years later, a lot has changed in the world of JavaScript, including many improvements to the language itself.
 
 Over the course of two months, the engineering team at DataFox has been able to successfully convert our main web application codebase (~1400 files, ~200,000 lines) from CoffeeScript to ECMAScript 2015 (ES2015) without losing any productivity.
-This post outlines our conversion process and provides some practical tips for those of you in the same situation.
+This post outlines our conversion process and provides some practical tips.
 
-† CoffeeScript refers to CoffeeScript 1.x unless otherwise stated.
+<sup>†</sup>CoffeeScript refers to CoffeeScript 1.x unless otherwise stated.
 
-## Motivation
+## Why Spend the Effort?
 
 Before jumping into the how, let’s first take a look at _why_ we decided to undertake this project.
 
@@ -27,7 +27,7 @@ This process has streamlined the creation, development, and acceptance of new [l
 
 Apart from the language, the JavaScript ecosystem has seen huge growth.
 Tooling, in particular, has seen a large amount of development.
-While many tools in the ecosystem can work perfectly fine with either JavaScript or CoffeeScript, here are a few benefits we've gotten from switching to ES2015.
+While many tools in the ecosystem can work perfectly fine with either JavaScript or CoffeeScript, here are a few benefits we wanted to get from switching to ES2015.
 - Built-in static analysis for editors like [Visual Studio Code][] can make reading and writing code much easier. Support for [automatic type acquisition](https://code.visualstudio.com/docs/languages/javascript#_automatic-type-acquisition) and projects like [DefinitelyTyped][] reduce friction for getting type analysis.
 - [ESLint][] for powerful and pluggable JavaScript linting.
 - [jscodeshift][] makes [refactoring large codebases](https://www.toptal.com/javascript/write-code-to-rewrite-your-code) much more efficient.
@@ -52,17 +52,17 @@ In order to convert CoffeeScript files to ES2015, we used the following tools:
 - [bulk-decaffeinate][]/[decaffeinate][]: Converts the CoffeeScript code to ES2015. `bulk-decaffeinate` is a wrapper around `decaffeinate`, `eslint`, and `jscodeshift`.
 - [ESLint][]: Linter for ES2015 code that we run with `--fix` to automatically fix many lint errors.
 - [jscodeshift][]: Parses the ES2015 abstract syntax tree (AST) and performs code transformations to apply our own code style.
-- [DataFoxCo/jscodemods][]: These are codemodification scripts we wrote to be used with `jscodeshift`. They will read in ES2015 code, parse the AST, filter for specific patterns, transform the code, and finally output the transformed code to fix correctness/stylistic issues. See the README in that repository for more detailed information on each of the transformations.
+- [DataFoxCo/jscodemods][]: These are code modification scripts (codemods) we wrote to be used with `jscodeshift`. They read in ES2015 code, parse the AST, filter for specific patterns, transform the code, and finally output the transformed code to fix correctness/stylistic issues. See the README in that repository for more detailed information on each of the transformations.
   - [AST Explorer][] is a great tool for prototyping and writing your own codemods.
 
 I also want to give a nod to Bugsnag's [depercolator](https://github.com/bugsnag/depercolator), which similarly wraps `decaffeinate` but is specifically designed for React codebases.
-In addition to decaffeinate, it wraps `cjsx-transform`, `react-codemod`, and `prettier-eslint` (a wrapper for `prettier && eslint --fix`).
+In addition to decaffeinate, it wraps [`cjsx-transform`](https://github.com/jsdf/coffee-react-transform), [`react-codemod`](https://github.com/reactjs/react-codemod), and [`prettier-eslint`](https://github.com/prettier/prettier-eslint) (a wrapper for `prettier && eslint --fix`).
 We were not aware of this tool when we had started out conversion process; however, if we had a React codebase, we most likely would have used it!
-Check out [their blog post](https://blog.bugsnag.com/converting-a-large-react-codebase-from-coffeescript-to-es6/) on their journey.
+Check out [their blog post](https://blog.bugsnag.com/converting-a-large-react-codebase-from-coffeescript-to-es6/) detailing their journey.
 
 ## Before Going Cold Turkey
 
-### Be a Resource for Your Team
+### Know What You're Doing
 
 Make sure you get a sense for the scope of work required to convert your codebase.
 This will enable you to be a resource to your team before, during, and after the conversion process.
@@ -84,11 +84,11 @@ Here are a few items you may want to check off as part of your personal preparat
     - Some of these style issues can be fixed by using `--loose*` options on `decaffeinate`.
     - Other issues you may want to try fixing with `jscodeshift` codemods.
     - Spend some time on this now to try to smooth out any edge cases you may come across in your code; it will save you time in the long run.
-- Make sure you are able to create an equally good, but hopefully better, developer experience for writing modern JavaScript compared to CoffeeScript.
+- Make sure you are able to create an equally good, but hopefully better, developer experience for writing modern JavaScript compared to CoffeeScript. Will your developers have editor support for ES2015? Will linting be built in? Will refactoring be easier?
 
 ### Get Buy-in from Your Team
 
-While doing all the personal preparation you can is great, the most important thing is to get buy-in from your team and any leadership necessary.
+While preparing is important, it's more crucial to get buy-in from your team and leadership.
 The time you spend converting is time not spent building; though, my hope is that sharing our experiences will reduce the amount of time you spend.
 More than the time spent converting, though, is the switching cost of every engineer needing to become familiar and productive with ES2015.
 Although this cost may be high in the short-term, for our team it was a worthwhile investment.
@@ -101,7 +101,7 @@ Here are some ideas to lessen the switching cost and to get buy-in from your tea
 - Demo some of the shiny tools that work with modern JavaScript and show off the better developer experience.
 - (Try to) keep up with news in the JavaScript community. Subscribe to [JavaScript Weekly][] and share interesting articles and videos with your team.
 - Convert a smaller, less critical project and run it in production for a while.
-- Write up documentation for how to convert code from CoffeeScript to ES2015. This blog post should give you a great start.
+- Write up documentation for how to convert code from CoffeeScript to ES2015. This post should give you a good start!
 
 ## The Conversion Process
 
@@ -117,7 +117,7 @@ For reference, you can also view the [official decaffeinate conversion guide](ht
 Before performing decaffeinate, make sure you've installed the following globally:
 
 ```shell
-$ npm install -g bulk-decaffeinate decaffeinate jscodeshift eslint@^3.19.0
+$ npm install -g bulk-decaffeinate decaffeinate jscodeshift eslint
 $ git clone git@github.com:DataFoxCo/jscodemods.git ~/jscodemods
 ```
 
@@ -125,7 +125,7 @@ $ git clone git@github.com:DataFoxCo/jscodemods.git ~/jscodemods
 
 This process also assumes that your project already has a `.eslintrc` (or `.eslintrc.js`) configured (may be in the parent path).
 If you don't have a `.eslintrc` file, it might be good to configure one before running `bulk-decaffeinate`.
-Otherwise, you will have to do more work later to fix lint issues.
+Otherwise, you will have to do more work later to fix lint issues due to unnecessarily disabled rules and potential refactoring.
 
 ### Issues Preventing Conversion
 
@@ -184,7 +184,7 @@ $ find . -name "*.coffee" | xargs perl -pi -e 's/^(  \w+:.*)=>$/\1->/g'
 ```
 which will replace all `method: (...) =>` with `->` that are not indented.
 
-But, you then need to fix all places that reference those methods as unbound functions (e.g. `_.map(someArray, @myMethod, callback)`.
+But, you then need to fix all places that reference those methods as unbound functions (e.g. `_.map(someArray, @myMethod)`.
 We wrote a [bind-iteratee-and-callback-methods](https://github.com/DataFoxCo/jscodemods#bind-iteratee-and-callback-methods) codemod to perform this binding automatically after the decaffeinate process.
 The codemod supports some commonly used higher order functions like those of `Array.prototype`, underscore, lodash, and async.js.
 Since it would be incredibly hard to know if the method actually needs to be bound, this may result in some superfluous binding.
@@ -193,18 +193,18 @@ While we were okay with binding for conversion purposes, we prefer to use arrow 
 
 ```javascript
 // BAD
-_.map([], this.myMethod, callback);
+_.map([], this.myMethod);
 
 // OKAY
-_.map([], this.myMethod.bind(this), callback);
+_.map([], this.myMethod.bind(this));
 
 // BETTER
 const mapSomething = (something) => this.myMethod(something);
-_.map([], mapSomething, callback);
+_.map([], mapSomething);
 ```
 
-† `decaffeinate@2` would fail to convert this code by default unless using `--enable-babel-constructor-workaround` or `--allow-invalid-constructors`.
-However, `decaffeinate@3` will convert it using the Babel constructor workaround by default, but our preference is still to fix these cases as described below.
+<sup>†</sup>`decaffeinate@2` would fail to convert this code by default unless using `--enable-babel-constructor-workaround` or `--allow-invalid-constructors`.
+However, `decaffeinate@3` will convert it using the Babel constructor workaround by default, but our preference is still to fix these cases as described above.
 
 #### Problems with `grunt-neuter`
 
@@ -239,12 +239,12 @@ This is due to the line `Foo.__super__.constructor.apply(this, arguments)`.
 
 On the other hand, an ES2015 class should be able to extend a CoffeeScript compiled ES5 class, so working from the outside in should be fine.
 
-† CoffeeScript 2 actually does compile to ES2015 classes, so it should be interoperable.
+<sup>†</sup>CoffeeScript 2 actually does compile to ES2015 classes, so it should be interoperable.
 For a discussion on why you should use `decaffeinate` and not CoffeeScript 2 for your conversion, see [this GitHub issue](https://github.com/decaffeinate/decaffeinate/issues/1130).
 
 ### The Conversion Process
 
-Here are some high-level tips that we took advantage of to make the conversion process go smoothly:
+Here are some tips that we used to make the conversion process go smoothly:
 
 - When choosing what parts of code to convert first, start with projects from the outside in to handle the class extension problem above.
 - Tests are a great place to start converting. They have the benefit of being able to test the correctness of the conversion for you, and we've found that generated code is generally pretty clean and idiomatic.
@@ -253,11 +253,10 @@ Here are some high-level tips that we took advantage of to make the conversion p
 - Parallelize your efforts by having different individuals manage the conversion of each individual sub-project. This also gives everyone the chance to be familiar with the process and the generated ES2015 code. Ideally, the individuals working on converting each piece should be familiar with the existing code already to some degree.
 - The steps below include running a number of `jscodeshift` codemods as part of `bulk-decaffeinate`. However, you may choose to run those independently after converting the files; use `git add --patch` to do some spot-checking as you commit.
 - Set a deadline for when you should finish converting everything by. Keep tabs on your process as you go along.
-- Plan a celebration for once you've converted all your code!
-- Celebrate!
+- Celebrate once you've converted all your code!
 
-Following the above advice, we were able to convert our ~200,000 lines of actual CoffeeScript code (not counting whitespace and comments), spread out across ~1400 files.
-Plus, we were able to continue working on feature building at about the same pace as previously during and after the conversion.
+By following these practices, we were able to convert our ~200,000 lines of actual CoffeeScript code (not counting whitespace and comments), spread out across ~1400 files.
+Plus, we were able to continue building features at the same pace as before, both during and after the conversion.
 
 #### Step by Step Instructions for Converting a Project
 
@@ -334,7 +333,7 @@ It will use `~/myproject` as the example project.
 1. Make sure your project still runs correctly!
 1. Update ignorefiles, git hooks, etc.
 1. Review your changes with someone.
-1. Once your changes are approved, land your changes, but do NOT squash your changes.
+1. Once your changes are approved, land them, but do **not** squash them. If you squash them, you will lose the ability to track git history from before and after the conversion.
 
 ## Post-conversion
 
@@ -374,16 +373,16 @@ You will see a message like:
 
 At some point, you will want to fix these errors and re-enable the lint rules.
 
-## Some Well-deserved Rest
+## Coffee in Our Veins, Not Code
 
 In just two months, there is not a single line of CoffeeScript remaining in our codebase.
-With all that coffee out of the system, it's time to get some well-deserved rest.
-Of course, we can't rest too much.
-Although we've already fully fixed the style issues in over a third of our converted files, we are remaining diligent about cleaning files as we come across them.
+With all that coffee out of the system, it's time to get some well-deserved rest... but not too much.
+Although we've already fully fixed the style issues in over a third of our converted files, we will continue to clean files as we come across them.
 
-While it's impossible to see the future and know exactly where CoffeeScript, ECMAScript, and the next cool language will stand, we have already gotten value out of doing this conversion.
-As it stands today, modern JavaScript still has a huge amount of inertia and continues to be a target language for languages like CoffeeScript, TypeScript, Kotlin, and many more.
-We are confident that the dividends of doing this conversion will continue to pay off even as we explore new technology.
+While it's impossible to see the future and know exactly where CoffeeScript, ECMAScript, and the next cool language will stand, this conversion has already been incredibly valuable.
+Today, modern JavaScript still has a huge amount of inertia and a vibrant community.
+It continues to be a target language for languages like CoffeeScript, TypeScript, Kotlin, and many more.
+Though the technology landscape constantly changes, the dividends of this conversion will continue to pay off in the foreseeable future.
 
 
 <!-- Links -->
