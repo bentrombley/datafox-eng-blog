@@ -1,14 +1,67 @@
-<header class="site-header">
-
-  <div class="wrap">
-    <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
+<header class="base-header header--regular">
+  <div class="container">
+    <div class="header__inner">
+      <div class="header__logo"><a href="{{ site.baseurl }}/" title="{{ site.title }}"><img src="{{ '/assets/images/datafox-logo.png'  | prepend: site.baseurl | prepend: site.url }}" alt="DataFox" height="40"/></a></div>
+      <div class="header__menu">
+        <nav class="navbar main-nav">
+          <div class="navbar-header">
+            <button type="button" data-toggle="collapse" data-target=".main-navbar-collapse" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+          </div>
+          <div class="collapse main-navbar-collapse navbar-collapse">
+            <div id="bs-example-navbar-collapse-1" class="collapse main-navbar-collapse navbar-collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown"><a href="https://www.datafox.com/product/" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Product<span class="mls fa fa-angle-down"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><span class="title">Product</span></li>
+                    <li><a href="https://www.datafox.com/product/crm-orchestration/">Orchestration Platform</a></li>
+                    <li><a href="https://www.datafox.com/product/company-intelligence/">Company Intelligence</a></li>
+                    <li><a href="https://www.datafox.com/product/company-signals/">Company Signals</a></li>
+                    <li><a href="https://www.datafox.com/product/conference-intelligence/">Conference Intelligence</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown"><a href="https://www.datafox.com/customers/" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Use Cases<span class="mls fa fa-angle-down"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><span class="title">Use Cases</span></li>
+                    <li><a href="https://www.datafox.com/who-benefits/?tab=sales">Sales</a></li>
+                    <li><a href="https://www.datafox.com/who-benefits/?tab=sales-ops">Sales Operations</a></li>
+                    <li><a href="https://www.datafox.com/who-benefits/?tab=marketing">Marketing</a></li>
+                    <li><a href="https://www.datafox.com/who-benefits/?tab=financial">Finance</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown"><a href="https://www.datafox.com/company/resources/" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Resources<span class="mls fa fa-angle-down"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><span class="title">Resources</span></li>
+                    <li><a href="https://www.datafox.com/company/resources/">Resource Center</a></li>
+                    <li><a href="https://www.datafox.com/customers">Customers</a></li>
+                    <li><a href="http://blog.datafox.com/">Company Blog</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown hidden-sm"><a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Integrations<span class="mls fa fa-angle-down"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><span class="title">Integrations</span></li>
+                    <li><a href="https://www.datafox.com/integrations/salesforce/">Salesforce</a></li>
+                    <li><a href="https://www.datafox.com/integrations/marketo/">Marketo</a></li>
+                    <li><a href="https://www.datafox.com/integrations/api/">API</a></li>
+                    <li><a href="https://www.datafox.com/integrations/chrome/">Chrome</a></li>
+                    <li><a href="https://www.datafox.com/integrations/slack/">Slack</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown"><a href="https://www.datafox.com/company/" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Company<span class="mls fa fa-angle-down"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><span class="title">Company</span></li>
+                    <li><a href="https://www.datafox.com/company">About Us</a></li>
+                    <li><a href="https://www.datafox.com/company/leadership/">Leadership</a></li>
+                    <li><a href="https://www.datafox.com/company/press/">Press</a></li>
+                    <li><a href="https://www.datafox.com/company/careers/">Careers</a></li>
+                  </ul>
+                </li>
+                <li class="hidden-sm"><a href="https://app.datafox.com" class="login">Log In</a></li>
+                <li><a href="http://info.datafox.com/request-trial.html?utm_medium=webpage&amp;utm_source=blog&amp;utm_content=navbar" target="_blank" class="js-signup signup trial-btn">Sign Up</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
   </div>
-
-  <div class="wrap">
-    <a class="nav-link" href="//datafox.com/">Company</a>
-    <a class="nav-link" href="/about">About</a>
-    <a class="nav-link" href="//twitter.com/datafoxco">Twitter</a>
-    <a class="nav-link" href="//github.com/datafoxco">Github</a>
-  </div>
-
 </header>
