@@ -1,7 +1,7 @@
 version: '2'
 services:
 
-  api:
+  datafox-jekyll:
     image: jekyll/jekyll
     container_name: github-blog-local
     volumes:

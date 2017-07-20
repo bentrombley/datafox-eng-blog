@@ -1,14 +1,21 @@
 # Site settings
 title: DataFox Tech Blog
-email:
 description: "DataFox Tech Blog"
+
+email: "admin@datafox.com"
 baseurl: ""
 url: "http://datafox.co"
+
 
 # Build settings
 markdown: kramdown
 permalink: pretty
+sass:
+  sass_dir: _sass
+  style: compressed
+
 
 highlighter: rouge
+
 
 exclude: ["Gemfile", "Gemfile.lock"]
