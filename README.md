@@ -2,6 +2,41 @@ This is the DataFox engineering blog, hosted on github pages.
 
 To create and edit blog posts:
 
+## Jekyll Docker
+#### Docker Setup
+
+First, get docker, and install:
+* [Mac instructions](https://docs.docker.com/docker-for-mac/), [Package](https://download.docker.com/mac/stable/Docker.dmg)
+* Linux: [Ubuntu](https://docs.docker.com/engine/installation/linux/ubuntu/)
+
+Once installed, you can check everything is up and running:
+```
+docker --version
+docker-compose --version
+docker-machine --version (Mac-only)
+```
+##### Linux only
+On Linux, to manage docker as non-root user, add your user to ```docker``` group:
+```
+sudo usermod -aG docker $USER
+```
+and load on startup:
+```
+sudo systemctl enable docker
+```
+And if you are using NetworkManager, add a DNS for Docker and restart:
+```
+echo 'json { "dns": ["8.8.8.8", "8.8.4.4"] }' | sudo tee /etc/docker/daemon.json
+sudo service docker restart
+```
+### Running locally:
+```
+docker-compose up
+```
+Visit [localhost:4000](http://localhost:4000) in your browser.
+
+---
+
 ## Initial Setup
 
 - git clone this repo locally
