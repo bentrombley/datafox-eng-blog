@@ -1,11 +1,13 @@
 @import "varibles";
-@import "mixins";
+@import "mixins/import-now";
 
-@import "vendor/spacing";
-@import "vendor/syntax-highlighting";
+@import "vendor/import-now";
 
 @import "base";
 @import "typography";
 
 @import "header";
+@import "content";
 @import "footer";
+
+@import "helpers";

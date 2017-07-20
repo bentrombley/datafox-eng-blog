@@ -10,6 +10,7 @@ url: "http://eng.datafox.com"
 
 # Build settings
 markdown: kramdown
+highlighter: rouge
 permalink: pretty
 sass:
   sass_dir: _sass
@@ -20,11 +21,9 @@ sass:
 analytics_id: "UA-72283306-1"
 
 
-highlighter: rouge
-
-
 exclude:
   - Gemfile
   - Gemfile.lock
   - Rakefile
   - .gitignore
+  - docker-compose.yml

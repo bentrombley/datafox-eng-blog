@@ -1,0 +1,60 @@
+$df_bg--grey:   #f5f5f5;// #f0f4f7;
+
+$df_color--blue:            #2198DB;
+$df_color--blue-light:      #44AEEA;
+$df_color--blue-lighter:    rgba($df_color--blue, .85);
+$df_color--darkblue:        #121F2B;
+$df_color--darkblue-light:  #2F3D50;
+
+$df_color--black-base:  #000000;
+$df_color--black:       #2A2A2A;
+$df_color--black-light: #4A4A4A;
+$df_color--black-lighter: #282828;
+
+$df_color--grey-dark:     #777777;
+$df_color--grey:          #999999;
+$df_color--grey-light:    #A1A1A1;
+$df_color--grey-lighter:  #CCCCCC;
+$df_color--grey-lightest: #EEEEEE;
+
+$df_color--white:     #FFFFFF;
+$df_color--white-off: #F6F6F6;
+
+// Marketo styles
+$brand-marketo-primary: #77dad0;
+$brand-dark-marketo: #363636;
+$brand-marketo-3: #201f3e;
+
+
+//new colors
+$df_color--blue-2:  #5066bb;
+$df_color--darkblue-2:  #19242f;
+$df_color--darkblue-3:  #1b2c40;
+$df_color--darkblue-4:  #19383E;
+$df_color--green:  #50b262;
+$df_color--purple: #7855bf;
+$df_color--yellow: #e89d00;
+
+$datafox__color-spec--red:        #E36F57;
+$datafox__color-spec--dark:       #3F4E57;
+$datafox__color-spec--blue:       #86B7C1;
+$datafox__color-spec--dark-blue:  #3D4E56;
+$datafox__color-spec--yellow:     #E5AB26;
+$datafox__color-spec--green:      #4CD690;
+$datafox__color-spec--blue-light: #21759b;
+
+
+$df_bg--blue-light: #f6fbff;
+
+
+
+// Fonts
+$main_font: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$hero_size: 315px;
+
+// Sizes
+$sm: 568px;
+$md: 768px;
+$lg: 1024px;
+$xl: 1280px;
