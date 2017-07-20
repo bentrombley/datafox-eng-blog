@@ -2,9 +2,10 @@
 title: DataFox Tech Blog
 description: "DataFox Tech Blog"
 
+
 email: "admin@datafox.com"
 baseurl: ""
-url: "http://datafox.co"
+url: "http://eng.datafox.com"
 
 
 # Build settings
@@ -15,7 +16,15 @@ sass:
   style: compressed
 
 
+# Google Analytics
+analytics_id: "UA-72283306-1"
+
+
 highlighter: rouge
 
 
-exclude: ["Gemfile", "Gemfile.lock"]
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - Rakefile
+  - .gitignore
