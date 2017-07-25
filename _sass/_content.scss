@@ -18,6 +18,7 @@
 .posts li { margin-bottom: 30px; }
 
 .posts .post-link {
+  display: block;
   font-size: 24px;
   letter-spacing: -1px;
   line-height: 1;
@@ -29,6 +30,9 @@
   color: #818181;
 }
 
+.posts .post-readmore {
+  display: block;
+}
 
 /* Post styles */
 /* ----------------------------------------------------------*/
@@ -122,3 +126,13 @@
 }
 
 .post pre.terminal code { background-color: #333; }
+
+article {
+  &.post {
+    header {
+      .fa {
+        color: $df_color--grey-dark;
+      }
+    }
+  }
+}

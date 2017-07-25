@@ -5,7 +5,6 @@ categories:   javascript
 tags:         null
 title:        Decaffeinating a Large CoffeeScript Codebase Without Losing Sleep
 date:         2017-07-18
-title:        iuasdbioausnd
 author:       
   name:       Kevin Gao
   twitter:    sudowork

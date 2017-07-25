@@ -69,6 +69,9 @@ task :new do
   twitter     = say_what?('    twitter: ')
   twitter = 'null' if twitter.to_s == ''
   if_exit(twitter)
+  github     = say_what?('    github:  ')
+  github = 'null' if github.to_s == ''
+  if_exit(github)
   filename  = "_drafts/#{Time.now.strftime('%Y-%m-%d')}-#{sluggize title}.md"
 
   if File.exist? filename
@@ -86,10 +89,11 @@ task :new do
     post.puts "uuid:         #{UUID.new.generate}"
     post.puts "categories:   #{category}"
     post.puts "tags:         [#{tags}]"
-    post.puts "title:        #{title}"
+    post.puts "title:        '#{title}'"
     post.puts "author:       "
     post.puts "  name:       #{author}"
     post.puts "  twitter:    #{twitter}"
+    post.puts "  github:     #{github}"
     post.puts "feature_img:  null"
     post.puts "sitemap:"
     post.puts "  lastmod:    #{Time.now.strftime('%FT%T')}"

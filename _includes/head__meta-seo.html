@@ -22,7 +22,7 @@
     {% else %}
     <meta content="website" property="og:type">
     {% endif %}
-    <meta content="{{ site.url }}/{{ page.url | replace:'index.html','' | prepend: full_base_url }}" property="og:url">
+    <meta content="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}" property="og:url">
     <meta content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}" property="og:description">
     {% if page.feature_img.nil? %}
     <meta content="{{ '/assets/favicons/apple-touch-icon.png' | prepend: site.baseurl | prepend: site.url }}" property="og:image">
