@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "What We Wish We Had Known About Mongoose"
-date:   2017-02-22
-categories: mongoose
-uuid: a508a6b5-03f7-4a51-a31a-30c725c83a5e
+layout:       post
+uuid:         a508a6b5-03f7-4a51-a31a-30c725c83a5e
+categories:   mongoose
+tags:         null
+title:        "What We Wish We Had Known About Mongoose"
+date:         2017-02-22
+author:       
+  name:       null
+  twitter:    null
+  github:     null
+feature_img:  null
+sitemap:
+  lastmod:    2017-02-22T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 At DataFox we use [mongoose](http://mongoosejs.com/) as an ORM layer that abstracts our MongoDB calls. Overall, we recommend using it because it improves code clarity and effectively adds schemas to MongoDB without the overhead of table migrations.  However, we've learned a few things that you should be aware of when using in production, particularly at scale.

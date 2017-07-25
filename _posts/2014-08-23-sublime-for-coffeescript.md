@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "Edit CoffeeScript like a Pro in 6 Minutes"
-date:   2014-08-23
-categories: coffeescript
-uuid: 73102c01-fccc-4774-9716-4c9c97ae43f8
+layout:       post
+uuid:         73102c01-fccc-4774-9716-4c9c97ae43f8
+categories:   coffeescript
+tags:         null
+title:        "Edit CoffeeScript like a Pro in 6 Minutes"
+date:         2014-08-23
+author:       
+  name:       null
+  twitter:    null
+  github:     null
+feature_img:  null
+sitemap:
+  lastmod:    2014-08-23T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 

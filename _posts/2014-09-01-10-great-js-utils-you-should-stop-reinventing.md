@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "10 Great JavaScript Utils You Should Stop Reinventing"
-date:   2014-09-01
-categories: nodejs
-uuid: bfd880de-7ee4-4912-a144-266d2ab57666
+layout:       post
+uuid:         bfd880de-7ee4-4912-a144-266d2ab57666
+categories:   nodejs
+tags:         null
+title:        "10 Great JavaScript Utils You Should Stop Reinventing"
+date:         2014-09-01
+author:       
+  name:       null
+  twitter:    null
+  github:     null
+feature_img:  null
+sitemap:
+  lastmod:    2014-09-01T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 I've wasted more time than I care to admit reinventing these wheels. These utilities are all small and well documented.  Just use them.

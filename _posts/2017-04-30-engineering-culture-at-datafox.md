@@ -1,11 +1,20 @@
 ---
-layout: post
-title:  "Engineering Culture at DataFox"
-date:   2017-04-30
-categories: engineering-culture
-uuid: E2068F60-80B9-4716-B8CD-8123E1DEA171
-
-
+layout:       post
+uuid:         E2068F60-80B9-4716-B8CD-8123E1DEA171
+categories:   engineering-culture
+tags:         null
+title:        "Engineering Culture at DataFox"
+date:         2017-04-30
+author:       
+  name:       null
+  twitter:    null
+  github:     null
+feature_img:  null
+sitemap:
+  lastmod:    2017-04-30T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 

@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "Keyword-Based Company Similarity"
-date:   2015-04-17
-categories: general
-uuid: f35a8781-a12b-49a1-8896-ad596f76780d
+layout:       post
+uuid:         f35a8781-a12b-49a1-8896-ad596f76780d
+categories:   general
+tags:         null
+title:        "Keyword-Based Company Similarity"
+date:         2015-04-17
+author:       
+  name:       null
+  twitter:    null
+  github:     null
+feature_img:  null
+sitemap:
+  lastmod:    2015-04-17T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 Finding Similar Companies

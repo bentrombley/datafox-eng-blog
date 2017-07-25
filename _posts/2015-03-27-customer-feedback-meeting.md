@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "Our Customer Feedback Meeting"
-date:   2015-03-27
-categories: customer feedback
-uuid: ed781183-69a3-481f-bcc6-75bd8acf1936
+layout:       post
+uuid:         ed781183-69a3-481f-bcc6-75bd8acf1936
+categories:   customer feedback
+tags:         null
+title:        "Our Customer Feedback Meeting"
+date:         2015-03-27
+author:       
+  name:       null
+  twitter:    null
+  github:     null
+feature_img:  null
+sitemap:
+  lastmod:    2015-03-27T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 Startups love to talk about being “customer focused” and “delighting users”, but too often this talk has little to do with what engineers do in their day-to-day work.

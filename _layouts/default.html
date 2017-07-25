@@ -19,9 +19,14 @@ layout: compress
     </div>
 
     {% include footer.html %}
+
     {% include footer__scripts.html %}
 
-    {% include icons.html %}
+    {% if page.layout == 'post' %}
+      {% if site.disqus_name %}
+        {% include disqus_comments.html %}
+      {% endif %}
+    {% endif %}
 
   </body>
 

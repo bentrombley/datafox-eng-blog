@@ -27,7 +27,7 @@
     {% if page.feature_img.nil? %}
     <meta content="{{ '/assets/favicons/apple-touch-icon.png' | prepend: site.baseurl | prepend: site.url }}" property="og:image">
     {% else %}
-    <meta content="{{ site.url }}/assets/{{ page.feature_img }}"" property="og:image">
+    <meta content="{{ site.url }}/assets/{{ page.feature_img }}" property="og:image">
     {% endif %}
     <meta content="200" property="og:image:width">
     <meta content="200" property="og:image:height">
@@ -35,7 +35,7 @@
 {% endif %}
 
 
-{% if twitter.meta %}
+{% if site.twitter.meta %}
     <!-- Metadata Twitter -->
     <meta name="twitter:card" value="summary">
     <meta content="{{ page.title }}" name="twitter:title">

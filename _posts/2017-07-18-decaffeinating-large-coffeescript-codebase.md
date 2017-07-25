@@ -1,10 +1,21 @@
 ---
-layout: post
-title: Decaffeinating a Large CoffeeScript Codebase Without Losing Sleep
-date: 2017-07-18
-author: Kevin Gao
-categories: javascript
-uuid: 60588087-597e-4502-8f05-223752c08dfb
+layout:       post
+uuid:         60588087-597e-4502-8f05-223752c08dfb
+categories:   javascript
+tags:         null
+title:        Decaffeinating a Large CoffeeScript Codebase Without Losing Sleep
+date:         2017-07-18
+title:        iuasdbioausnd
+author:       
+  name:       Kevin Gao
+  twitter:    sudowork
+  github:     sudowork
+feature_img:  null
+sitemap:
+  lastmod:    2017-07-18T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 In 2013, DataFox chose [CoffeeScript][]<sup>†</sup> over ECMAScript 5 because it improved developer productivity.

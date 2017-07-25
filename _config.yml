@@ -18,17 +18,23 @@ sass:
 
 
 # Facebook
-facebook.meta: true  # true for show Open Graph Meta Tags
-facebook.app_id: false  # add here facebook app id
+facebook:
+  meta: true  # true for show Open Graph Meta Tags
+  app_id: false  # add here facebook app id
 
 
 # Twitter
-twitter.meta: true  # true for show Metadata Twitter
-twitter.username: datafoxco  # twitter name without [at]
+twitter:
+  meta: true  # true for show Metadata Twitter
+  username: datafoxco  # twitter name without [at]
 
 
 # Google Analytics
 analytics_id: "UA-72283306-1"
+
+
+# Disqus
+disqus_name: "datafox-engineering-blog"
 
 
 # Navigation (2nd level links supported)

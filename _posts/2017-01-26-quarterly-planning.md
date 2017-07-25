@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "Quarterly Planning"
-date:   2017-01-26
-categories: Planning
-uuid: d97a4b3b-3607-4002-86ca-727ce96477e0
+layout:       post
+uuid:         d97a4b3b-3607-4002-86ca-727ce96477e0
+categories:   Planning
+tags:         null
+title:        "Quarterly Planning"
+date:         2017-01-26
+author:       
+  name:       null
+  twitter:    null
+  github:     null
+feature_img:  null
+sitemap:
+  lastmod:    2017-01-26T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 Balancing the need to be responsive to immediate customer feedback with the need for longer-term strategic product development is hard. While we're still iterating on this process, we wanted to share how we approach quarterly planning. Our goal is to incorporate ideas that will help our engineering, data, customer success, sales, and marketing marketing teams meet their objectives.
