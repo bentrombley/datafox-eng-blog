@@ -2,7 +2,7 @@
 layout:       post
 uuid:         bf5cb3a1-93fa-407b-ac76-98eac0635fc0
 categories:   mongodb
-tags:         [MongoDB. DataBase]
+tags:         [MongoDB, DataBase]
 title:        "Protect Your Database with .mongorc"
 date:         2014-10-05
 author:       
