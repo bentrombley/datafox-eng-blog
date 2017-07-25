@@ -17,6 +17,10 @@ sass:
   style: compressed
 
 
+# Linkedin
+linkedin: "datafox"
+
+
 # Facebook
 facebook:
   meta: true  # true for show Open Graph Meta Tags
@@ -69,22 +73,31 @@ nav_cta:
 
 # Footer Navigation (2nd level links supported)
 footer:
-  Home:
-    - '/'
-  Categories:
-    - '/categories/'
-    - { All Categories: '/categories/' }
-    - { NodeJS: '/categories/#nodejs' }
-    - { Engineering: '/categories/#engineering' }
-    - { Engineering Culture: '/categories/#engineering-culture' }
-  GitHub:
-    - 'http://github.com/datafoxco'
-  Company:
-    - 'https://www.datafox.com/company/'
-    - { About Us: 'https://www.datafox.com/company/' }
-    - { Leadership: 'https://www.datafox.com/company/leadership/' }
-    - { Press: 'https://www.datafox.com/company/press/' }
-    - { Careers: 'https://www.datafox.com/company/careers/' }
+  DataFox:
+    - '#'
+    - { Product: 'https://www.datafox.com/product' }
+    - { Use Cases: 'https://www.datafox.com/who-benefits' }
+    - { Customers: 'https://www.datafox.com/customers' }
+    - { Company: 'https://www.datafox.com/company' }
+    - { Engineering Blog: '/' }
+  Learn More:
+    - '#'
+    - { Blog: 'http://blog.datafox.com/' }
+    - { Resources: 'https://www.datafox.com/company/resources/' }
+    - { Sales Operations Meetup: 'https://www.meetup.com/Sales-Optimization/' }
+    - { Conference Directory: 'http://www.conferenceexplorer.com/' }
+  Integrations:
+    - '#'
+    - { Salesforce: 'https://www.datafox.com/integrations/salesforce/' }
+    - { Slack: 'https://www.datafox.com/integrations/slack/' }
+    - { Chrome: 'https://www.datafox.com/integrations/chrome/' }
+    - { API: 'https://www.datafox.com/integrations/api/' }
+  Support:
+    - '#'
+    - { Email Us: 'mailto:info@datafox.com' }
+    - { Help Center: 'http://support.datafox.com/' }
+    - { Privacy Policy: 'https://www.datafox.com/privacy-policy' }
+    - { Terms of Service: 'https://www.datafox.com/terms-of-service' }
 
 
 exclude:

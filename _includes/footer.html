@@ -15,8 +15,8 @@
 
         <ul class="list-unstyled no-list-style list-inline list-socials">
           <li class="social-link social-rss mrm"><a title="Subscribe via RSS" href="{{ "/feed.xml" | prepend: site.baseurl }}" target="_blank"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
-          <li class="social-link social-twitter mrm"><a href="https://www.twitter.com/" rel="me" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-          <li class="social-link social-linkedin mrm"><a href="https://www.linkedin.com/" rel="me" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+          <li class="social-link social-twitter mrm"><a href="https://www.twitter.com/{{ site.twitter.username }}" rel="me" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+          <li class="social-link social-linkedin mrm"><a href="https://www.linkedin.com/company/{{ site.linkedin }}" rel="me" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
         </ul>
 
       </div>
@@ -24,46 +24,44 @@
       <div class="col-md-1"></div>
 
 
+      {% for nav in site.footer %}
+
+      {% assign is_relative = nav[1][0] | slice: 0 %}
+      {% assign url = nav[1][0] %}
+
+      {% if is_relative == '/' %}
+      {% assign url = nav[1][0] | prepend: site.baseurl %}
+      {% endif %}
+
+      {% assign sub_len = nav[1] | size | minus: 1 %}
+
       <div class="col-sm-6 col-md-2">
-        <span class="title">DataFox</span>
+        <span class="title">{{ nav[0] }}</span>
+
         <ul class="list-unstyled">
-          <li><a class="footer_link" href="https://www.datafox.com/product">Product</a></li>
-          <li><a class="footer_link" href="https://www.datafox.com/who-benefits">Use Cases</a></li>
-          <li><a class="footer_link" href="https://www.datafox.com/customers">Customers</a></li>
-          <li><a class="footer_link" href="https://www.datafox.com/company">Company</a></li>
-          <li><a class="footer_link" href="http://eng.datafox.com/">Engineering Blog</a></li>
+          {% for i in (1..sub_len) %}
+
+          {% for sub_nav in nav[1][i] %}
+          {% assign sub_is_relative = sub_nav[1] | slice: 0 %}
+          {% assign sub_url = sub_nav[1] %}
+          {% if sub_is_relative == '/' %}
+          {% assign sub_url = sub_nav[1] | prepend: site.baseurl %}
+          {% endif %}
+          <li>
+            <a {% if sub_url contains '://' %}{% unless sub_url contains 'datafox.com' %}rel="nofollow" target="_blank"{% endunless %}{% endif %} class="footer_link" href="{{ sub_url }}">
+            {{ sub_nav[0] }}
+            </a>
+          </li>
+          {% endfor %}
+
+          {% endfor %}
 
         </ul>
+
       </div>
 
-      <div class="col-sm-6 col-md-2">
-        <span class="title">Learn More</span>
-        <ul class="list-unstyled">
-          <li><a class="footer_link" href="http://blog.datafox.com/">Blog</a></li>
-          <li><a class="footer_link" href="https://www.datafox.com/company/resources/">Resources</a></li>
-          <li><a class="footer_link" href="https://www.meetup.com/Sales-Optimization/" rel="nofollow" target="_blank">Sales Operations Meetup</a></li>
-          <li><a class="footer_link" href="http://www.conferenceexplorer.com/" target="_blank">Conference Directory</a></li>
-        </ul>
-      </div>
-      <div class="clear-md"></div>
-      <div class="col-sm-6 col-md-2">
-        <span class="title">Integrations</span>
-        <ul class="list-unstyled">
-          <li><a class="footer_link" href="https://www.datafox.com/integrations/salesforce/">Salesforce</a></li>
-          <li><a class="footer_link" href="https://www.datafox.com/integrations/slack/">Slack</a></li>
-          <li><a class="footer_link" href="https://www.datafox.com/integrations/chrome/">Chrome</a></li>
-          <li><a class="footer_link" href="https://www.datafox.com/integrations/api/">API</a></li>
-        </ul>
-      </div>
-      <div class="col-sm-6 col-md-2">
-        <span class="title">Support</span>
-        <ul class="list-unstyled">
-          <li><a class="footer_link" href="mailto:info@datafox.com">Email Us</a></li>
-          <li><a class="footer_link" href="http://support.datafox.com/">Help Center</a></li>
-          <li><a class="footer_link" href="https://www.datafox.com/privacy-policy">Privacy Policy</a></li>
-          <li><a class="footer_link" href="https://www.datafox.com/terms-of-service">Terms of Service</a></li>
-        </ul>
-      </div>
+      {% endfor %}
+
     </div>
   </div>
 </footer>

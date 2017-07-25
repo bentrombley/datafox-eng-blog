@@ -23,7 +23,7 @@
                   {% assign sub_len = nav[1] | size | minus: 1 %}
 
                   <li {% if sub_len > 0 %}class="dropdown"{% endif %}>
-                    <a {% if url contains '://' %}{% unless url contains 'datafox.com' %}target="_blank"{% endunless %}{% endif %} {% if sub_len > 0 %}data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle {% if page.url == nav[1][0] %}active{% endif %}"{% else %}class="{% if page.url == nav[1][0] %}active{% endif %}"{% endif %} href="{{ url }}">
+                    <a {% if url contains '://' %}{% unless url contains 'datafox.com' %}rel="nofollow" target="_blank"{% endunless %}{% endif %} {% if sub_len > 0 %}data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle {% if page.url == nav[1][0] %}active{% endif %}"{% else %}class="{% if page.url == nav[1][0] %}active{% endif %}"{% endif %} href="{{ url }}">
                       {{ nav[0] }} {% if sub_len > 0 %}<span class="mls fa fa-angle-down"></span>{% endif %}
                     </a>
 
