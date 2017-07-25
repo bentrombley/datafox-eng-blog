@@ -1,7 +1,7 @@
 <!-- tags-cloud -->
 {% assign tags = site.tags | sort %}
-<h4 class="tags-cloud--title">Tag Cloud</h4>
-<div class="tags-cloud">
+<h4 class="tags-cloud--title mtxl">Tag Cloud</h4>
+<div class="tags-cloud text-justify">
     {% for tag in tags %}
     <span class="site-tag">
       <a href="{{ site.baseurl }}/tags#{{ tag | first | slugify }}/"

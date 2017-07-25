@@ -25,4 +25,12 @@ ul {
   &.list-none {
     list-style: none;
   }
+  &.list-inline {
+    li {
+      display: inline-block;
+    }
+  }
+  &.fleft {
+    float: left;
+  }
 }

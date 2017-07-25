@@ -42,12 +42,13 @@ layout: default
 
   {% if page.tags %}
   <div class="tags">
-    <p>Tagged by:</p>
-    <ul class="tag-list">
+    <ul class="tag-list list-none list-inline fleft mln mbxl">
+      <li class="pln">Tagged by: </li>
       {% for tag in page.tags %}
       <li><a href="{{ site.baseurl }}{{ site.tag_page }}#{{ tag | slugify }}" class="post-tag">{{ tag }}</a></li>
       {% endfor %}
     </ul>
+    </p>
   </div>
   {% endif %}
 
