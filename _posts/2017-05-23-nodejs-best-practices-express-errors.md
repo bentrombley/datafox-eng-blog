@@ -2,7 +2,7 @@
 layout:       post
 uuid:         1bcf82a0-536d-0135-99a7-0242ac1f0002
 categories:   nodejs
-tags:         null
+tags:         [nodejs, javascript, JSON, API]
 title:        "NodeJS Best Practices: Error Handling in Express"
 date:         2017-05-29
 author:       

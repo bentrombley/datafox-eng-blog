@@ -2,7 +2,7 @@
 layout:       post
 uuid:         d97a4b3b-3607-4002-86ca-727ce96477e0
 categories:   Planning
-tags:         null
+tags:         [Planning, metrics]
 title:        "Quarterly Planning"
 date:         2017-01-26
 author:       

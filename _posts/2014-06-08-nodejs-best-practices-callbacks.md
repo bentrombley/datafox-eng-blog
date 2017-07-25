@@ -2,7 +2,7 @@
 layout:       post
 uuid:         b54a5ee7-36e7-4996-8d2e-ed760344b260
 categories:   nodejs
-tags:         null
+tags:         [javascript, callback]
 title:        "NodeJS Best Practices: Callbacks"
 date:         2014-06-08 12:03:49
 author:       

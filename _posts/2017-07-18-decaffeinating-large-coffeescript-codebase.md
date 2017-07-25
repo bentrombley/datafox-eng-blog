@@ -2,7 +2,7 @@
 layout:       post
 uuid:         60588087-597e-4502-8f05-223752c08dfb
 categories:   javascript
-tags:         null
+tags:         [javascript, coffeescript, webpack]
 title:        Decaffeinating a Large CoffeeScript Codebase Without Losing Sleep
 date:         2017-07-18
 author:       

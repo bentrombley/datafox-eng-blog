@@ -2,7 +2,7 @@
 layout:       post
 uuid:         E2068F60-80A9-4716-B8CD-81B311DEA171
 categories:   engineering-culture
-tags:         null
+tags:         [engineering, culture]
 title:        "Make Your Systems Diligent, Not Your People, Part II: How To Build Diligent Systems"
 date:         2017-03-25
 author:       

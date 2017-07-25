@@ -2,7 +2,7 @@
 layout:       post
 uuid:         E2068F60-80B9-4716-B8CD-8123E1DEA171
 categories:   engineering-culture
-tags:         null
+tags:         [culture, startup, engineering, DataFox]
 title:        "Engineering Culture at DataFox"
 date:         2017-04-30
 author:       

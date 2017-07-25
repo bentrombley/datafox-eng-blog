@@ -2,7 +2,7 @@
 layout:       post
 uuid:         f285577f-e5a7-44dc-b568-ab657bffc074
 categories:   nodejs
-tags:         null
+tags:         [nodejs, DataFox]
 title:        "NodeJs Best Practices: Event Emitting and Async Callbacks"
 date:         2014-08-02
 author:       

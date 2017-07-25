@@ -2,7 +2,7 @@
 layout:       post
 uuid:         0f8caf84-9204-421b-bdc1-1b6706091801
 categories:   emberjs
-tags:         null
+tags:         [data, javascript, handlebars, JSON]
 title:        "Polymorphism in Ember Data"
 date:         2017-03-07
 author:       

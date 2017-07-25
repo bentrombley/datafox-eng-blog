@@ -2,7 +2,7 @@
 layout:       post
 uuid:         f35a8781-a12b-49a1-8896-ad596f76780d
 categories:   general
-tags:         null
+tags:         [keywords, Companies]
 title:        "Keyword-Based Company Similarity"
 date:         2015-04-17
 author:       

@@ -2,7 +2,7 @@
 layout:       post
 uuid:         a508a6b5-03f7-4a51-a31a-30c725c83a5e
 categories:   mongoose
-tags:         null
+tags:         [javascript, mongoose, MongoDB]
 title:        "What We Wish We Had Known About Mongoose"
 date:         2017-02-22
 author:       
