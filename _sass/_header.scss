@@ -71,7 +71,7 @@
 }
 .main-nav .navbar-nav {
   display: block;
-  float: left;
+  //float: left;
   margin: auto;
 }
 .main-nav .navbar-collapse {
@@ -321,8 +321,10 @@ header {
     .header__inner{
       height: 69px;
       margin-top: 12px;
+      //position: relative;
       .header__logo {
         height: 69px;
+        //margin-top: 12px;
         width: rem(130px);
         display: inline-block;
         position: absolute;
@@ -343,8 +345,8 @@ header {
         height: 69px;
         display: inline-block;
         //width: 100%;
-        float: right;
         @media (min-width: $md) {
+          float: right;
           padding-left: rem(90px);
           a.dropdown-toggle:hover + .dropdown-menu,
           .dropdown-menu:hover {
@@ -352,22 +354,24 @@ header {
           }
         }
         ul {
-          float: right;
+          @media (min-width: $md) {
+            float: right;
+          }
           margin: 0;
           li {
-            float: left;
+            //float: left;
           }
         }
         //temporary solutuion
-        nav.navbar.main-nav {
-          position: absolute;
-          top: 15px;
-          left: 0;
-          right: 0;
-          .navbar-nav {
-            float: none;
-          }
-        }
+        //nav.navbar.main-nav {
+        //  position: absolute;
+        //  top: 15px;
+        //  left: 0;
+        //  right: 0;
+        //  .navbar-nav {
+        //    float: none;
+        //  }
+        //}
         //temporary solutuion
         @media (max-width: $md - 1px) {
           nav.navbar.main-nav {
@@ -402,6 +406,7 @@ header {
           }
           > li {
             background: $df_color--darkblue-3;
+            float: none;
             a{
               background: $df_color--darkblue-3;
               padding: rem(5px) rem(20px) rem(5px) 0;

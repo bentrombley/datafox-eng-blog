@@ -46,7 +46,7 @@ task :new do
   puts "  For create a new post enter [Category, Tags, Title]"
   puts "  For quit enter [exit] in anytime."
   puts ""
-  category  = say_what?('  Category: ')
+  category  = say_what?('  Category:  ')
   if category.to_s == ''
     puts ""
     puts "  Category can't be empty!".red
@@ -58,12 +58,18 @@ task :new do
   # exit if category == exit
   if_exit(category)
 
-  tags      = say_what?('  Tags:     ')
+  tags      = say_what?('  Tags:      ')
   if_exit(tags)
-  title     = say_what?('  Title:    ')
+  title     = say_what?('  Title:     ')
   if_exit(title)
+                   puts '  Author:    '
+  author    = say_what?('    name:    ')
+  author = 'null' if author.to_s == ''
+  if_exit(author)
+  twitter     = say_what?('    twitter: ')
+  twitter = 'null' if twitter.to_s == ''
+  if_exit(twitter)
   filename  = "_drafts/#{Time.now.strftime('%Y-%m-%d')}-#{sluggize title}.md"
-
 
   if File.exist? filename
     puts ""
@@ -77,11 +83,14 @@ task :new do
   File.open(filename, "w+") do |post|
     post.puts "---"
     post.puts "layout:       post"
+    post.puts "uuid:         #{UUID.new.generate}"
     post.puts "categories:   #{category}"
     post.puts "tags:         [#{tags}]"
     post.puts "title:        #{title}"
+    post.puts "author:       "
+    post.puts "  name:       #{author}"
+    post.puts "  twitter:    #{twitter}"
     post.puts "feature_img:  null"
-    post.puts "uuid:         #{UUID.new.generate}"
     post.puts "sitemap:"
     post.puts "  lastmod:    #{Time.now.strftime('%FT%T')}"
     post.puts "  priority:   0.5"

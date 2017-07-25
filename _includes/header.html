@@ -10,53 +10,58 @@
           <div class="collapse main-navbar-collapse navbar-collapse">
             <div id="bs-example-navbar-collapse-1" class="collapse main-navbar-collapse navbar-collapse">
               <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown"><a href="https://www.datafox.com/product/" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Product<span class="mls fa fa-angle-down"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><span class="title">Product</span></li>
-                    <li><a href="https://www.datafox.com/product/crm-orchestration/">Orchestration Platform</a></li>
-                    <li><a href="https://www.datafox.com/product/company-intelligence/">Company Intelligence</a></li>
-                    <li><a href="https://www.datafox.com/product/company-signals/">Company Signals</a></li>
-                    <li><a href="https://www.datafox.com/product/conference-intelligence/">Conference Intelligence</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown"><a href="https://www.datafox.com/customers/" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Use Cases<span class="mls fa fa-angle-down"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><span class="title">Use Cases</span></li>
-                    <li><a href="https://www.datafox.com/who-benefits/?tab=sales">Sales</a></li>
-                    <li><a href="https://www.datafox.com/who-benefits/?tab=sales-ops">Sales Operations</a></li>
-                    <li><a href="https://www.datafox.com/who-benefits/?tab=marketing">Marketing</a></li>
-                    <li><a href="https://www.datafox.com/who-benefits/?tab=financial">Finance</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown"><a href="https://www.datafox.com/company/resources/" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Resources<span class="mls fa fa-angle-down"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><span class="title">Resources</span></li>
-                    <li><a href="https://www.datafox.com/company/resources/">Resource Center</a></li>
-                    <li><a href="https://www.datafox.com/customers">Customers</a></li>
-                    <li><a href="http://blog.datafox.com/">Company Blog</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown hidden-sm"><a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Integrations<span class="mls fa fa-angle-down"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><span class="title">Integrations</span></li>
-                    <li><a href="https://www.datafox.com/integrations/salesforce/">Salesforce</a></li>
-                    <li><a href="https://www.datafox.com/integrations/marketo/">Marketo</a></li>
-                    <li><a href="https://www.datafox.com/integrations/api/">API</a></li>
-                    <li><a href="https://www.datafox.com/integrations/chrome/">Chrome</a></li>
-                    <li><a href="https://www.datafox.com/integrations/slack/">Slack</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown"><a href="https://www.datafox.com/company/" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Company<span class="mls fa fa-angle-down"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><span class="title">Company</span></li>
-                    <li><a href="https://www.datafox.com/company">About Us</a></li>
-                    <li><a href="https://www.datafox.com/company/leadership/">Leadership</a></li>
-                    <li><a href="https://www.datafox.com/company/press/">Press</a></li>
-                    <li><a href="https://www.datafox.com/company/careers/">Careers</a></li>
-                  </ul>
-                </li>
-                <li class="hidden-sm"><a href="https://app.datafox.com" class="login">Log In</a></li>
-                <li><a href="http://info.datafox.com/request-trial.html?utm_medium=webpage&amp;utm_source=blog&amp;utm_content=navbar" target="_blank" class="js-signup signup trial-btn">Sign Up</a></li>
+
+                {% for nav in site.nav %}
+
+                  {% assign is_relative = nav[1][0] | slice: 0 %}
+                  {% assign url = nav[1][0] %}
+
+                  {% if is_relative == '/' %}
+                  {% assign url = nav[1][0] | prepend: site.baseurl %}
+                  {% endif %}
+
+                  {% assign sub_len = nav[1] | size | minus: 1 %}
+
+                  <li {% if sub_len > 0 %}class="dropdown"{% endif %}>
+                    <a {% if url contains '://' %}{% unless url contains 'datafox.com' %}target="_blank"{% endunless %}{% endif %} {% if sub_len > 0 %}data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle {% if page.url == nav[1][0] %}active{% endif %}"{% else %}class="{% if page.url == nav[1][0] %}active{% endif %}"{% endif %} href="{{ url }}">
+                      {{ nav[0] }} {% if sub_len > 0 %}<span class="mls fa fa-angle-down"></span>{% endif %}
+                    </a>
+
+                    <ul class="dropdown-menu">
+                      <li><span class="title">{{ nav[0] }}</span></li>
+
+                    {% for i in (1..sub_len) %}
+
+                        {% for sub_nav in nav[1][i] %}
+                            {% assign sub_is_relative = sub_nav[1] | slice: 0 %}
+                            {% assign sub_url = sub_nav[1] %}
+                            {% if sub_is_relative == '/' %}
+                              {% assign sub_url = sub_nav[1] | prepend: site.baseurl %}
+                            {% endif %}
+                            <li>
+                              <a {% if sub_url contains '://' %}{% unless sub_url contains 'datafox.com' %}target="_blank"{% endunless %}{% endif %} class="sidebar-nav-item sidebar-nav-item-sub {% if page.url == sub_nav[1] %}active{% endif %}" href="{{ sub_url }}">
+                                {{ sub_nav[0] }}
+                              </a>
+                            </li>
+                        {% endfor %}
+
+                    {% endfor %}
+
+                    </ul>
+
+                  </li>
+
+                {% endfor %}
+
+                {% if site.nav_cta.first.title && site.nav_cta.first.link %}
+                <li class="hidden-sm"><a href="{{ site.nav_cta.first.link }}" class="login">{{ site.nav_cta.first.title }}</a></li>
+                {% endif %}
+
+                {% if site.nav_cta.second.title && site.nav_cta.second.link %}
+                <li><a href="{{ site.nav_cta.second.link }}" target="_blank" class="js-signup signup trial-btn">{{ site.nav_cta.second.title }}</a></li>
+                {% endif %}
+
+
               </ul>
             </div>
           </div>

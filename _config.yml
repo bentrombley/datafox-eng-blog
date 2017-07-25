@@ -17,8 +17,68 @@ sass:
   style: compressed
 
 
+# Facebook
+facebook.meta: true  # true for show Open Graph Meta Tags
+facebook.app_id: false  # add here facebook app id
+
+
+# Twitter
+twitter.meta: true  # true for show Metadata Twitter
+twitter.username: datafoxco  # twitter name without [at]
+
+
 # Google Analytics
 analytics_id: "UA-72283306-1"
+
+
+# Navigation (2nd level links supported)
+nav:
+  Home:
+    - '/'
+  Categories:
+    - '/categories/'
+    - { All Categories: '/categories/' }
+    - { NodeJS: '/categories/#nodejs' }
+    - { Engineering: '/categories/#engineering' }
+    - { Engineering Culture: '/categories/#engineering-culture' }
+  GitHub:
+    - 'http://github.com/datafoxco'
+  Company:
+    - 'https://www.datafox.com/company/'
+    - { About Us: 'https://www.datafox.com/company/' }
+    - { Leadership: 'https://www.datafox.com/company/leadership/' }
+    - { Press: 'https://www.datafox.com/company/press/' }
+    - { Careers: 'https://www.datafox.com/company/careers/' }
+
+
+# CTA links on navbar
+nav_cta:
+  first:
+    title: 'Log In'
+    link: 'https://app.datafox.com'
+  second:
+    title: 'Sign Up'
+    link: 'http://info.datafox.com/request-trial.html?utm_medium=webpage&amp;utm_source=blog&amp;utm_content=navbar'
+
+
+# Footer Navigation (2nd level links supported)
+footer:
+  Home:
+    - '/'
+  Categories:
+    - '/categories/'
+    - { All Categories: '/categories/' }
+    - { NodeJS: '/categories/#nodejs' }
+    - { Engineering: '/categories/#engineering' }
+    - { Engineering Culture: '/categories/#engineering-culture' }
+  GitHub:
+    - 'http://github.com/datafoxco'
+  Company:
+    - 'https://www.datafox.com/company/'
+    - { About Us: 'https://www.datafox.com/company/' }
+    - { Leadership: 'https://www.datafox.com/company/leadership/' }
+    - { Press: 'https://www.datafox.com/company/press/' }
+    - { Careers: 'https://www.datafox.com/company/careers/' }
 
 
 exclude:
