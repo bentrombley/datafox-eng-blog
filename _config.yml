@@ -39,7 +39,7 @@ disqus_name: "datafox-engineering-blog"
 
 # Navigation (2nd level links supported)
 nav:
-  Home:
+  Tech Blog:
     - '/'
   Categories:
     - '/categories/'
