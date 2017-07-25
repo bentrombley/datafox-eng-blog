@@ -6,9 +6,9 @@ tags:         null
 title:        "Protect Your Database with .mongorc"
 date:         2014-10-05
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
 feature_img:  null
 sitemap:
   lastmod:    2014-10-05T08:43:04

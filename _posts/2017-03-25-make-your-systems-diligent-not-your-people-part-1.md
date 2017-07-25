@@ -6,9 +6,9 @@ tags:         null
 title:        "Make Your Systems Diligent, Not Your People"
 date:         2017-03-25
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
 feature_img:  null
 sitemap:
   lastmod:    2017-03-25T08:43:04

@@ -6,9 +6,9 @@ tags:         null
 title:        "What We Wish We Had Known About Mongoose"
 date:         2017-02-22
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Michael Balint
+  twitter:    michaelbalint
+  github:     michael-balint
 feature_img:  null
 sitemap:
   lastmod:    2017-02-22T08:43:04

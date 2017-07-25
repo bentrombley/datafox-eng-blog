@@ -6,9 +6,9 @@ tags:         null
 title:        "Polymorphism in Ember Data"
 date:         2017-03-07
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
 feature_img:  null
 sitemap:
   lastmod:    2017-03-07T08:43:04

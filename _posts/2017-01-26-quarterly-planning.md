@@ -6,9 +6,9 @@ tags:         null
 title:        "Quarterly Planning"
 date:         2017-01-26
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Cyrus Stoller
+  twitter:    cyrusstoller
+  github:     cyrusstoller
 feature_img:  null
 sitemap:
   lastmod:    2017-01-26T08:43:04

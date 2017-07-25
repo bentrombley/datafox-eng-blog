@@ -6,9 +6,9 @@ tags:         null
 title:        "Edit CoffeeScript like a Pro in 6 Minutes"
 date:         2014-08-23
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
 feature_img:  null
 sitemap:
   lastmod:    2014-08-23T08:43:04

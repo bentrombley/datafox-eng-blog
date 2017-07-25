@@ -6,9 +6,9 @@ tags:         null
 title:        "NodeJS Best Practices: Callbacks"
 date:         2014-06-08 12:03:49
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
 feature_img:  null
 sitemap:
   lastmod:    2014-06-08T12:03:49

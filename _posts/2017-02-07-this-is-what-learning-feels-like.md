@@ -6,9 +6,9 @@ tags:         null
 title:        "This is What Learning Feels Like"
 date:         2017-02-07
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
 feature_img:  null
 sitemap:
   lastmod:    2017-02-07T08:43:04

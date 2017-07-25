@@ -6,9 +6,9 @@ tags:         null
 title:        "Our Customer Feedback Meeting"
 date:         2015-03-27
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
 feature_img:  null
 sitemap:
   lastmod:    2015-03-27T08:43:04

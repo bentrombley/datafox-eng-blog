@@ -6,9 +6,9 @@ tags:         null
 title:        "Engineering Culture at DataFox"
 date:         2017-04-30
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
 feature_img:  null
 sitemap:
   lastmod:    2017-04-30T08:43:04

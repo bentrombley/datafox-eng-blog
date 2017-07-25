@@ -6,9 +6,9 @@ tags:         null
 title:        "NodeJs Best Practices: Environment-Specific Configuration"
 date:         2014-09-28
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
 feature_img:  null
 sitemap:
   lastmod:    2014-09-28T08:43:04

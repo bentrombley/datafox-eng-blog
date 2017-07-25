@@ -6,9 +6,9 @@ tags:         null
 title:        "NodeJS Best Practices: Error Handling in Express"
 date:         2017-05-29
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
 feature_img:  null
 sitemap:
   lastmod:    2017-05-29T08:43:04

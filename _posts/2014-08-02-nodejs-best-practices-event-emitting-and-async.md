@@ -6,9 +6,9 @@ tags:         null
 title:        "NodeJs Best Practices: Event Emitting and Async Callbacks"
 date:         2014-08-02
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
 feature_img:  null
 sitemap:
   lastmod:    2014-08-02T08:43:04

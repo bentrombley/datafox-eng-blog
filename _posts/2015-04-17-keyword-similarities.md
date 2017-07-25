@@ -6,9 +6,9 @@ tags:         null
 title:        "Keyword-Based Company Similarity"
 date:         2015-04-17
 author:       
-  name:       null
-  twitter:    null
-  github:     null
+  name:       Alden Timme
+  twitter:    aotimme
+  github:     aotimme
 feature_img:  null
 sitemap:
   lastmod:    2015-04-17T08:43:04
