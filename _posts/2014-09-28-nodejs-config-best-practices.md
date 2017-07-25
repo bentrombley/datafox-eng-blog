@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "NodeJs Best Practices: Environment-Specific Configuration"
-date:   2014-09-28
-categories: nodejs
-uuid: 497214c7-8a26-471c-968b-c1f1f8bb4295
+layout:       post
+uuid:         497214c7-8a26-471c-968b-c1f1f8bb4295
+categories:   nodejs
+tags:         [nodejs, APIs]
+title:        "NodeJs Best Practices: Environment-Specific Configuration"
+date:         2014-09-28
+author:       
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
+feature_img:  null
+sitemap:
+  lastmod:    2014-09-28T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 When you find yourself writing code like:

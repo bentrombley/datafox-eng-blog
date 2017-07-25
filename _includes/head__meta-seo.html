@@ -1,0 +1,47 @@
+<title>
+    {% if page.title == "Home" %}
+        {{ site.title }}
+    {% elsif page.title == "Search" %}
+        {{ page.title }} on {{ site.title }}
+    {% else %}
+        {{ page.title }} &middot; {{ site.title }}
+    {% endif %}
+</title>
+
+<meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+
+{% if site.facebook.meta %}
+    <!-- Open Graph Meta Tags -->
+    {% if site.facebook.app_id %}
+    <meta property="fb:app_id" content="{{ site.facebook.app_id }}">
+    {% endif %}
+    <meta content="{{ site.title }}" property="og:site_name">
+    <meta content="{{ page.title }}" property="og:title">
+    {% if page.layout == 'post' %}
+    <meta content="article" property="og:type">
+    {% else %}
+    <meta content="website" property="og:type">
+    {% endif %}
+    <meta content="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}" property="og:url">
+    <meta content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}" property="og:description">
+    {% if page.feature_img.nil? %}
+    <meta content="{{ '/assets/favicons/apple-touch-icon.png' | prepend: site.baseurl | prepend: site.url }}" property="og:image">
+    {% else %}
+    <meta content="{{ site.url }}/assets/{{ page.feature_img }}" property="og:image">
+    {% endif %}
+    <meta content="200" property="og:image:width">
+    <meta content="200" property="og:image:height">
+    <meta content="en_US" property="og:locale">
+{% endif %}
+
+
+{% if site.twitter.meta %}
+    <!-- Metadata Twitter -->
+    <meta name="twitter:card" value="summary">
+    <meta content="{{ page.title }}" name="twitter:title">
+    <meta content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}' name='twitter:description">
+    <meta content="@{{ site.twitter.username }}" name="twitter:site">
+    {% if page.author.twitter %}
+    <meta content="@{{ page.author.twitter }}" name="twitter:creator">
+    {% endif %}
+{% endif %}

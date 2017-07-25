@@ -1,0 +1,36 @@
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: 400;
+}
+
+a         {
+  color: $df_color--blue;
+  text-decoration: none;
+  @include transit();
+  &:visited {
+    color: $df_color--blue;
+    @include transit();
+  }
+  &:hover,
+  &:focus {
+    color: darken($df_color--blue, 5%);
+    text-decoration: underline;
+    @include transit();
+  }
+
+}
+
+ul {
+  &.list-none {
+    list-style: none;
+  }
+  &.list-inline {
+    li {
+      display: inline-block;
+    }
+  }
+  &.fleft {
+    float: left;
+  }
+}

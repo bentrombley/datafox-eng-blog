@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "NodeJS Best Practices: Callbacks"
-date:   2014-06-08 12:03:49
-categories: nodejs
-uuid: b54a5ee7-36e7-4996-8d2e-ed760344b260
+layout:       post
+uuid:         b54a5ee7-36e7-4996-8d2e-ed760344b260
+categories:   nodejs
+tags:         [javascript, callback]
+title:        "NodeJS Best Practices: Callbacks"
+date:         2014-06-08 12:03:49
+author:       
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
+feature_img:  null
+sitemap:
+  lastmod:    2014-06-08T12:03:49
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 As an experienced programmer, I've found that NodeJS is easy to learn with many tutorials to cover the basics.  However, I was (and still am) unclear about what are the best practices for NodeJS. Here are a few of the things I've learned so far about callbacks:

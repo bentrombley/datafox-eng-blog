@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "Polymorphism in Ember Data"
-date:   2017-03-07
-categories: emberjs
-uuid: 0f8caf84-9204-421b-bdc1-1b6706091801
+layout:       post
+uuid:         0f8caf84-9204-421b-bdc1-1b6706091801
+categories:   emberjs
+tags:         [data, javascript, handlebars, JSON]
+title:        "Polymorphism in Ember Data"
+date:         2017-03-07
+author:       
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
+feature_img:  null
+sitemap:
+  lastmod:    2017-03-07T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 One of the core powers of DataFox is our ability to show you a customized feed

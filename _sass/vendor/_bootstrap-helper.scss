@@ -1,0 +1,47 @@
+
+@media (max-width:767px) {
+  .hidden-xs {
+    display: none !important
+  }
+}
+
+@media (min-width:768px) and (max-width:991px) {
+  .hidden-sm {
+    display: none !important
+  }
+}
+
+@media (min-width:992px) and (max-width:1199px) {
+  .hidden-md {
+    display: none !important
+  }
+}
+
+@media (min-width:1200px) {
+  .hidden-lg {
+    display: none !important
+  }
+}
+
+
+
+@mixin row-table {
+  display: table !important;
+  width: inherit;
+
+  > [class*="col-"]{
+    float:none!important;
+    display: table-cell!important;
+    vertical-align: middle;
+    &.td-top{ vertical-align: top!important; }
+    &.td-bottom { vertical-align: bottom!important; }
+  }
+}
+.row-table.row-table-xs {
+  @include row-table;
+}
+@media (min-width: $md) {
+  .row-table {
+    @include row-table;
+  }
+};

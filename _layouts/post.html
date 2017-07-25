@@ -1,30 +1,61 @@
 ---
 layout: default
 ---
-<div class="post">
+
+<article class="post" itemscope itemtype="https://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1>{{ page.title }}</h1>
-    <p class="meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
+    <h1 class="post-title" itemprop="name headline">{{ page.title | escape }}</h1>
+    <p class="post-meta">
+      <span class="post_date nowrap mrm">
+        <span class="fa fa-calendar mrs"></span>
+        <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time>
+      </span>
+
+      {% if page.categories %}
+      <span class="post_categories nowrap mrm">
+        <span class="fa fa-tag mrs"></span> <a href="{{ '/categories/#' | prepend: site.baseurl | prepend: site.url | append: page.categories[0] }}">{{ page.categories }}</a>
+      </span>
+      {% endif %}
+
+      <span class="post_author nowrap" itemprop="author">
+        <span class="fa fa-user-circle-o mrs"></span>
+        <span itemscope itemtype="http://schema.org/Person">
+          {% if page.author.name %}
+            {% if page.author.github %}
+          <span itemprop="name"><a href="https://github.com/{{ page.author.github }}" target="_blank" rel="nofollow">{{ page.author.name }}</a></span>
+            {% else %}
+              {{ page.author.name }}
+            {% endif %}
+          {% else %}
+          <span itemprop="name"><a href="https://github.com/datafoxco" target="_blank" rel="me">DataFoxCo</a></span>
+          {% endif %}
+        </span>
+      </span>
+    </p>
+
   </header>
 
-  <article class="post-content">
-  {{ content }}
-  </article>
+  <div class="post-content" itemprop="articleBody">
+    {{ content }}
+  </div>
 
-</div>
-<div id="disqus_thread"></div>
+  {% if page.tags %}
+  <div class="tags">
+    <ul class="tag-list list-none list-inline fleft mln mbxl">
+      <li class="pln">Tagged: </li>
+      {% for tag in page.tags %}
+      <li><a href="{{ site.baseurl }}{{ site.tag_page }}#{{ tag | slugify }}" class="post-tag">{{ tag }}</a></li>
+      {% endfor %}
+    </ul>
+    </p>
+  </div>
+  {% endif %}
 
-<script type="text/javascript">
-  var disqus_config = function () {
-    //this.page.url = PAGE_URL;  // No canonical URL at this point.
-    this.page.identifier = "{{ page.uuid }}";
-  };
-  (function() { // DON'T EDIT BELOW THIS LINE
-    var d = document, s = d.createElement('script');
-    s.src = 'https://datafox-engineering-blog.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  {% if site.disqus_name %}
+  <div id="disqus_thread"></div>
+  {% endif %}
+
+</article>
+
+{% include tags-cloud.html %}

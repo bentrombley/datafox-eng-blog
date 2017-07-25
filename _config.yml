@@ -1,14 +1,108 @@
 # Site settings
 title: DataFox Tech Blog
-email:
 description: "DataFox Tech Blog"
+
+
+email: "admin@datafox.com"
 baseurl: ""
-url: "http://datafox.co"
+url: "http://eng.datafox.com"
+
 
 # Build settings
 markdown: kramdown
-permalink: pretty
-
 highlighter: rouge
+permalink: pretty
+sass:
+  sass_dir: _sass
+  style: compressed
 
-exclude: ["Gemfile", "Gemfile.lock"]
+
+# Linkedin
+linkedin: "datafox"
+
+
+# Facebook
+facebook:
+  meta: true  # true for show Open Graph Meta Tags
+  app_id: false  # add here facebook app id
+
+
+# Twitter
+twitter:
+  meta: true  # true for show Metadata Twitter
+  username: datafoxco  # twitter name without [at]
+
+
+# Google Analytics
+analytics_id: "UA-72283306-1"
+
+
+# Disqus
+disqus_name: "datafox-engineering-blog"
+
+
+# Navigation (2nd level links supported)
+nav:
+  Tech Blog:
+    - '/'
+  Categories:
+    - '/categories/'
+    - { All Categories: '/categories/' }
+    - { NodeJS: '/categories/#nodejs' }
+    - { Engineering: '/categories/#engineering' }
+    - { Engineering Culture: '/categories/#engineering-culture' }
+  GitHub:
+    - 'http://github.com/datafoxco'
+  Company:
+    - 'https://www.datafox.com/company/'
+    - { About Us: 'https://www.datafox.com/company/' }
+    - { Leadership: 'https://www.datafox.com/company/leadership/' }
+    - { Press: 'https://www.datafox.com/company/press/' }
+    - { Careers: 'https://www.datafox.com/company/careers/' }
+
+
+# CTA links on navbar
+nav_cta:
+  first:
+    title: 'Log In'
+    link: 'https://app.datafox.com'
+  second:
+    title: 'Sign Up'
+    link: 'http://info.datafox.com/request-trial.html?utm_medium=webpage&amp;utm_source=blog&amp;utm_content=navbar'
+
+
+# Footer Navigation (2nd level links supported)
+footer:
+  DataFox:
+    - '#'
+    - { Product: 'https://www.datafox.com/product' }
+    - { Use Cases: 'https://www.datafox.com/who-benefits' }
+    - { Customers: 'https://www.datafox.com/customers' }
+    - { Company: 'https://www.datafox.com/company' }
+    - { Engineering Blog: '/' }
+  Learn More:
+    - '#'
+    - { Blog: 'http://blog.datafox.com/' }
+    - { Resources: 'https://www.datafox.com/company/resources/' }
+    - { Sales Operations Meetup: 'https://www.meetup.com/Sales-Optimization/' }
+    - { Conference Directory: 'http://www.conferenceexplorer.com/' }
+  Integrations:
+    - '#'
+    - { Salesforce: 'https://www.datafox.com/integrations/salesforce/' }
+    - { Slack: 'https://www.datafox.com/integrations/slack/' }
+    - { Chrome: 'https://www.datafox.com/integrations/chrome/' }
+    - { API: 'https://www.datafox.com/integrations/api/' }
+  Support:
+    - '#'
+    - { Email Us: 'mailto:info@datafox.com' }
+    - { Help Center: 'http://support.datafox.com/' }
+    - { Privacy Policy: 'https://www.datafox.com/privacy-policy' }
+    - { Terms of Service: 'https://www.datafox.com/terms-of-service' }
+
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - Rakefile
+  - .gitignore
+  - docker-compose.yml

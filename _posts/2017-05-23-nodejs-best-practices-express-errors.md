@@ -1,8 +1,20 @@
 ---
-layout: post
-title:  "NodeJS Best Practices: Error Handling in Express"
-date:   2017-05-29
-categories: nodejs
+layout:       post
+uuid:         1bcf82a0-536d-0135-99a7-0242ac1f0002
+categories:   nodejs
+tags:         [nodejs, javascript, JSON, API]
+title:        "NodeJS Best Practices: Error Handling in Express"
+date:         2017-05-29
+author:       
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
+feature_img:  null
+sitemap:
+  lastmod:    2017-05-29T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 There are already many great articles about how to do error handling in NodeJS.  They boil down to this:

@@ -1,11 +1,20 @@
 ---
-layout: post
-title:  "Engineering Culture at DataFox"
-date:   2017-04-30
-categories: engineering-culture
-uuid: E2068F60-80B9-4716-B8CD-8123E1DEA171
-
-
+layout:       post
+uuid:         E2068F60-80B9-4716-B8CD-8123E1DEA171
+categories:   engineering-culture
+tags:         [culture, startup, engineering, DataFox]
+title:        "Engineering Culture at DataFox"
+date:         2017-04-30
+author:       
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
+feature_img:  null
+sitemap:
+  lastmod:    2017-04-30T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 
