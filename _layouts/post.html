@@ -43,7 +43,7 @@ layout: default
   {% if page.tags %}
   <div class="tags">
     <ul class="tag-list list-none list-inline fleft mln mbxl">
-      <li class="pln">Tagged by: </li>
+      <li class="pln">Tagged: </li>
       {% for tag in page.tags %}
       <li><a href="{{ site.baseurl }}{{ site.tag_page }}#{{ tag | slugify }}" class="post-tag">{{ tag }}</a></li>
       {% endfor %}
