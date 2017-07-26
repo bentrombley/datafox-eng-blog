@@ -19,6 +19,7 @@ for run project locally, you can use a two way *docker* or *bundler*
 
 #### Docker way
 ```
+cd ~/datafoxco.github.io
 docker-compose up
 ```
 
@@ -36,15 +37,18 @@ Visit [localhost:4000](http://localhost:4000) in your browser.
 
 open terminal and wakeup docker container
 ```
+cd ~/datafoxco.github.io
 docker-compose up
 ```
 run Rake task manager with default task(init new post)
 ```
+cd ~/datafoxco.github.io
 docker-compose exec datafox-jekyll rake
 ```
-Fallow instrunction...
+Follow instrunction... Rake will ask you "title", "category", "tags". etc.
 
 ![](./_includes/doc/rake-new-post.jpg)
+[NOTE] Rake automaticly generate UUID, current date, and all meta data which you need for start blogging new post.
 
 
 #### Manualy
