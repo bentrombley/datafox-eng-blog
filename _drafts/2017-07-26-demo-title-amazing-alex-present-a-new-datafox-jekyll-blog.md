@@ -9,7 +9,7 @@ author:
   name:       Alex Zappa
   twitter:    reatlat
   github:     reatlat
-feature_img:  null
+feature_img:  /assets/posts/img/sublime-lint-errors.png
 sitemap:
   lastmod:    2017-07-26T16:41:50
   priority:   0.5
