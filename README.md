@@ -2,73 +2,80 @@ This is the DataFox engineering blog, hosted on github pages.
 
 To create and edit blog posts:
 
-## Jekyll Docker
-#### Docker Setup
-
-First, get docker, and install:
-* [Mac instructions](https://docs.docker.com/docker-for-mac/), [Package](https://download.docker.com/mac/stable/Docker.dmg)
-* Linux: [Ubuntu](https://docs.docker.com/engine/installation/linux/ubuntu/)
-
-Once installed, you can check everything is up and running:
-```
-docker --version
-docker-compose --version
-docker-machine --version (Mac-only)
-```
-##### Linux only
-On Linux, to manage docker as non-root user, add your user to ```docker``` group:
-```
-sudo usermod -aG docker $USER
-```
-and load on startup:
-```
-sudo systemctl enable docker
-```
-And if you are using NetworkManager, add a DNS for Docker and restart:
-```
-echo 'json { "dns": ["8.8.8.8", "8.8.4.4"] }' | sudo tee /etc/docker/daemon.json
-sudo service docker restart
-```
-### Running locally:
-```
-docker-compose up
-```
-Visit [localhost:4000](http://localhost:4000) in your browser.
-
----
-
 ## Initial Setup
 
 - git clone this repo locally
-- [install jekyll](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/)
-- `bundle install` to install dependencies
+
+for run project locally, you can use a two way *docker* or *bundler*
+- docker
+    - install [docker](#docker-setup)
+    - install [docker-compose](#docker-setup)
+- bundler
+    - [install jekyll](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/)
+    - `bundle install` to install dependencies
+
 
 ### Running locally:
 
-    cd ~/datafoxco.github.io
-    jekyll serve --drafts
+#### Docker way
+```
+docker-compose up
+```
+
+#### Manualy
+```
+cd ~/datafoxco.github.io
+jekyll serve --drafts
+```
 
 Visit [localhost:4000](http://localhost:4000) in your browser.
 
 ## Writing Posts
 
+#### Docker way
+
+open terminal and wakeup docker container
+```
+docker-compose up
+```
+run Rake task manager with default task(init new post)
+```
+docker-compose exec datafox-jekyll rake
+```
+Fallow instrunction...
+
+![](./_includes/doc/rake-new-post.jpg)
+
+
+#### Manualy
 Create a new `.md` file in the `_drafts` folder and edit in markdown.
 
 At the top add a section
 
     ---
-    layout: post
-    title:  "My Blog Post Title"
-    date:   2017-01-08
-    categories: css
-    uuid: aa97bb06-6a2f-4759-9dce-2a26666a50ff
+    layout:       post
+    uuid:         c12e0920-53ac-0135-99a9-0242ac1f0002
+    categories:   demo
+    tags:         [demo1, demo2, demo3, demo4]
+    title:        'Demo article for example'
+    date:         2017-07-25
+    author:       
+      name:       Alex Zappa
+      twitter:    reatlat
+      github:     reatlat
+    feature_img:  null
+    sitemap:
+      lastmod:    2017-07-25T16:18:40
+      priority:   0.5
+      changefreq: monthly
+      exclude:    'no'
     ---
 
 Make sure to generate a new UUID for each new page (use v4 if you're wondering). The `uuid` field is necessary to provide a unique ID to each post for our Disqus threads.
 
-Add any images to the `img` directory and reference like this in your post:
+Add any images to the `/assets/posts/img` directory and reference like this in your post:
 
-    <img src="/img/path/to/my/file.jpg" width="100%" />
+    <img src="/assets/posts/img/path/to/my/file.jpg" width="100%" />
 
 You can preview your post by visiting [localhost:4000](http://localhost:4000) in your browser.
 
@@ -85,3 +92,30 @@ Use `git mv` to move your draft file to the `_posts` folder and put the publish 
 Commit your change and push to the repo, and it will be automatically built and live within 5 minutes (usually faster).
 
 
+
+## Docker Setup
+
+First, get docker, and install:
+* [Mac instructions](https://docs.docker.com/docker-for-mac/), [Package](https://download.docker.com/mac/stable/Docker.dmg)
+* Linux: [Ubuntu](https://docs.docker.com/engine/installation/linux/ubuntu/)
+
+Once installed, you can check everything is up and running:
+```
+docker --version
+docker-compose --version
+docker-machine --version (Mac-only)
+```
+#### Linux only
+On Linux, to manage docker as non-root user, add your user to ```docker``` group:
+```
+sudo usermod -aG docker $USER
+```
+and load on startup:
+```
+sudo systemctl enable docker
+```
+And if you are using NetworkManager, add a DNS for Docker and restart:
+```
+echo 'json { "dns": ["8.8.8.8", "8.8.4.4"] }' | sudo tee /etc/docker/daemon.json
+sudo service docker restart
+```
