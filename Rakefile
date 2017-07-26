@@ -90,6 +90,7 @@ task :new do
     post.puts "categories:   #{category}"
     post.puts "tags:         [#{tags}]"
     post.puts "title:        '#{title}'"
+    post.puts "date:         #{Time.now.strftime('%F')}"
     post.puts "author:       "
     post.puts "  name:       #{author}"
     post.puts "  twitter:    #{twitter}"
