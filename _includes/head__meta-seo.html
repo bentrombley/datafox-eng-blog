@@ -16,7 +16,7 @@
     <meta property="fb:app_id" content="{{ site.facebook.app_id }}">
     {% endif %}
     <meta content="{{ site.title }}" property="og:site_name">
-    <meta content="{{ page.title }}" property="og:title">
+    <meta content="{% if page.title == "Home" %}{{ site.title }}{% else %}{{ page.title }}{% endif %}" property="og:title">
     {% if page.layout == 'post' %}
     <meta content="article" property="og:type">
     {% else %}
@@ -38,7 +38,7 @@
 {% if site.twitter.meta %}
     <!-- Metadata Twitter -->
     <meta name="twitter:card" value="summary">
-    <meta content="{{ page.title }}" name="twitter:title">
+    <meta content="{% if page.title == "Home" %}{{ site.title }}{% else %}{{ page.title }}{% endif %}" name="twitter:title">
     <meta content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}' name='twitter:description">
     <meta content="@{{ site.twitter.username }}" name="twitter:site">
     {% if page.author.twitter %}
