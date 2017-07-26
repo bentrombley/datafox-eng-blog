@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "Make Your Systems Diligent, Not Your People"
-date:   2017-03-25
-categories: engineering-culture
-uuid: 97CF6990-2C36-4537-8EF4-30A3D7FE5EA0
+layout:       post
+uuid:         97CF6990-2C36-4537-8EF4-30A3D7FE5EA0
+categories:   engineering-culture
+tags:         [engineering, culture]
+title:        "Make Your Systems Diligent, Not Your People"
+date:         2017-03-25
+author:       
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
+feature_img:  null
+sitemap:
+  lastmod:    2017-03-25T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 
 ---
 

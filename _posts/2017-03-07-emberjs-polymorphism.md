@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "Polymorphism in Ember Data"
-date:   2017-03-07
-categories: emberjs
-uuid: 0f8caf84-9204-421b-bdc1-1b6706091801
+layout:       post
+uuid:         0f8caf84-9204-421b-bdc1-1b6706091801
+categories:   emberjs
+tags:         [data, javascript, handlebars, JSON]
+title:        "Polymorphism in Ember Data"
+date:         2017-03-07
+author:       
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
+feature_img:  null
+sitemap:
+  lastmod:    2017-03-07T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 One of the core powers of DataFox is our ability to show you a customized feed
@@ -11,7 +22,7 @@ of recent events affecting companies you care about.  For example, today I can
 see that my former employer, Box, launched a new product, while my friend's
 company, FireEye, just announced a new partnership with Thomson Reuters.
 
-<img src="/img/events_feed.png" style="width: 100%" />
+<img src="/assets/posts/img/events_feed.png" style="width: 100%" />
 <small>My news feed on 3/7/17</small>
 
 When it comes to displaying an event in our app we create a new Ember data model:

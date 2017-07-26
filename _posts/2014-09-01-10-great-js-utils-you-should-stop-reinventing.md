@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "10 Great JavaScript Utils You Should Stop Reinventing"
-date:   2014-09-01
-categories: nodejs
-uuid: bfd880de-7ee4-4912-a144-266d2ab57666
+layout:       post
+uuid:         bfd880de-7ee4-4912-a144-266d2ab57666
+categories:   nodejs
+tags:         [NumeralJS, UnderscoreJS, MomentJS, javascript]
+title:        "10 Great JavaScript Utils You Should Stop Reinventing"
+date:         2014-09-01
+author:       
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
+feature_img:  null
+sitemap:
+  lastmod:    2014-09-01T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 I've wasted more time than I care to admit reinventing these wheels. These utilities are all small and well documented.  Just use them.
@@ -163,7 +174,7 @@ StreamWorker handles the `pause()` and `resume()` in the stream as well as handl
 
 ## 9.  [Colors](https://github.com/Marak/colors.js)
 
-<img src="/img/nyan-cat-console.png" style="width: 100%" />
+<img src="/assets/posts/img/nyan-cat-console.png" style="width: 100%" />
 <small>Running tests is always fun with nyan cat!</small>
 
 Okay, you may not _need_ to add colors to your console output, but it's definitely fun.  [Colors](https://github.com/Marak/colors.js) saves you the hassle of dealing with ANSI color codes:

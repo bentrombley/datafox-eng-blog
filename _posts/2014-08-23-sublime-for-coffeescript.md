@@ -1,13 +1,24 @@
 ---
-layout: post
-title:  "Edit CoffeeScript like a Pro in 6 Minutes"
-date:   2014-08-23
-categories: coffeescript
-uuid: 73102c01-fccc-4774-9716-4c9c97ae43f8
+layout:       post
+uuid:         73102c01-fccc-4774-9716-4c9c97ae43f8
+categories:   coffeescript
+tags:         [javascript, coffeescript, vim, sublime, atom, IntelliJ]
+title:        "Edit CoffeeScript like a Pro in 6 Minutes"
+date:         2014-08-23
+author:       
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
+feature_img:  null
+sitemap:
+  lastmod:    2014-08-23T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 
-<img src="/img/sublime-lint-errors.png" style="width: 100%" />
+<img src="/assets/posts/img/sublime-lint-errors.png" style="width: 100%" />
 <small><b>Pictured Above:</b> See errors and inconsistencies in your code as you type.</small>
 
 There are tons of articles explaining how great CoffeeScript is as a language (which is true), but few that actually talk about how you should set up your dev environment to write it.  As a CoffeeScript shop, this is how we do it at DataFox.

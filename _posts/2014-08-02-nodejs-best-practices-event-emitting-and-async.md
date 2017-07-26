@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "NodeJs Best Practices: Event Emitting and Async Callbacks"
-date:   2014-08-02
-categories: nodejs
-uuid: f285577f-e5a7-44dc-b568-ab657bffc074
+layout:       post
+uuid:         f285577f-e5a7-44dc-b568-ab657bffc074
+categories:   nodejs
+tags:         [nodejs, DataFox]
+title:        "NodeJs Best Practices: Event Emitting and Async Callbacks"
+date:         2014-08-02
+author:       
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
+feature_img:  null
+sitemap:
+  lastmod:    2014-08-02T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 ## The Issue

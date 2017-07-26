@@ -1,9 +1,20 @@
 ---
-layout: post
-title:  "Protect Your Database with .mongorc"
-date:   2014-10-05
-categories: mongodb
-uuid: bf5cb3a1-93fa-407b-ac76-98eac0635fc0
+layout:       post
+uuid:         bf5cb3a1-93fa-407b-ac76-98eac0635fc0
+categories:   mongodb
+tags:         [MongoDB, DataBase]
+title:        "Protect Your Database with .mongorc"
+date:         2014-10-05
+author:       
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
+feature_img:  null
+sitemap:
+  lastmod:    2014-10-05T08:43:04
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 Your database is the most import piece of your infrastructure and also your most vulnerable.  When it's down, everything is down.  Anything you can do to protect against errors or mistakes is worth the effort.
