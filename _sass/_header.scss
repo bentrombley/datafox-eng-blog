@@ -4,7 +4,7 @@
 .base-header {
   position: relative;
   z-index: 100;
-  background: rgba(white, .9);
+  background: rgba(white, .95);
 
   .container {
 
@@ -482,7 +482,7 @@ header {
 
 
   @media (max-width: $sm - 1px) {
-    background-color: rgba(white,0.9); //- Make opaque
+    //background-color: rgba(white,0.9); //- Make opaque
   }
 
   .container {
