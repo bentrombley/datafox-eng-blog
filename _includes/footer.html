@@ -6,18 +6,11 @@
         <p>
           <a href="https://www.datafox.com/" title="DataFox"><img class="footer__logo" src="{{ '/assets/images/datafox-logo-white.png' | prepend: site.baseurl | prepend: site.url }}" alt="DataFox Logo"></a>
         </p>
-
-        <address>
-          324 5th Street <br> San Francisco, CA 94107 <br>
-          <a href="tel:1-415-969-2142">(415) 969-2144</a><br>
+        <p>
+          <a href="tel:1-415-969-2142">(415) 969-2144</a>
+          <br>
           <a href="mailto:info@datafox.com">info@datafox.com</a>
-        </address>
-
-        <ul class="list-unstyled no-list-style list-inline list-socials">
-          <li class="social-link social-rss mrm"><a title="Subscribe via RSS" href="{{ "/feed.xml" | prepend: site.baseurl }}" target="_blank"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
-          <li class="social-link social-twitter mrm"><a href="https://www.twitter.com/{{ site.twitter.username }}" rel="me" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-          <li class="social-link social-linkedin mrm"><a href="https://www.linkedin.com/company/{{ site.linkedin }}" rel="me" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-        </ul>
+        </p>
 
       </div>
 
@@ -62,6 +55,12 @@
 
       {% endfor %}
 
+    </div>
+    <div class="row"><div class="col-md-12"><hr></div></div>
+    <div class="row">
+      <div class="col-sm-6">
+        <p class="smaller">&copy; 2013 - {{ site.time | date: '%Y' }}&nbsp;&nbsp;<a href="https://www.datafox.com/">DataFox Inc.</a>&nbsp;All Rights Reserved.</p>
+      </div>
     </div>
   </div>
 </footer>

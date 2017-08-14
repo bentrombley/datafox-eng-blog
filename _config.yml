@@ -43,8 +43,6 @@ disqus_name: "datafox-engineering-blog"
 
 # Navigation (2nd level links supported)
 nav:
-  Tech Blog:
-    - '/'
   Categories:
     - '/categories/'
     - { All Categories: '/categories/' }
@@ -53,12 +51,30 @@ nav:
     - { Engineering Culture: '/categories/#engineering-culture' }
   GitHub:
     - 'http://github.com/datafoxco'
-  Company:
-    - 'https://www.datafox.com/company/'
-    - { About Us: 'https://www.datafox.com/company/' }
-    - { Leadership: 'https://www.datafox.com/company/leadership/' }
-    - { Press: 'https://www.datafox.com/company/press/' }
-    - { Careers: 'https://www.datafox.com/company/careers/' }
+  Product:
+    - 'https://www.datafox.com/product/'
+    - { Company Intelligence: 'https://www.datafox.com/product/company-intelligence/' }
+    - { Company Signals: 'https://www.datafox.com/product/company-signals/' }
+    - { Conference Intelligence: 'https://www.datafox.com/product/conference-intelligence/' }
+    - { APIs: 'https://www.datafox.com/integrations/api/' }
+  Custumers:
+    - 'https://www.datafox.com/customers/'
+    - { Sales & Marketing: '!title' }
+    - { Sales Operations: 'https://www.datafox.com/customers/sales-operations/' }
+    - { Sales Managers: 'https://www.datafox.com/customers/sales-managers/' }
+    - { Sales Reps: 'https://www.datafox.com/customers/sales-reps/' }
+    - { Marketing: 'https://www.datafox.com/customers/marketing/' }
+    - { Event Marketing: 'https://www.datafox.com/customers/event-marketing/' }
+    - { Finance: '!!title' }
+    - { Private Equity: 'https://www.datafox.com/customers/private-equity/' }
+    - { Investment Banking: 'https://www.datafox.com/customers/investment-banking/' }
+
+  Integration:
+    - '#'
+    - { Salesforce: 'https://www.datafox.com/integrations/salesforce/' }
+    - { Marketo: 'https://www.datafox.com/integrations/marketo/' }
+    - { Chrome: 'https://www.datafox.com/integrations/chrome/' }
+    - { Slack: 'https://www.datafox.com/integrations/slack/' }
 
 
 # CTA links on navbar
@@ -66,32 +82,33 @@ nav_cta:
   first:
     title: 'Log In'
     link: 'https://app.datafox.com'
-  second:
-    title: 'Sign Up'
-    link: 'http://info.datafox.com/request-trial.html?utm_medium=webpage&amp;utm_source=blog&amp;utm_content=navbar'
+#  second:
+#    title: 'Sign Up'
+#    link: 'http://info.datafox.com/request-trial.html?utm_medium=webpage&amp;utm_source=blog&amp;utm_content=navbar'
 
 
 # Footer Navigation (2nd level links supported)
 footer:
-  DataFox:
+  Company:
     - '#'
     - { Product: 'https://www.datafox.com/product' }
     - { Use Cases: 'https://www.datafox.com/who-benefits' }
     - { Customers: 'https://www.datafox.com/customers' }
     - { Company: 'https://www.datafox.com/company' }
     - { Engineering Blog: '/' }
-  Learn More:
+  Resources:
     - '#'
-    - { Blog: 'http://blog.datafox.com/' }
-    - { Resources: 'https://www.datafox.com/company/resources/' }
-    - { Sales Operations Meetup: 'https://www.meetup.com/Sales-Optimization/' }
-    - { Conference Directory: 'http://www.conferenceexplorer.com/' }
-  Integrations:
+    - { Resource Hub: 'https://www.datafox.com/company/resources/' }
+    - { Company Blog: 'http://blog.datafox.com' }
+    - { Engineering Blog: 'http://eng.datafox.com' }
+    - { Sales Ops Meetup: 'https://www.meetup.com/Sales-Optimization' }
+    - { Podcasts: 'https://itunes.apple.com/us/podcast/crm-orchestration-and-sales-optimization-by-datafox/id1247620232?mt=2' }
+  Free Tools:
     - '#'
-    - { Salesforce: 'https://www.datafox.com/integrations/salesforce/' }
-    - { Slack: 'https://www.datafox.com/integrations/slack/' }
-    - { Chrome: 'https://www.datafox.com/integrations/chrome/' }
-    - { API: 'https://www.datafox.com/integrations/api/' }
+    - { Chrome Extension: 'https://www.datafox.com/integrations/chrome/' }
+    - { Slack Alerts: 'https://www.datafox.com/integrations/slack/' }
+    - { Business Search: 'https://datafox.com/search' }
+    - { Conference Search: 'http://www.conferenceexplorer.com/' }
   Support:
     - '#'
     - { Email Us: 'mailto:info@datafox.com' }
