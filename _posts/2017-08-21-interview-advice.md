@@ -1,8 +1,20 @@
 ---
-layout: post
-title:  "Engineering Interviewing Advice I Wish I Had Heard"
-date:   2017-08-21
-categories: interviewing
+layout:       post
+uuid:         05fd8841-a823-4d2d-9c57-6b404ade1d39
+categories:   interviewing
+tags:         [interviewing, skill]
+title:        "Engineering Interviewing Advice I Wish I Had Heard"
+date:         2017-08-21
+author:       
+  name:       Ben Trombley
+  twitter:    bentrombley
+  github:     bentrombley
+feature_img:  null
+sitemap:
+  lastmod:    2017-08-21T06:11:00
+  priority:   0.5
+  changefreq: monthly
+  exclude:    'no'
 ---
 
 I recently had the chance to mentor a student at [Hackbright](https://hackbrightacademy.com/), a dev bootcamp dedicated to helping women change careers into software engineering.  As the session came to a close the focus turned to interviewing, so she asked me for advice.
