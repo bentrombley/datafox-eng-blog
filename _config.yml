@@ -57,7 +57,7 @@ nav:
     - { Company Signals: 'https://www.datafox.com/product/company-signals/' }
     - { Conference Intelligence: 'https://www.datafox.com/product/conference-intelligence/' }
     - { APIs: 'https://www.datafox.com/integrations/api/' }
-  Custumers:
+  Customers:
     - 'https://www.datafox.com/customers/'
     - { Sales & Marketing: '!title' }
     - { Sales Operations: 'https://www.datafox.com/customers/sales-operations/' }
