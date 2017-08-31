@@ -14,7 +14,7 @@ layout: default
 
       {% if page.categories %}
       <span class="post_categories nowrap mrm">
-        <span class="fa fa-tag mrs"></span> <a href="{{ '/categories/#' | prepend: site.baseurl | prepend: site.url | append: page.categories[0] }}">{{ page.categories }}</a>
+        <span class="fa fa-tag mrs"></span> <a href="{{ '/categories/#' | prepend: site.baseurl | append: page.categories[0] }}">{{ page.categories }}</a>
       </span>
       {% endif %}
 

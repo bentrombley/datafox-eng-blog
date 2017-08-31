@@ -10,3 +10,4 @@ services:
     command: sh -c 'jekyll serve -s /usr/src/app --drafts'
     ports:
       - "4000:4000"
+      - "80:4000"

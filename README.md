@@ -22,6 +22,7 @@ for run project locally, you can use a two way *docker* or *bundler*
 cd ~/datafoxco.github.io
 docker-compose up
 ```
+Visit [localhost](http://localhost) in your browser.
 
 #### Manualy
 ```
@@ -33,8 +34,18 @@ Visit [localhost:4000](http://localhost:4000) in your browser.
 
 ## Writing Posts
 
-#### Docker way
+#### Using Rake
+run Rake task manager with default task(init new post)
+```
+cd ~/datafoxco.github.io
+rake
+```
+Follow instrunction... Rake will ask you "title", "category", "tags". etc.
 
+![](./_includes/doc/rake-new-post.jpg)
+[NOTE] Rake automaticly generate UUID, current date, and all meta data which you need for start blogging new post.
+
+#### Docker way
 open terminal and wakeup docker container
 ```
 cd ~/datafoxco.github.io
@@ -45,11 +56,6 @@ run Rake task manager with default task(init new post)
 cd ~/datafoxco.github.io
 docker-compose exec datafox-jekyll rake
 ```
-Follow instrunction... Rake will ask you "title", "category", "tags". etc.
-
-![](./_includes/doc/rake-new-post.jpg)
-[NOTE] Rake automaticly generate UUID, current date, and all meta data which you need for start blogging new post.
-
 
 #### Manualy
 Create a new `.md` file in the `_drafts` folder and edit in markdown.

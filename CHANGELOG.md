@@ -1,5 +1,15 @@
 # Chnagelog
 
+##### 2.1.4 - 2017/08/31
+- update docker-compose file
+- update post layout
+- update README file
+
+##### 2.1.3 - 2017/08/29
+- fix typo in navbar
+- new post
+- update meta info for article
+
 ##### 2.1.2 - 2017/08/19
 - update exclude files
 
