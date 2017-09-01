@@ -1,5 +1,8 @@
 # Chnagelog
 
+##### 2.1.6 - 2017/09/02
+- fix font-size for navbar
+
 ##### 2.1.5 - 2017/09/01
 - fix momentum scroll for iOS
 
