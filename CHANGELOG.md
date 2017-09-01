@@ -1,5 +1,8 @@
 # Chnagelog
 
+##### 2.1.5 - 2017/09/01
+- fix momentum scroll for iOS
+
 ##### 2.1.4 - 2017/08/31
 - update docker-compose file
 - update post layout
