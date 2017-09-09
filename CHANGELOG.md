@@ -1,5 +1,9 @@
 # Chnagelog
 
+##### 2.1.7 - 2017/09/09
+- update cdn for MathJax (orijinal one closed)
+- add respond.js for old browsers
+
 ##### 2.1.6 - 2017/09/02
 - fix font-size for navbar
 
