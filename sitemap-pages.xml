@@ -8,6 +8,7 @@ sitemap:
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   {% for page in site.pages %}
   {% unless page.sitemap.exclude == "yes" %}
+  {% unless page.url contains 'style.css' %}
   <url>
     <loc>{{ site.url }}{{ page.url | remove: "index.html" }}</loc>
     {% if page.sitemap.lastmod %}
@@ -28,6 +29,7 @@ sitemap:
     <priority>0.3</priority>
     {% endif %}
   </url>
+  {% endunless %}
   {% endunless %}
   {% endfor %}
 </urlset>
