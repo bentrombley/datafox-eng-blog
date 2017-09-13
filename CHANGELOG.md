@@ -1,7 +1,10 @@
 # Chnagelog
 
+##### 2.2.0 - 2017/09/14
+- refactor sitemap
+
 ##### 2.1.7 - 2017/09/09
-- update cdn for MathJax (orijinal one closed)
+- update cdn for MathJax (original one closed)
 - add respond.js for old browsers
 
 ##### 2.1.6 - 2017/09/02
