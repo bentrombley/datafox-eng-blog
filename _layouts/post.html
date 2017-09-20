@@ -23,7 +23,7 @@ layout: default
         <span itemscope itemtype="http://schema.org/Person">
           {% if page.author.name %}
             {% if page.author.github %}
-          <span itemprop="name"><a href="https://github.com/{{ page.author.github }}" target="_blank" rel="nofollow">{{ page.author.name }}</a></span>
+          <span itemprop="name"><a href="https://github.com/{{ page.author.github }}" target="_blank" rel="me">{{ page.author.name }}</a></span>
             {% else %}
               {{ page.author.name }}
             {% endif %}
