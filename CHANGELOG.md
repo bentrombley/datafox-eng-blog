@@ -1,5 +1,13 @@
 # Chnagelog
 
+##### 2.2.2 - 2017/09/20
+- SEO
+    - update links
+    - replace link-atrributes **nofollow** to **me**
+    
+##### 2.2.1 - 2017/09/15
+- update style for sitemap.xml 
+
 ##### 2.2.0 - 2017/09/14
 - refactor sitemap
 
