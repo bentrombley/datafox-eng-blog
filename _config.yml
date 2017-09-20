@@ -91,10 +91,10 @@ nav_cta:
 footer:
   Company:
     - '#'
-    - { Product: 'https://www.datafox.com/product' }
-    - { Use Cases: 'https://www.datafox.com/who-benefits' }
-    - { Customers: 'https://www.datafox.com/customers' }
-    - { Company: 'https://www.datafox.com/company' }
+    - { Product: 'https://www.datafox.com/product/' }
+    - { Use Cases: 'https://www.datafox.com/who-benefits/' }
+    - { Customers: 'https://www.datafox.com/customers/' }
+    - { Company: 'https://www.datafox.com/company/' }
     - { Engineering Blog: '/' }
   Resources:
     - '#'
@@ -113,8 +113,8 @@ footer:
     - '#'
     - { Email Us: 'mailto:info@datafox.com' }
     - { Help Center: 'http://support.datafox.com/' }
-    - { Privacy Policy: 'https://www.datafox.com/privacy-policy' }
-    - { Terms of Service: 'https://www.datafox.com/terms-of-service' }
+    - { Privacy Policy: 'https://www.datafox.com/privacy-policy/' }
+    - { Terms of Service: 'https://www.datafox.com/terms-of-service/' }
 
 
 exclude:

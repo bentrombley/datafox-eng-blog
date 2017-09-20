@@ -41,7 +41,7 @@
           {% assign sub_url = sub_nav[1] | prepend: site.baseurl %}
           {% endif %}
           <li>
-            <a {% if sub_url contains '://' %}{% unless sub_url contains 'datafox.com' %}rel="nofollow" target="_blank"{% endunless %}{% endif %} class="footer_link" href="{{ sub_url }}">
+            <a {% if sub_url contains '://' %}{% unless sub_url contains 'datafox.com' %}rel="me" target="_blank"{% endunless %}{% endif %} class="footer_link" href="{{ sub_url }}">
             {{ sub_nav[0] }}
             </a>
           </li>
