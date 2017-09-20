@@ -19,13 +19,8 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <!-- Inline Custom CSS -->
-    <style>
-        {% capture include_to_scssify %}
-            {% include styles.scss %}
-        {% endcapture %}
-        {{ include_to_scssify | scssify }}
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ "/assets/styles.css" | prepend: site.baseurl }}">
 
     {% include head__scripts.html %}
 
