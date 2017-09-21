@@ -202,7 +202,7 @@ ShouldJS helps you add clear assert statements to your unit tests while eliminia
       ...
     });
 
-[ShouldJS](https://github.com/shouldjs/should.js) plugs smoothly into test frameworks like [mocha](http://visionmedia.github.io/mocha/) and you can choose whether to write simple asserts or fully English-like semantic assertions.
+[ShouldJS](https://github.com/shouldjs/should.js) plugs smoothly into test frameworks like [mocha](http://mochajs.org/) and you can choose whether to write simple asserts or fully English-like semantic assertions.
 
 
 
