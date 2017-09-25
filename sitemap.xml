@@ -4,14 +4,14 @@ sitemap:
   exclude: 'yes'
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="{{ 'sitemap-style.xsl' | prepend: site.baseurl }}"?>
+<?xml-stylesheet type="text/xsl" href="{{ '/sitemap-style.xsl' | prepend: site.url }}"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>{{ "sitemap-posts.xml" | prepend: site.baseurl }}</loc>
+    <loc>{{ "/sitemap-posts.xml" | prepend: site.url }}</loc>
     <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
   </sitemap>
   <sitemap>
-    <loc>{{ "sitemap-pages.xml" | prepend: site.baseurl }}</loc>
+    <loc>{{ "/sitemap-pages.xml" | prepend: site.url }}</loc>
     <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
   </sitemap>
 </sitemapindex>
