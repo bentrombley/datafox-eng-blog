@@ -87,7 +87,7 @@ sub par_perl_subroutine {}
 Joke variable names are like those skits between rap songs.  They're funny once and then they're annoying.  Don't do it.
 
 ### Codenames
-Codenames are fun for projects.  Calling your project “Street Fighter” or “Batman” is fun.  But don’t put it in code where it will love on long past the secret project.  “Batman” doesn’t mean anything to your reader, and you’ll be stuck explaining it to every new engineer.
+Codenames are fun for projects.  Calling your project “Street Fighter” or “Batman” is fun.  But don’t put it in code where it will live on long past the secret project.  “Batman” doesn’t mean anything to your reader, and you’ll be stuck explaining it to every new engineer.
 
 ### Acronyms
 Common acronyms are fine.  But random abbreviations and acronyms can be extremely confusion.
