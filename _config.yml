@@ -5,7 +5,7 @@ description: "Follow how the DataFox engineering team uses data science and mach
 
 email: "admin@datafox.com"
 baseurl: ""
-url: "http://eng.datafox.com"
+url: "https://eng.datafox.com"
 
 
 # Build settings
@@ -50,7 +50,7 @@ nav:
     - { Engineering: '/categories/#engineering' }
     - { Engineering Culture: '/categories/#engineering-culture' }
   GitHub:
-    - 'http://github.com/datafoxco'
+    - 'https://github.com/datafoxco'
   Product:
     - 'https://www.datafox.com/product/'
     - { Company Intelligence: 'https://www.datafox.com/product/company-intelligence/' }
@@ -99,8 +99,8 @@ footer:
   Resources:
     - '#'
     - { Resource Hub: 'https://www.datafox.com/company/resources/' }
-    - { Company Blog: 'http://blog.datafox.com' }
-    - { Engineering Blog: 'http://eng.datafox.com' }
+    - { Company Blog: 'https://blog.datafox.com' }
+    - { Engineering Blog: 'https://eng.datafox.com' }
     - { Sales Ops Meetup: 'https://www.meetup.com/Sales-Optimization' }
     - { Podcasts: 'https://itunes.apple.com/us/podcast/crm-orchestration-and-sales-optimization-by-datafox/id1247620232?mt=2' }
   Free Tools:
