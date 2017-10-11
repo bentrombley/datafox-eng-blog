@@ -2,7 +2,7 @@
 layout:       post
 uuid:         60588087-597e-4502-8f05-223752c08dfb
 categories:   engineering-culture
-tags:         [engineering culture, hackathon]
+tags:         ["engineering culture", hackathon]
 title:        The Empathy Hackathon
 date:         2017-09-24
 author:

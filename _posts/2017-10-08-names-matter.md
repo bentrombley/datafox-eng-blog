@@ -2,12 +2,13 @@
 layout:       post
 uuid:         0F4503EB-D8E7-41DC-A5B1-A7EAD30A8F89
 categories:   code-style
-tags:         [code style]
+tags:         [code, style]
 title:        Names Matter
 date:         2017-10-07
 author:
   name:       Ben Trombley
   twitter:    bentrombley
+  github:     bentrombley
 feature_img:  null
 sitemap:
   lastmod:    2017-10-07T18:00:00
