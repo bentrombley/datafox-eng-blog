@@ -83,7 +83,7 @@ sub liminal_messages {}
 sub ordinate_flunky {}
 sub par_perl_subroutine {}
 ```
-([Source](http://www.perlmonks.org/?node_id=156816]))
+([Source](http://www.perlmonks.org/?node_id=156816))
 
 Joke variable names are like those skits between rap songs.  They're funny once and then they're annoying.  Don't do it.
 
