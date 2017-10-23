@@ -1,4 +1,11 @@
-# Chnagelog
+# Changelog
+
+##### 2.3.0 - 2017/10/24
+- update adroll script
+- fix broken links
+- new article
+- init https
+- remove CNAME
 
 ##### 2.2.2 - 2017/09/20
 - SEO
