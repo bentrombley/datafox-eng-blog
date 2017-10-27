@@ -37,9 +37,9 @@
 
 {% if site.twitter.meta %}
     <!-- Metadata Twitter -->
-    <meta name="twitter:card" value="summary">
+    <meta name="twitter:card" content="summary">
     <meta content="{% if page.title == "Home" %}{{ site.title }}{% else %}{{ page.title }}{% endif %}" name="twitter:title">
-    <meta content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}' name='twitter:description">
+    <meta content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}" name="twitter:description">
     <meta content="@{{ site.twitter.username }}" name="twitter:site">
     {% if page.author.twitter %}
     <meta content="@{{ page.author.twitter }}" name="twitter:creator">
