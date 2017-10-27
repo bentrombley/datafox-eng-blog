@@ -174,7 +174,7 @@ StreamWorker handles the `pause()` and `resume()` in the stream as well as handl
 
 ## 9.  [Colors](https://github.com/Marak/colors.js)
 
-<img src="/assets/posts/img/nyan-cat-console.png" style="width: 100%" />
+<img class="img-responsive" src="/assets/posts/img/nyan-cat-console.png" alt="ANSI color codes" />
 <small>Running tests is always fun with nyan cat!</small>
 
 Okay, you may not _need_ to add colors to your console output, but it's definitely fun.  [Colors](https://github.com/Marak/colors.js) saves you the hassle of dealing with ANSI color codes:

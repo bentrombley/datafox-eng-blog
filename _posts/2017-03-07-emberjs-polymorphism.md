@@ -22,7 +22,7 @@ of recent events affecting companies you care about.  For example, today I can
 see that my former employer, Box, launched a new product, while my friend's
 company, FireEye, just announced a new partnership with Thomson Reuters.
 
-<img src="/assets/posts/img/events_feed.png" style="width: 100%" />
+<img src="/assets/posts/img/events_feed.png" class="img-responsive" alt="Polymorphism in Ember Data" />
 <small>My news feed on 3/7/17</small>
 
 When it comes to displaying an event in our app we create a new Ember data model:

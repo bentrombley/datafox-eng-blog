@@ -17,9 +17,10 @@ sitemap:
   exclude:    'no'
 ---
 
-
-<img src="/assets/posts/img/sublime-lint-errors.png" style="width: 100%" />
+<div class="text-center">
+<img class="img-responsive maa" src="/assets/posts/img/sublime-lint-errors.png" alt="Edit CoffeeScript like a Pro in 6 Minutes" />
 <small><b>Pictured Above:</b> See errors and inconsistencies in your code as you type.</small>
+</div>
 
 There are tons of articles explaining how great CoffeeScript is as a language (which is true), but few that actually talk about how you should set up your dev environment to write it.  As a CoffeeScript shop, this is how we do it at DataFox.
 
