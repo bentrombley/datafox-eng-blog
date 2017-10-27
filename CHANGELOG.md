@@ -1,5 +1,13 @@
 # Changelog
 
+##### 2.3.1 - 2017/10/28
+- remove adroll script with events
+- SEO
+    - add alternative text for images
+    - remove old unused elements
+    - update metatags
+- validate html5
+
 ##### 2.3.0 - 2017/10/24
 - update adroll script
 - fix broken links
