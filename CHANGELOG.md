@@ -1,5 +1,9 @@
 # Changelog
 
+##### 2.3.2 - 2017/10/31
+- revert commit
+    - move back adroll track script
+    
 ##### 2.3.1 - 2017/10/28
 - remove adroll script with events
 - SEO
