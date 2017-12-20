@@ -41,14 +41,18 @@ layout: default
   </div>
 
   {% if page.tags %}
-    <div class="tags">
-      <ul class="tag-list list-none list-inline mln mbxl">
-        <li class="pln">Tagged: </li>
-        {% for tag in page.tags %}
-        <li><a href="{{ site.baseurl }}/tags/{{ site.tag_page }}#{{ tag | slugify }}" class="post-tag">{{ tag }}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
+  <div class="tags">
+    <ul class="tag-list list-none list-inline fleft mln mbxl">
+      <li class="pln">Tagged: </li>
+      {% for tag in page.tags %}
+      <li><a href="{{ site.baseurl }}/tags/{{ site.tag_page }}#{{ tag | slugify }}" class="post-tag">{{ tag }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if site.disqus_name %}
+  <div id="disqus_thread"></div>
   {% endif %}
 
 </article>
