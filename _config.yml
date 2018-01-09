@@ -71,7 +71,6 @@ nav:
     - { Finance: '!!title' }
     - { Private Equity: 'https://www.datafox.com/customers/private-equity/' }
     - { Investment Banking: 'https://www.datafox.com/customers/investment-banking/' }
-
   Integration:
     - '#'
     - { Salesforce: 'https://www.datafox.com/integrations/salesforce/' }
@@ -94,11 +93,11 @@ nav_cta:
 footer:
   Company:
     - '#'
-    - { Product: 'https://www.datafox.com/product/' }
-    - { Use Cases: 'https://www.datafox.com/who-benefits/' }
-    - { Customers: 'https://www.datafox.com/customers/' }
-    - { Company: 'https://www.datafox.com/company/' }
-    - { Engineering Blog: '/' }
+    - { About Us: 'https://www.datafox.com/company/' }
+    - { Leadership: 'https://www.datafox.com/company/leadership/' }
+    - { Our Data: 'https://www.datafox.com/product/intelligent-data/' }
+    - { Press: 'https://www.datafox.com/company/press/' }
+    - { Careers: 'https://www.datafox.com/company/careers/' }
   Resources:
     - '#'
     - { Resource Hub: 'https://www.datafox.com/company/resources/' }
@@ -114,11 +113,11 @@ footer:
     - { Conference Search: 'http://www.conferenceexplorer.com/' }
   Support:
     - '#'
+    - { Contact Us: 'https://www.datafox.com/company/contact/' }
     - { Email Us: 'mailto:info@datafox.com' }
     - { Help Center: 'https://help.datafox.com/hc/en-us' }
     - { Privacy Policy: 'https://www.datafox.com/privacy-policy/' }
     - { Terms of Service: 'https://www.datafox.com/terms-of-service/' }
-
 
 exclude:
   - Gemfile
