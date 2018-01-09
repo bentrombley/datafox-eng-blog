@@ -38,8 +38,11 @@ analytics_id: "UA-72283306-1"
 
 
 # Disqus
-disqus_name: "datafox-engineering-blog"
+#disqus_name: "datafox-engineering-blog"
+disqus_name: false
 
+# Tags cloud
+tags_cloud: true
 
 # Navigation (2nd level links supported)
 nav:
