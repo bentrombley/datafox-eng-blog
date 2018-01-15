@@ -46,37 +46,65 @@ tags_cloud: true
 
 # Navigation (2nd level links supported)
 nav:
-  Categories:
-    - '/categories/'
-    - { All Categories: '/categories/' }
-    - { NodeJS: '/categories/#nodejs' }
-    - { Engineering: '/categories/#engineering' }
+  Tech Blog:
+    - { All Categories:      '/categories/' }
+    - { NodeJS:              '/categories/#nodejs' }
+    - { Engineering:         '/categories/#engineering' }
     - { Engineering Culture: '/categories/#engineering-culture' }
+    - { Archive:             '/archive/' }
+
   GitHub:
-    - 'https://github.com/datafoxco'
-  Product:
-    - 'https://www.datafox.com/product/'
-    - { Company Intelligence: 'https://www.datafox.com/product/company-intelligence/' }
-    - { Company Signals: 'https://www.datafox.com/product/company-signals/' }
-    - { Conference Intelligence: 'https://www.datafox.com/product/conference-intelligence/' }
-    - { APIs: 'https://www.datafox.com/integrations/api/' }
-  Customers:
-    - 'https://www.datafox.com/customers/'
-    - { Sales & Marketing: '!title' }
+    - { Open Source: 'https://github.com/datafoxco' }
+
+  By Benefit:
+    - { Upgrade Your CRM Data:          'https://www.datafox.com/solutions/data-foundations/' }
+    - { Prioritize Your Accounts:       'https://www.datafox.com/solutions/prioritize-your-accounts/' }
+    - { Find More Best-Fit Accounts:    'https://www.datafox.com/solutions/account-orchestration/' }
+    - { Design Data-Driven Territories: 'https://www.datafox.com/solutions/design-data-driven-territories/' }
+    - { Eliminate Account Research:     'https://www.datafox.com/customers/sales-reps/' }
+    - { Monitor Your Target Companies:  'https://www.datafox.com/product/company-signals/' }
+    - { Automate Prospecting Tasks:     'https://www.datafox.com/solutions/workflow-orchestration/' }
+    - { Maximize Conference ROI:        'https://www.datafox.com/customers/event-marketing/' }
+
+  For Sales & Marketing:
     - { Sales Operations: 'https://www.datafox.com/customers/sales-operations/' }
-    - { Sales Managers: 'https://www.datafox.com/customers/sales-managers/' }
-    - { Sales Reps: 'https://www.datafox.com/customers/sales-reps/' }
-    - { Marketing: 'https://www.datafox.com/customers/marketing/' }
-    - { Event Marketing: 'https://www.datafox.com/customers/event-marketing/' }
-    - { Finance: '!!title' }
-    - { Private Equity: 'https://www.datafox.com/customers/private-equity/' }
+    - { Sales Leadership: 'https://www.datafox.com/customers/sales-managers/' }
+    - { Marketing:        'https://www.datafox.com/customers/marketing/' }
+
+  For Finance:
+    - { Private Equity:     'https://www.datafox.com/customers/private-equity/' }
     - { Investment Banking: 'https://www.datafox.com/customers/investment-banking/' }
-  Integration:
-    - '#'
-    - { Salesforce: 'https://www.datafox.com/integrations/salesforce/' }
-    - { Marketo: 'https://www.datafox.com/integrations/marketo/' }
-    - { Chrome: 'https://www.datafox.com/integrations/chrome/' }
-    - { Slack: 'https://www.datafox.com/integrations/slack/' }
+
+  Applications:
+    - { Base Intelligence Platform: 'https://www.datafox.com/product/company-intelligence/' }
+
+  CRM Data Management:
+    - { Account Data For Accounts: 'https://www.datafox.com/product/account-data-management/' }
+    - { Account Data For Leads:    'https://www.datafox.com/product/lead-enrichment/' }
+
+  Data Sets:
+    - { Conferences & Award Lists: 'https://www.datafox.com/product/conference-intelligence/' }
+    - { Technographics:            'https://www.datafox.com/product/technographics/' }
+
+  Integrations:
+    - { Salesforce:  'https://www.datafox.com/integrations/salesforce/' }
+    - { Orchestrate: 'https://www.datafox.com/integrations/salesforce/orchestrate/' }
+    - { Enrich:      'https://www.datafox.com/integrations/salesforce/enrich/' }
+    - { Marketo:     'https://www.datafox.com/integrations/marketo/' }
+    - { Slack:       'https://www.datafox.com/integrations/slack/' }
+    - { Chrome:      'https://www.datafox.com/integrations/chrome/' }
+
+  APIs:
+    - { Overview:      'https://www.datafox.com/integrations/api/' }
+    - { Firmographics: 'https://www.datafox.com/integrations/api/company-firmographics/' }
+    - { Signals:       'https://www.datafox.com/integrations/api/company-signals/' }
+    - { Conferences:   'https://www.datafox.com/integrations/api/conferences/' }
+
+  Pricing:
+    - { Overview: 'https://www.datafox.com/product/pricing/' }
+
+  Customers:
+    - { Hear From Customers: 'https://www.datafox.com/customers/overview/' }
 
 
 # CTA links on navbar
@@ -84,9 +112,9 @@ nav_cta:
   first:
     title: 'Log In'
     link: 'https://app.datafox.com'
-#  second:
-#    title: 'Sign Up'
-#    link: 'http://info.datafox.com/request-trial.html?utm_medium=webpage&amp;utm_source=blog&amp;utm_content=navbar'
+  second:
+    title: 'Sign Up'
+    link: 'http://www.datafox.com/signup/?utm_medium=webpage&amp;utm_source=eng-blog&amp;utm_content=navbar'
 
 
 # Footer Navigation (2nd level links supported)
