@@ -39,32 +39,51 @@ ul {
 body {
 
   h1, .h1 {
-    font-size: rem(42px);
+    font-size: rem(52px);
+    line-height: rem(64px);
+    font-weight: 300;
+    @media (max-width: $sm) {
+      font-size: rem(37px);
+      line-height: rem(39px);
+    }
   }
 
   h2, .h2 {
-    font-size: rem(30px);
+    font-size: rem(24px);
+    line-height: rem(32px);
+    font-weight: 500;
+  }
+  h2.h1 {
+    margin-bottom: 18.5px;
   }
 
   h3, .h3 {
-    font-size: rem(24px);
+    font-size: rem(18px);
+    line-height: rem(30px);
+    font-weight: 700;
+
     &.datafox-blue {
       color: $df_color--blue;
     }
   }
 
   h4, .h4 {
-    font-size: rem(20px);
+    font-size: rem(18px);
+    line-height: rem(30px);
+    font-weight: 400;
   }
 
   h5, .h5 {
-    font-size: rem(18px);
+    font-size: rem(15px);
+    font-weight: 700;
   }
 
   h6, .h6 {
-    font-size: rem(16px);
+    font-size: rem(15px);
+    font-weight: 400;
   }
 
+  ol li,
   ul li,
   p, .p {
     &.smallest {
@@ -78,7 +97,7 @@ body {
     }
     // normal
     font-size: rem(18px);
-
+    line-height: 1.667;
     &.large {
       font-size: rem(20px);
     }
@@ -88,6 +107,15 @@ body {
     &.largest {
       font-size: rem(24px);
     }
+
+    // new specific sizes
+    &.font-size--15 {
+      font-size: rem(15px);
+    }
+    &.font-size--21 {
+      font-size: rem(21px);
+    }
+
   }
 
   .text-light {
@@ -104,6 +132,11 @@ body {
   }
   .text-bold {
     font-weight: 700 !important;
+  }
+
+
+  .drop-shadow {
+    filter: drop-shadow(0px 2px 3px rgba($df_color--black-base,.15));
   }
 
 }

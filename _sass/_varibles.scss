@@ -1,3 +1,7 @@
+$brand-black:           #282828;
+$brand-white:           #ffffff;
+$brand-dark:            #25313e;
+
 $df_bg--grey:   #f5f5f5;// #f0f4f7;
 
 $df_color--blue:            #2198DB;
@@ -48,13 +52,44 @@ $df_bg--blue-light: #f6fbff;
 
 
 
-// Fonts
-$main_font: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-
-$hero_size: 315px;
+//version 3.0 colors
+$color--pickled-bluewood: #2E404D;
+$color--fruit-salad:      #4CAF50;
+$color--fuchsia-blue:     #7E57C2;
+$color--persian-green:    #009688;
+$color--teal:             #00897B;
+$color--mirage:           #1A242A;
+$color--dark-mirage:      #161E28;
+$color--lochmara:         #0288D1;
+$color--chathams-blue:    #145981;
+$color--dodger-blue:      #2196F3; //#2198DB;
+$color--san-marino:       #3F51B5;
+$color--wild-sand:        #F4F4F4;
+$color--catskill-white:   #EEF3F8;
+$color--link-water:       #D9E6F8;
+$color--blue-bayoux:      #4C617E;
+$color--hawkes-blue:      #E3F2FD;
+$color--swans-down:       #D6EFED;
+$color--blue-romance:     #D0F7D2;
+$color--moon-raker:       #ECD9F7;
+$color--ebony-clay:       #243040;
+$color--alto:             #DBDBDB;
+$color--warm-grey:        #818181;
 
 // Sizes
 $sm: 568px;
 $md: 768px;
 $lg: 1024px;
 $xl: 1280px;
+
+$navbar-size: 81px;
+
+$hero_size: 315px;
+
+
+
+
+// Fonts
+$main_font: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+

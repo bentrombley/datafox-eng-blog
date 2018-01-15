@@ -1,0 +1,263 @@
+.nav > li > a {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+// Main navigation header
+.main-nav {
+  border: 0;
+  font-size: $font-size-small;
+  text-transform: uppercase;
+
+  box-shadow: 0 5px 10px rgba($df_color--darkblue-2,.15);
+  min-height: $navbar-size;
+
+  @media (max-width: $screen-sm-min) {
+    font-size: $font-size-base;
+    background-color: rgba(white,0.9); //- Make opaque
+  }
+
+  .container {
+    margin-top: 12px;
+    @media (max-width: 1400px) {
+      width: 98%;
+    }
+  }
+
+  ul.show-on-scroll {
+    top: 4px;
+    position: relative;
+    a {
+      white-space: nowrap;
+      @include transit(all, .5s, ease);
+
+    }
+
+    li {
+      @include transit(all, .5s, ease);
+
+      &:nth-of-type(1){
+
+      }
+      &:nth-last-of-type(1) {
+        width: 0px;
+        opacity: 0;
+      }
+    }
+  }
+
+  &.scrolled-down {
+    background-color: rgba(white, 1);  // opaque
+    ul.show-on-scroll {
+      li {
+        @include transit(all, .5s, ease);
+
+        &:nth-of-type(1) a{
+          border-color: white !important;
+          @include transit(all, .5s, ease);
+
+        }
+        &:nth-last-of-type(1) {
+          //width: 170px;
+          width: 104px;
+          opacity:1;
+        }
+      }
+    }
+
+  }
+
+  &.navbar-default {
+    background-color: rgba(white, 1);  // opaque
+    .navbar-collapse,
+    .navbar-form {
+      border-color: rgba(0,0,0,0);
+    }
+    .navbar-nav {
+      .active {
+        border-bottom: none;
+      }
+      > li {
+        a {
+          //font-weight: 600;
+          font-weight: 500;
+          color: $df_color--blue;
+          text-transform: none;
+          font-size: rem(15px);
+          @media (max-width: 991px) {
+            padding: 15px 20px;
+          }
+          &:hover,
+          &:focus {
+            color: $df_color--blue;
+            background: none;
+          }
+          .mls {
+            margin-left: 12px !important;
+          }
+          @media (min-width: $screen-sm-min) {
+            &.login {
+              border: 2px solid $df_color--blue !important;
+              color: $df_color--blue !important;
+              border-radius: 3px !important;
+              padding: 5px 20px !important;
+              margin: 6px !important;
+              //font-weight: 600 !important;
+              font-weight: 500 !important;
+              &:hover {
+                background: $df_color--blue !important;
+                color: white !important;
+                border: 2px solid $df_color--blue !important;
+              }
+            }
+            &.signup {
+              border: 2px solid $df_color--blue;
+              border-radius: 4px;
+              padding: 5px 20px;
+              margin: 11px;
+              color: white;
+              background-color: $df_color--blue;
+              &:hover {
+                background: $df_color--blue !important;
+                color: white !important;
+                border: 2px solid $df_color--blue !important;
+              }
+            }
+
+          }
+
+        }
+        .dropdown-menu {
+          left: -13px;
+          border-radius: 3px;
+          padding: rem(16px) rem(32px);
+          background: $df_color--darkblue-3;
+          @media (min-width: $md) {
+            &:before {
+              content: " ";
+              position: absolute;
+              width: 0;
+              height: 0;
+              border-left: 10px solid transparent;
+              border-right: 10px solid transparent;
+              border-bottom: 10px solid $df_color--darkblue-3;
+              top: -10px;
+              left: 40px;
+            }
+            &.product {
+              min-width: 430px;
+              &:before {
+                left: 50px;
+              }
+            }
+            &.solutions {
+              min-width: 490px;
+              &:before {
+                left: 52px;
+              }
+            }
+            &.use-cases:before {
+              left: 56px;
+            }
+            &.integrations:before {
+              left: 65px;
+            }
+            &.api:before {
+              left: 35px;
+            }
+            &.tech-blog {
+              min-width: 360px;
+              &:before {
+                left: 53px;
+              }
+            }
+          }
+          > li {
+            background: $df_color--darkblue-3;
+            a{
+              background: $df_color--darkblue-3;
+              padding: rem(5px) rem(20px) rem(5px) 0;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+            .title {
+              color: white;
+              text-transform: none;
+              //font-weight: 600;
+              font-weight: 500;
+              font-size: rem(16px);
+              border-bottom: 1px solid rgba(white,.1);
+              display: block;
+              margin-bottom: rem(10px);
+              padding-bottom: rem(10px);
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  .dropdown-menu {
+    font-size: $font-size-small;
+    background-color: $brand-black;
+
+    right: initial;
+
+    a, a:hover {
+      background-color: $brand-black;
+      color: $brand-white;
+    }
+  }
+
+  .navbar-brand {
+    padding: 7px 10px;
+  }
+
+  .navbar-nav {
+    @media (min-width: $md) {
+      padding-left: 70px;
+    }
+
+    @media (min-width: $screen-xs-max) and (max-width: $screen-lg-min) {
+      padding-left: 70px;
+    }
+
+    .active {
+      border-bottom: 3px solid $brand-primary;
+    }
+  }
+
+  .datafox-brand {
+    height: 40px;
+  }
+
+}
+
+//- Add support for showing menu dropdowns on hover in the navbar
+//- taken from http://stackoverflow.com/questions/8878033/how-to-make-twitter-bootstrap-menu-dropdown-on-hover-rather-than-click
+.main-nav {
+  @media (min-width: 979px) {
+    ul.nav li.dropdown:hover > ul.dropdown-menu {
+      display: block;
+    }
+  }
+}
+
+// add support for sticking navbars to the top on scroll
+.sticky.stuck {
+  position: fixed;
+  top: 55px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+body.is-desktop {
+  .open>.dropdown-menu {
+    @media (min-width: $md) {
+      display: none;
+    }
+  }
+}
