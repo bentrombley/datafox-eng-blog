@@ -2,61 +2,67 @@
 layout: default
 ---
 
-<article class="post" itemscope itemtype="https://schema.org/BlogPosting">
+<div class="page-content">
+  <div class="wrap">
 
-  <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">{{ page.title | escape }}</h1>
-    <p class="post-meta">
-      <span class="post_date nowrap mrm">
-        <span class="fa fa-calendar mrs"></span>
-        <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time>
-      </span>
+    <article class="post" itemscope itemtype="https://schema.org/BlogPosting">
 
-      {% if page.categories %}
-      <span class="post_categories nowrap mrm">
-        <span class="fa fa-tag mrs"></span> <a href="{{ '/categories/#' | prepend: site.baseurl | append: page.categories[0] }}">{{ page.categories }}</a>
-      </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">{{ page.title | escape }}</h1>
+        <p class="post-meta">
+          <span class="post_date nowrap mrm">
+            <span class="fa fa-calendar mrs"></span>
+            <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time>
+          </span>
+
+          {% if page.categories %}
+          <span class="post_categories nowrap mrm">
+            <span class="fa fa-tag mrs"></span> <a href="{{ '/categories/#' | prepend: site.baseurl | append: page.categories[0] }}">{{ page.categories }}</a>
+          </span>
+          {% endif %}
+
+          <span class="post_author nowrap" itemprop="author">
+            <span class="fa fa-user-circle-o mrs"></span>
+            <span itemscope itemtype="http://schema.org/Person">
+              {% if page.author.name %}
+                {% if page.author.github %}
+              <span itemprop="name"><a href="https://github.com/{{ page.author.github }}" target="_blank" rel="me">{{ page.author.name }}</a></span>
+                {% else %}
+                  {{ page.author.name }}
+                {% endif %}
+              {% else %}
+              <span itemprop="name"><a href="https://github.com/datafoxco" target="_blank" rel="me">DataFoxCo</a></span>
+              {% endif %}
+            </span>
+          </span>
+        </p>
+
+      </header>
+
+      <div class="post-content" itemprop="articleBody">
+        {{ content }}
+      </div>
+
+      {% if page.tags %}
+      <div class="tags">
+        <ul class="tag-list list-none list-inline mln mbxl">
+          <li class="pln">Tagged: </li>
+          {% for tag in page.tags %}
+          <li><a href="{{ site.baseurl }}/tags/{{ site.tag_page }}#{{ tag | slugify }}" class="post-tag">{{ tag }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
       {% endif %}
 
-      <span class="post_author nowrap" itemprop="author">
-        <span class="fa fa-user-circle-o mrs"></span>
-        <span itemscope itemtype="http://schema.org/Person">
-          {% if page.author.name %}
-            {% if page.author.github %}
-          <span itemprop="name"><a href="https://github.com/{{ page.author.github }}" target="_blank" rel="me">{{ page.author.name }}</a></span>
-            {% else %}
-              {{ page.author.name }}
-            {% endif %}
-          {% else %}
-          <span itemprop="name"><a href="https://github.com/datafoxco" target="_blank" rel="me">DataFoxCo</a></span>
-          {% endif %}
-        </span>
-      </span>
-    </p>
+      {% if site.disqus_name %}
+      <div id="disqus_thread"></div>
+      {% endif %}
 
-  </header>
+    </article>
 
-  <div class="post-content" itemprop="articleBody">
-    {{ content }}
+    {% if site.tags_cloud %}
+      {% include tags-cloud.html %}
+    {% endif %}
+
   </div>
-
-  {% if page.tags %}
-  <div class="tags">
-    <ul class="tag-list list-none list-inline mln mbxl">
-      <li class="pln">Tagged: </li>
-      {% for tag in page.tags %}
-      <li><a href="{{ site.baseurl }}/tags/{{ site.tag_page }}#{{ tag | slugify }}" class="post-tag">{{ tag }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-
-  {% if site.disqus_name %}
-  <div id="disqus_thread"></div>
-  {% endif %}
-
-</article>
-
-{% if site.tags_cloud %}
-  {% include tags-cloud.html %}
-{% endif %}
+</div>

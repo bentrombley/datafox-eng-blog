@@ -1,14 +1,44 @@
 ---
 layout: default
 ---
-<div class="post">
 
-  <header class="post-header">
-    <h1>{{ page.title }}</h1>
-  </header>
+<section class="section section-header section-hero section-hero--{{ page.hero.bg }} bg-img bg-img--{{ page.hero.bg }} section-md">
+  <div class="container container-hero">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <div class="container-hero__inner">
+          <div class="container">
+            <h1>DataFox Tech Blog: {{ page.title }}</h1>
+            <!--
+            <h4 class="mtxl color--swans-down text-readable extra"></h4>
+            <p class="mtxl">
+              <a class="trial-btn btn btn--teal-light mdl-js-button mdl-js-ripple-effect">GET API CONSULTATION</a>
+            </p>
+            -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <article class="post-content">
-  {{ content }}
-  </article>
+<div class="page-content">
+  <div class="wrap">
+    {% if page.type == 'archive' %}
 
+      {{ content }}
+
+    {% else %}
+
+          <div class="post">
+
+            <article class="post-content">
+              {{ content }}
+            </article>
+
+          </div>
+
+    {% endif %}
+
+  </div>
 </div>

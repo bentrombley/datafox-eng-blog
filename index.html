@@ -3,28 +3,54 @@ layout: default
 title:  Home
 ---
 
-<div class="home">
-  <h1 class="home-title mbxl">DataFox Tech Blog</h1>
-  <ul class="posts">
 
-    {% for post in site.posts %}
-      <li>
-        <span class="post-date nowrap mrm">
-          <span class="fa fa-calendar mrs"></span>
-          <span class="mrm">{{ post.date | date: "%b %-d, %Y" }}</span>
-          {% if post.categories %}
-            <span class="post_categories nowrap mrm">
-              <span class="fa fa-tag mrs"></span> <a href="{{ '/categories/#' | prepend: site.baseurl | prepend: site.url | append: post.categories[0] }}">{{ post.categories }}</a>
+<section class="section section-header section-hero section-hero--homepage bg-img bg-img--homepage section-md">
+  <div class="container container-hero">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <div class="container-hero__inner">
+          <div class="container">
+            <h1>DataFox Tech Blog</h1>
+            <!--
+            <h4 class="mtxl color--swans-down text-readable extra"></h4>
+            <p class="mtxl">
+              <a class="trial-btn btn btn--teal-light mdl-js-button mdl-js-ripple-effect">GET API CONSULTATION</a>
+            </p>
+            -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="page-content">
+  <div class="wrap">
+
+
+    <div class="home">
+      <ul class="posts">
+        {% for post in site.posts %}
+        <li>
+            <span class="post-date nowrap mrm">
+              <span class="fa fa-calendar mrs"></span>
+              <span class="mrm">{{ post.date | date: "%b %-d, %Y" }}</span>
+              {% if post.categories %}
+                <span class="post_categories nowrap mrm">
+                  <span class="fa fa-tag mrs"></span> <a href="{{ '/categories/#' | prepend: site.baseurl | prepend: site.url | append: post.categories[0] }}">{{ post.categories }}</a>
+                </span>
+              {% endif %}
             </span>
-          {% endif %}
-        </span>
-        <a class="post-link mbm" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        <span>
-          {{ post.excerpt | strip_html | normalize_whitespace | truncate: 250 | escape }}
-        </span>
-        <a class="post-readmore mts" href="{{ post.url | prepend: site.baseurl }}">Read more <i class="mls fa fa-angle-right"></i></a>
-      </li>
-    {% endfor %}
-  </ul>
+          <a class="post-link mbm" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          <span>
+              {{ post.excerpt | strip_html | normalize_whitespace | truncate: 250 | escape }}
+            </span>
+          <a class="post-readmore mts" href="{{ post.url | prepend: site.baseurl }}">Read more <i class="mls fa fa-angle-right"></i></a>
+        </li>
+        {% endfor %}
+      </ul>
 
+    </div>
+
+  </div>
 </div>
