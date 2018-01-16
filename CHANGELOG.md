@@ -1,5 +1,14 @@
 # Changelog
 
+##### 2.4.0 - 2018/01/16
+- disable disqus comments (config.yml)
+- init archive page
+- add option to config.yml show/hide tags-cloud
+- update navbar menu
+- implement MaterialDesignLight
+- add JS pagination to homepage
+- update templates
+
 ##### 2.3.2 - 2017/10/31
 - revert commit
     - move back adroll track script
