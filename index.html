@@ -1,6 +1,7 @@
 ---
 layout: default
 title:  Home
+mixitup: true
 ---
 
 
@@ -24,14 +25,14 @@ title:  Home
   </div>
 </section>
 
-<div class="page-content">
+<div class="page-content mixit-wrapper-top">
   <div class="wrap">
 
 
     <div class="home">
-      <ul class="posts">
+      <ul class="posts mixit-wrapper">
         {% for post in site.posts %}
-        <li>
+        <li class="mixit-wrapper__item">
             <span class="post-date nowrap mrm">
               <span class="fa fa-calendar mrs"></span>
               <span class="mrm">{{ post.date | date: "%b %-d, %Y" }}</span>
@@ -49,6 +50,10 @@ title:  Home
         </li>
         {% endfor %}
       </ul>
+
+    </div>
+
+    <div class="mixit-pagination">
 
     </div>
 

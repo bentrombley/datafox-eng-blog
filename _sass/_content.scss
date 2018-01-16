@@ -141,3 +141,51 @@ article {
     }
   }
 }
+
+/**
+ * MixItUp
+ */
+.mixit-wrapper {
+  min-height: 600px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mixit-wrapper__item {
+  display: none;
+}
+
+.mixit-pagination {
+  text-align: center;
+
+  .nav-links{
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 3px;
+    border: 1px solid $df_color--grey;
+    color: $df_color--black;
+    &.active {
+      color: white;
+      background: $df_color--blue;
+      border-color: $df_color--blue;
+    }
+    &.pager {
+
+    }
+    &.page-prev {
+
+    }
+    &.page-next {
+
+    }
+    &.triple-dots {
+      cursor: default;
+    }
+    &.disabled {
+      display: none;
+      cursor: default;
+      color: rgba($df_color--black, .7);
+      background: $df_color--grey-lightest;
+    }
+  }
+}
