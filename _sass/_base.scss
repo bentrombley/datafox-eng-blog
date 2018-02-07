@@ -13,6 +13,7 @@ html, body {
 
 html {
   background: $df_color--black;
+  -webkit-font-smoothing: antialiased;
 }
 
 html,
@@ -36,6 +37,20 @@ body {
   //font-weight: 300;
   //background-color: #fdfdfd;
   background: $df_color--black;
+
+  // override container class
+  .container {
+    @media (min-width: $screen-sm-min) {
+      width: 100%;
+    }
+    @media (min-width: $screen-md-min) {
+      width: 100%;
+    }
+    @media (min-width: $screen-lg-min) {
+      width: $container-lg;
+    }
+  }
+
 }
 
 

@@ -6,16 +6,22 @@
         <p>
           <a href="https://www.datafox.com/" title="DataFox"><img class="footer__logo" src="{{ '/assets/images/datafox-logo-white.png' | prepend: site.baseurl | prepend: site.url }}" alt="DataFox Logo"></a>
         </p>
-        <p>
-          <a href="tel:1-415-969-2142">(415) 969-2144</a>
-          <br>
-          <a href="mailto:info@datafox.com">info@datafox.com</a>
-        </p>
+        <ul class="list-unstyled">
+          <li>
+            <a href="tel:1-415-969-2142">(415) 969-2144</a>
+          </li>
+          <li>
+            <a href="https://www.datafox.com/company/contact/">Contact Us</a>
+          </li>
+          <li>
+            <a href="https://www.datafox.com/terms-of-service/">Terms of Service</a>
+          </li>
+          <li>
+            <a href="https://www.datafox.com/privacy-policy/">Privacy Policy</a>
+          </li>
+        </ul>
 
       </div>
-
-      <div class="col-md-1"></div>
-
 
       {% for nav in site.footer %}
 
@@ -28,7 +34,7 @@
 
       {% assign sub_len = nav[1] | size | minus: 1 %}
 
-      <div class="col-sm-6 col-md-2">
+      <div class="col-md-3">
         <span class="title">{{ nav[0] }}</span>
 
         <ul class="list-unstyled">

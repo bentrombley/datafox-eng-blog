@@ -77,6 +77,7 @@ nav:
 
   Applications:
     - { Base Intelligence Platform: 'https://www.datafox.com/product/company-intelligence/' }
+    - { Account Scoring:            'https://www.datafox.com/product/account-scoring/' }
 
   CRM Data Management:
     - { Account Data For Accounts: 'https://www.datafox.com/product/account-data-management/' }
@@ -123,29 +124,18 @@ footer:
     - '#'
     - { About Us: 'https://www.datafox.com/company/' }
     - { Leadership: 'https://www.datafox.com/company/leadership/' }
-    - { Our Data: 'https://www.datafox.com/product/intelligent-data/' }
     - { Press: 'https://www.datafox.com/company/press/' }
     - { Careers: 'https://www.datafox.com/company/careers/' }
-  Resources:
+  WHAT’S DIFFERENT:
     - '#'
+    - { Intelligent Data: 'https://www.datafox.com/product/intelligent-data/' }
+    - { Scoring Methodology: 'https://www.datafox.com/product/account-scoring/methodology/' }
+    - { Signals Data: 'https://www.datafox.com/product/company-signals/' }
+  Resources:
     - { Resource Hub: 'https://www.datafox.com/company/resources/' }
     - { Company Blog: 'https://blog.datafox.com' }
     - { Engineering Blog: 'https://eng.datafox.com' }
     - { Sales Ops Meetup: 'https://www.meetup.com/Sales-Optimization' }
-    - { Podcasts: 'https://itunes.apple.com/us/podcast/crm-orchestration-and-sales-optimization-by-datafox/id1247620232?mt=2' }
-  Free Tools:
-    - '#'
-    - { Chrome Extension: 'https://www.datafox.com/integrations/chrome/' }
-    - { Slack Alerts: 'https://www.datafox.com/integrations/slack/' }
-    - { Business Search: 'https://datafox.com/search' }
-    - { Conference Search: 'http://www.conferenceexplorer.com/' }
-  Support:
-    - '#'
-    - { Contact Us: 'https://www.datafox.com/company/contact/' }
-    - { Email Us: 'mailto:info@datafox.com' }
-    - { Help Center: 'https://help.datafox.com/hc/en-us' }
-    - { Privacy Policy: 'https://www.datafox.com/privacy-policy/' }
-    - { Terms of Service: 'https://www.datafox.com/terms-of-service/' }
 
 exclude:
   - Gemfile

@@ -1,5 +1,10 @@
 # Changelog
 
+##### 2.4.1 - 2018/02/07
+- update navbar
+- update footer menu
+- update bootstrap styles
+
 ##### 2.4.0 - 2018/01/16
 - disable disqus comments (config.yml)
 - init archive page
