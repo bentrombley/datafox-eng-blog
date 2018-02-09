@@ -1,4 +1,24 @@
 
+
+.clear {
+  clear: both;
+  &-sm {
+    @media (max-width: $screen-sm - 1px) {
+      clear: both;
+    }
+  }
+  &-md {
+    @media (max-width: $screen-md - 1px) {
+      clear: both;
+    }
+  }
+  &-lg {
+    @media (max-width: $screen-lg - 1px) {
+      clear: both;
+    }
+  }
+}
+
 /* Utility */
 
 .wrap:before,

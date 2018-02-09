@@ -47,7 +47,7 @@ tags_cloud: true
 # Navigation (2nd level links supported)
 nav:
   Tech Blog:
-    - { All Categories:      '/categories/' }
+    - { All Categories:      '/categories/#' }
     - { NodeJS:              '/categories/#nodejs' }
     - { Engineering:         '/categories/#engineering' }
     - { Engineering Culture: '/categories/#engineering-culture' }

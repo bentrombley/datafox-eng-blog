@@ -7,6 +7,12 @@
   background-color: #fff;
 }
 
+.section-header + .page-content {
+  padding: 61px 0 30px;
+  @media (min-width: $md) {
+    padding: 111px 0 30px;
+  }
+}
 
 /* Home styles */
 /* ----------------------------------------------------------*/

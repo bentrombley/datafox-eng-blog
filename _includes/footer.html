@@ -2,7 +2,7 @@
 <footer class="base-footer">
   <div class="container container-footer">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-sm-6 col-md-3">
         <p>
           <a href="https://www.datafox.com/" title="DataFox"><img class="footer__logo" src="{{ '/assets/images/datafox-logo-white.png' | prepend: site.baseurl | prepend: site.url }}" alt="DataFox Logo"></a>
         </p>
@@ -32,26 +32,27 @@
       {% assign url = nav[1][0] | prepend: site.baseurl %}
       {% endif %}
 
+
       {% assign sub_len = nav[1] | size | minus: 1 %}
 
-      <div class="col-md-3">
+      <div class="col-sm-6 col-md-3">
         <span class="title">{{ nav[0] }}</span>
 
         <ul class="list-unstyled">
           {% for i in (1..sub_len) %}
 
-          {% for sub_nav in nav[1][i] %}
-          {% assign sub_is_relative = sub_nav[1] | slice: 0 %}
-          {% assign sub_url = sub_nav[1] %}
-          {% if sub_is_relative == '/' %}
-          {% assign sub_url = sub_nav[1] | prepend: site.baseurl %}
-          {% endif %}
-          <li>
-            <a {% if sub_url contains '://' %}{% unless sub_url contains 'datafox.com' %}rel="me" target="_blank"{% endunless %}{% endif %} class="footer_link" href="{{ sub_url }}">
-            {{ sub_nav[0] }}
-            </a>
-          </li>
-          {% endfor %}
+            {% for sub_nav in nav[1][i] %}
+              {% assign sub_is_relative = sub_nav[1] | slice: 0 %}
+              {% assign sub_url = sub_nav[1] %}
+              {% if sub_is_relative == '/' %}
+              {% assign sub_url = sub_nav[1] | prepend: site.baseurl %}
+              {% endif %}
+              <li>
+                <a {% if sub_url contains '://' %}{% unless sub_url contains 'datafox.com' %}rel="me" target="_blank"{% endunless %}{% endif %} class="footer_link" href="{{ sub_url }}">
+                {{ sub_nav[0] }}
+                </a>
+              </li>
+            {% endfor %}
 
           {% endfor %}
 
@@ -59,6 +60,9 @@
 
       </div>
 
+      {% if nav[0] == "Company" %}
+      <div class="clear-md"></div>
+      {% endif %}
       {% endfor %}
 
     </div>

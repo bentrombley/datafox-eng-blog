@@ -1,5 +1,9 @@
 # Changelog
 
+##### 2.4.2 - 2018/02/09
+- update navbar
+- fix footer navigation style
+
 ##### 2.4.1 - 2018/02/07
 - update navbar
 - update footer menu

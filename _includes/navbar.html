@@ -1,5 +1,5 @@
 
-<nav class="main-nav navbar navbar-default navbar-fixed-top page-top-navbar scrolled-down">
+<nav class="main-nav navbar navbar-default navbar-fixed-top page-top-navbar">
   <div class="container">
     <div class="navbar-header">
       <button class="navbar-toggle" id="menu-toggle" type="button">
@@ -23,7 +23,7 @@
                   <span class="title">Categories</span>
                 </li>
                 <li>
-                  <a href="{{ '/categories/' | prepend: site.baseurl }}">All Categories</a>
+                  <a href="{{ '/categories/#' | prepend: site.baseurl }}">All Categories</a>
                 </li>
                 <li>
                   <a href="{{ '/categories/#nodejs' | prepend: site.baseurl }}">NodeJS</a>
@@ -196,13 +196,11 @@
       </ul>
       <ul class="nav navbar-nav navbar-right show-on-scroll">
         <li>
-          <a class="login mdl-js-button mdl-js-ripple-effect" href="https://app.datafox.com">LOG IN</a>
+          <a class="login mdl-js-button mdl-js-ripple-effect" href="https://app.datafox.com/login?utm_source=eng_blog&utm_medium=log_in&utm_term=18Q1">LOG IN</a>
         </li>
-        {% if false %}
         <li>
-          <a class="login trial-btn mdl-js-button mdl-js-ripple-effect"  href="https://www.datafox.com/">REQUEST DEMO</a>
+          <a class="login trial-btn mdl-js-button mdl-js-ripple-effect"  href="https://www.datafox.com/signup/?utm_source=eng_blog&utm_medium=request_demo&utm_term=18Q1">REQUEST DEMO</a>
         </li>
-        {% endif %}
       </ul>
     </div>
   </div>
@@ -230,7 +228,7 @@
             {% for sub_nav in nav[1][i] %}
 
               <li>
-                <a {% if sub_url contains '://' %}{% unless sub_url contains 'datafox.com' %}target="_blank"{% endunless %}{% endif %} class="sidebar-nav-item sidebar-nav-item-sub {% if page.url == sub_nav[1] %}active{% endif %}" href="{{ sub_nav[1] }}">
+                <a class="js-mobile-menu__link" {% if sub_url contains '://' %}{% unless sub_url contains 'datafox.com' %}target="_blank"{% endunless %}{% endif %} class="sidebar-nav-item sidebar-nav-item-sub {% if page.url == sub_nav[1] %}active{% endif %}" href="{{ sub_nav[1] }}">
                 {{ sub_nav[0] }}
                 </a>
               </li>
@@ -243,6 +241,11 @@
       </li>
 
       {% endfor %}
+
+      <li class="phl">
+        <a class="js-mobile-menu__link login trial-btn mdl-js-button mdl-js-ripple-effect"  href="https://www.datafox.com/signup/?utm_source=eng_blog&utm_medium=request_demo&utm_term=18Q1">REQUEST DEMO</a>
+        <a class="js-mobile-menu__link login mdl-js-button mdl-js-ripple-effect" href="https://app.datafox.com/login?utm_source=eng_blog&utm_medium=log_in&utm_term=18Q1">LOG IN</a>
+      </li>
 
     </ul>
 
