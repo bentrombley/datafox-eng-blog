@@ -20,7 +20,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ "/assets/styles.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/assets/styles.css?ver=" | prepend: site.baseurl | append: site.version }}">
 
     {% include head__scripts.html %}
 
