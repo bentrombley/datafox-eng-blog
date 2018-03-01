@@ -46,7 +46,7 @@ All you have to do is:
 
 Then add a bit of JavaScript that removes `truncate class` on click.  [Try it out!](http://jsbin.com/bemoqoy/3/edit?html,css,js,output)!
 
-It was working brilliantly until the designs changed. Now I needed to show a few rows of text instead of a single row, but the `text-overflow` property only works for a single line!
+It was working brilliantly, but after some internal testing we received feedback that we wanted hide or show multiple rows instead of just one, but the `text-overflow` property only works for a single line!
 
 ### I considered various options
 
