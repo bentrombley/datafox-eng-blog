@@ -1,7 +1,7 @@
 # Site settings
 title: "DataFox Tech Blog"
 description: "Follow how the DataFox engineering team uses data science and machine learning to provide the best data-driven solutions to meet your growth objectives"
-version: "2.4.2"
+version: "2.5.1"
 
 email: "admin@datafox.com"
 baseurl: ""
@@ -136,6 +136,7 @@ footer:
     - { Scoring Methodology: 'https://www.datafox.com/product/account-scoring/methodology/' }
     - { Signals Data: 'https://www.datafox.com/product/company-signals/' }
   Resources:
+    - '#'
     - { Resource Hub: 'https://www.datafox.com/company/resources/' }
     - { Company Blog: 'https://blog.datafox.com' }
     - { Engineering Blog: 'https://eng.datafox.com' }

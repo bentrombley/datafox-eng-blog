@@ -1,5 +1,9 @@
 # Changelog
 
+##### 2.5.1 - 2018/03/02
+- update meta description
+- add missing link to footer
+
 ##### 2.5.0 - 2018/03/02
 - refactor footer with purecss grid (new global style)
 
