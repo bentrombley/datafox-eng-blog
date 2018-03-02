@@ -1,5 +1,8 @@
 # Changelog
 
+##### 2.5.0 - 2018/03/02
+- refactor footer with purecss grid (new global style)
+
 ##### 2.4.2 - 2018/02/09
 - update navbar
 - fix footer navigation style
