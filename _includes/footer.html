@@ -1,8 +1,8 @@
 <!-- Footer -->
 <footer class="base-footer">
   <div class="container container-footer">
-    <div class="row">
-      <div class="col-sm-6 col-md-3">
+    <div class="pure-g phm">
+      <div class="pure-u-1-1 pure-u-sm-1-3 pure-u-md-1-5">
         <p>
           <a href="https://www.datafox.com/" title="DataFox"><img class="footer__logo" src="{{ '/assets/images/datafox-logo-white.png' | prepend: site.baseurl | prepend: site.url }}" alt="DataFox Logo"></a>
         </p>
@@ -12,12 +12,6 @@
           </li>
           <li>
             <a href="https://www.datafox.com/company/contact/">Contact Us</a>
-          </li>
-          <li>
-            <a href="https://www.datafox.com/terms-of-service/">Terms of Service</a>
-          </li>
-          <li>
-            <a href="https://www.datafox.com/privacy-policy/">Privacy Policy</a>
           </li>
         </ul>
 
@@ -35,7 +29,7 @@
 
       {% assign sub_len = nav[1] | size | minus: 1 %}
 
-      <div class="col-sm-6 col-md-3">
+      <div class="pure-u-1-1 pure-u-sm-1-3 pure-u-md-1-5">
         <span class="title">{{ nav[0] }}</span>
 
         <ul class="list-unstyled">
@@ -66,10 +60,22 @@
       {% endfor %}
 
     </div>
-    <div class="row"><div class="col-md-12"><hr></div></div>
-    <div class="row">
-      <div class="col-sm-6">
+    <div class="pure-g phm"><div class="pure-u-1-1"><hr></div></div>
+    <div class="pure-g phm pure-text-xs-center">
+      <div class="pure-u-1-1 pure-u-sm-1-2">
+        <p class="smaller pure-hidden-sm pure-hidden-md pure-hidden-lg pure-hidden-xl">
+          <a href="https://www.datafox.com/terms-of-service/">Terms of Service</a>
+          &nbsp;|&nbsp;
+          <a href="https://www.datafox.com/privacy-policy/">Privacy Policy</a>
+        </p>
         <p class="smaller">&copy; 2013 - {{ site.time | date: '%Y' }}&nbsp;&nbsp;<a href="https://www.datafox.com/">DataFox Inc.</a>&nbsp;All Rights Reserved.</p>
+      </div>
+      <div class="pure-u-1-1 pure-u-sm-1-2 text-right pure-hidden-xs">
+        <p class="smaller">
+          <a href="https://www.datafox.com/terms-of-service/">Terms of Service</a>
+          &nbsp;|&nbsp;
+          <a href="https://www.datafox.com/privacy-policy/">Privacy Policy</a>
+        </p>
       </div>
     </div>
   </div>
