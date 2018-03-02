@@ -1,0 +1,40 @@
+/* pure-text-xs */
+@media screen and (max-width:35.438em) {
+  .pure-text-xs-left{text-align: left}
+  .pure-text-xs-center{text-align: center}
+  .pure-text-xs-right{text-align: right}
+  .pure-text-xs-justify{text-align: justify}
+  .pure-text-xs-initial{text-align: initial}
+}
+/* pure-text-sm */
+@media screen and (min-width:35.5em) and (max-width:47.938em) {
+  .pure-text-sm-left{text-align: left}
+  .pure-text-sm-center{text-align: center}
+  .pure-text-sm-right{text-align: right}
+  .pure-text-sm-justify{text-align: justify}
+  .pure-text-sm-initial{text-align: initial}
+}
+/* pure-text-md */
+@media screen and (min-width:48em) and (max-width:63.938em) {
+  .pure-text-md-left{text-align: left}
+  .pure-text-md-center{text-align: center}
+  .pure-text-md-right{text-align: right}
+  .pure-text-md-justify{text-align: justify}
+  .pure-text-md-initial{text-align: initial}
+}
+/* pure-text-lg */
+@media screen and (min-width:64em) and (max-width:79.938em) {
+  .pure-text-lg-left{text-align: left}
+  .pure-text-lg-center{text-align: center}
+  .pure-text-lg-right{text-align: right}
+  .pure-text-lg-justify{text-align: justify}
+  .pure-text-lg-initial{text-align: initial}
+}
+/* pure-text-xl */
+@media screen and (min-width:80em) {
+  .pure-text-xl-left{text-align: left}
+  .pure-text-xl-center{text-align: center}
+  .pure-text-xl-right{text-align: right}
+  .pure-text-xl-justify{text-align: justify}
+  .pure-text-xl-initial{text-align: initial}
+}
