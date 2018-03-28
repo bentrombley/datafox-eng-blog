@@ -1,5 +1,9 @@
 # Changelog
 
+##### 2.5.2 - 2018/03/28
+- update styles
+- update footer link
+
 ##### 2.5.1 - 2018/03/02
 - update meta description
 - add missing link to footer
