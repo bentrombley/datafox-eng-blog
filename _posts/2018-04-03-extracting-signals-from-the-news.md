@@ -28,7 +28,7 @@ News Sources
 
 Although we also classify unstructured text coming from public websites, company blogs, and tweets, this post will focus solely on news generated from news organizations.
 
-Every 30 minutes of every day, we collect the articles from nearly 7000 of these sources (through RSS feeds) and pass them through our classifier. These sources range from regional business journals (e.g. Wichita Business Journal) to widely digested tech websites (e.g. TechCrunch).
+Every 30 minutes of every day, we collect the articles from nearly 7000 of these sources (through RSS feeds) and pass them through our classifier. These sources range from highly specific news sources (e.g. Healthcare IT News) to more widely digested websites (e.g. TechCrunch).
 
 What they all have in common is a high degree of content curation (thank you editors) and a focus on being very up-to-date (thank you capitalism). These features help prevent garbage from entering our pipeline and helps us keep our classification of the news highly targeted and highly relevant.
 
