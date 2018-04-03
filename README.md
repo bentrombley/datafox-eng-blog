@@ -69,7 +69,7 @@ At the top add a section
     tags:         [demo1, demo2, demo3, demo4]
     title:        'Demo article for example'
     date:         2017-07-25
-    author:       
+    author:
       name:       Alex Zappa
       twitter:    reatlat
       github:     reatlat
@@ -128,4 +128,14 @@ And if you are using NetworkManager, add a DNS for Docker and restart:
 ```
 echo 'json { "dns": ["8.8.8.8", "8.8.4.4"] }' | sudo tee /etc/docker/daemon.json
 sudo service docker restart
+```
+
+## Adding CSS to Be Compiled
+
+The file which currently imports and compiles CSS is found at `assets/styles.css`. If there is an additional `css` package/file you want to incorporate into the styling of a blog post, you can add a line to this `styles.css` file indicating the path to the particular `scss` file.
+
+Here's an example:
+
+```
+@import "vendor/purecss/tables";
 ```
