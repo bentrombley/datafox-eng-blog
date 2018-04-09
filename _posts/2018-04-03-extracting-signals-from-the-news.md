@@ -185,10 +185,10 @@ In the end, a tuned logistic regression performed best, lending itself well to f
 <td></td>
 </tr>
 <tr>
-<td><span style="font-weight:bold">All Signals</span></td>
-<td><span style="font-weight:bold">78.1%</span></td>
-<td><span style="font-weight:bold">73.2%</span></td>
-<td><span style="font-weight:bold">74.6%</span></td>
+<td class="text-bold">All Signals</td>
+<td class="text-bold">78.1%</td>
+<td class="text-bold">73.2%</td>
+<td class="text-bold">74.6%</td>
 </tr>
 </tbody>
 </table>
