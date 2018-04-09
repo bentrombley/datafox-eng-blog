@@ -76,7 +76,7 @@ nav:
     - { Investment Banking: 'https://www.datafox.com/customers/investment-banking/' }
 
   Applications:
-    - { Base Intelligence Platform: 'https://www.datafox.com/product/company-intelligence/' }
+    - { Company Intelligence Platform: 'https://www.datafox.com/product/company-intelligence/' }
     - { Account Scoring:            'https://www.datafox.com/product/account-scoring/' }
 
   CRM Data Management:
@@ -122,9 +122,9 @@ nav_cta:
 footer:
   Company:
     - '#'
-    - { About Us: 'https://www.datafox.com/company/' }
-    - { Leadership: 'https://www.datafox.com/company/leadership/' }
+    - { About Us: 'https://www.datafox.com/company/leadership/' }
     - { Press: 'https://www.datafox.com/company/press/' }
+    - { Security: 'https://www.datafox.com/company/security/' }
   Connect:
     - '#'
     - { Partners: 'https://www.datafox.com/company/partners/' }
