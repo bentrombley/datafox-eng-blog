@@ -5,6 +5,7 @@ sitemap:
 @import "varibles";
 @import "mixins/import-now";
 
+// include @import vendor stylesheet to file "vendor/import-now"
 @import "vendor/import-now";
 
 @import "base";
@@ -18,4 +19,3 @@ sitemap:
 @import "footer";
 
 @import "helpers";
-@import "vendor/purecss/tables";
