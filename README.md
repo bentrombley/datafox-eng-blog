@@ -132,10 +132,17 @@ sudo service docker restart
 
 ## Adding CSS to Be Compiled
 
-The file which currently imports and compiles CSS is found at `assets/styles.css`. If there is an additional `css` package/file you want to incorporate into the styling of a blog post, you can add a line to this `styles.css` file indicating the path to the particular `scss` file.
+The file which currently imports and compiles CSS is found at `assets/styles.scss`. If there is an additional `scss` package/file you want to incorporate into the styling of a blog post, you can add a line to this `styles.scss` file indicating the path to the particular `scss` file.
 
 Here's an example:
 
 ```
 @import "vendor/purecss/tables";
 ```
+
+###### NOTE:
+if you update stylesheet, please update current version ìn the file `_config.yml`
+
+<img src="./_includes/doc/version-config-yml.png" width="300" height="80">
+
+This is important to say browser download new one `styles.css`
