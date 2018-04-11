@@ -153,9 +153,10 @@ section.section-hero {
   }
 
   &.section-hero {
-    padding-bottom: 3rem;
-    @media (max-width: $md - 1px) {
-      padding-bottom: 1rem;
+    padding-bottom: rem(16px);
+    min-height: 250px;
+    @media (min-width: $md) {
+      padding-bottom: rem(20px);
       min-height: 300px;
     }
   }

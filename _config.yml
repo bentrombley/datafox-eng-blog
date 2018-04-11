@@ -1,7 +1,7 @@
 # Site settings
 title: "DataFox Tech Blog"
 description: "Follow how the DataFox engineering team uses data science and machine learning to provide the best data-driven solutions to meet your growth objectives"
-version: "2.5.3"
+version: "2.5.4"
 
 email: "admin@datafox.com"
 baseurl: ""
@@ -76,7 +76,7 @@ nav:
     - { Investment Banking: 'https://www.datafox.com/customers/investment-banking/' }
 
   Applications:
-    - { Company Intelligence Platform: 'https://www.datafox.com/product/company-intelligence/' }
+    - { Base Intelligence Platform: 'https://www.datafox.com/product/company-intelligence/' }
     - { Account Scoring:            'https://www.datafox.com/product/account-scoring/' }
 
   CRM Data Management:

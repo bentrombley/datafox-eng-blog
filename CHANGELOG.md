@@ -1,5 +1,12 @@
 # Changelog
 
+##### 2.5.4 - 2018/04/11
+- update styles
+- update navbar link
+
+##### 2.5.3 - 2018/04/09
+- update styles
+
 ##### 2.5.2 - 2018/03/28
 - update styles
 - update footer link
