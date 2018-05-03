@@ -66,18 +66,20 @@ nav:
     - { Automate Prospecting Tasks:     'https://www.datafox.com/solutions/workflow-orchestration/' }
     - { Maximize Conference ROI:        'https://www.datafox.com/customers/event-marketing/' }
 
-  For Sales & Marketing:
+  Sales & Marketing:
     - { Sales Operations: 'https://www.datafox.com/customers/sales-operations/' }
     - { Sales Leadership: 'https://www.datafox.com/customers/sales-managers/' }
     - { Marketing:        'https://www.datafox.com/customers/marketing/' }
 
-  For Finance:
+  Finance Deal Engine:
     - { Private Equity:     'https://www.datafox.com/customers/private-equity/' }
     - { Investment Banking: 'https://www.datafox.com/customers/investment-banking/' }
 
   Applications:
     - { Base Intelligence Platform: 'https://www.datafox.com/product/company-intelligence/' }
     - { Account Scoring:            'https://www.datafox.com/product/account-scoring/' }
+    - { Inbound IQ:                 'https://www.datafox.com/product/inbound-iq/' }
+    - { Finance Deal Engine:        'https://www.datafox.com/customers/private-equity/' }
 
   CRM Data Management:
     - { Account Data For Accounts: 'https://www.datafox.com/product/account-data-management/' }
