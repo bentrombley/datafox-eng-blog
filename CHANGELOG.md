@@ -1,5 +1,9 @@
 # Changelog
 
+##### 2.5.5 - 2018/05/11
+- update styles
+- update footer navbar link
+
 ##### 2.5.4 - 2018/04/11
 - update styles
 - update navbar link
