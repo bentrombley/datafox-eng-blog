@@ -143,7 +143,7 @@ The table below shows a few representative ranges. Based on an examination of th
 
 In our database, approximately 100 keywords are present in above 10K companies (e.g. software, manufacturing), so the document frequency's upper range varies between 10K and 100K, depending on how much precision we want to sacrifice for recall of the most common keywords. Applying these ranges left us with the following four models:
 
-<table class="pure-table">
+<table class="pure-table" style="margin: 0px auto;">
 <thead>
 <td>Model</td>
 <td>Min DF</td>
