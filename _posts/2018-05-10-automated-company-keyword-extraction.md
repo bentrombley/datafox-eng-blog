@@ -143,7 +143,7 @@ The table below shows a few representative ranges. Based on an examination of th
 
 In our database, approximately 100 keywords are present in above 10K companies (e.g. software, manufacturing), so the document frequency's upper range varies between 10K and 100K, depending on how much precision we want to sacrifice for recall of the most common keywords. Applying these ranges left us with the following four models:
 
-<table class="pure-table" style="margin: 0px auto;">
+<table class="pure-table mha">
 <thead>
 <td>Model</td>
 <td>Min DF</td>
@@ -203,7 +203,7 @@ The max F1 scores indicate that the **N-gram Tokens** models had better peak per
 Now, the *N-gram Tokens (10-100K)* model receives a large boost in recall, not precision, in comparison to the *N-gram Tokens (400-10K)* model, accounting for much of the up-tick in F1-score. Further, this methodology does not reveal anything about the precision of new keywords extracted. In **Table 2**, we see that the *N-gram Tokens (10-100K)* model would add about 25 times more new keywords than the *N-gram Tokens (400-10K)* model, while affecting only 100K more companies.
 
 
-<table class="pure-table">
+<table class="pure-table mha">
 <thead>
 <td>Model</td>
 <td>Min DF</td>

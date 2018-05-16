@@ -150,7 +150,7 @@ In order to compare the results from these models, we used precision, recall and
 
 In the end, a tuned logistic regression performed best, lending itself well to future re-training and giving us the ability to inspect the most important features contributing to each signal tag. Here are some high-level results from the model's performance on the test set, where the overall precision (78.1%) and the overall recall (73.2%) combined for a healthy f1-score of 74.6%.
 
-<table class="pure-table">
+<table class="pure-table mha">
 <thead>
 <tr>
 <th>Signal Type</th>
