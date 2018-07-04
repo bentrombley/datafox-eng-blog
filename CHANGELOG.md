@@ -1,5 +1,9 @@
 # Changelog
 
+##### 2.5.7 - 2018/07/04
+- update styles
+- update navigation bar
+
 ##### 2.5.6 - 2018/05/11
 - update styles
 

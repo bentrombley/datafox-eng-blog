@@ -1,7 +1,7 @@
 # Site settings
 title: "DataFox Tech Blog"
 description: "Follow how the DataFox engineering team uses data science and machine learning to provide the best data-driven solutions to meet your growth objectives"
-version: "2.5.6"
+version: "2.5.7"
 
 email: "admin@datafox.com"
 baseurl: ""
@@ -70,6 +70,16 @@ nav:
     - { Sales Operations: 'https://www.datafox.com/customers/sales-operations/' }
     - { Sales Leadership: 'https://www.datafox.com/customers/sales-managers/' }
     - { Marketing:        'https://www.datafox.com/customers/marketing/' }
+
+  By Use Case:
+    - { CRM Data Cleanup:             'https://www.datafox.com/data/crm/crm-data-cleaning/' }
+    - { Data Enrichment:              'https://www.datafox.com/data/crm/data-enrichment/' }
+    - { Define Target Market:         'https://www.datafox.com/data/projects/define-target-market/' }
+    - { TAM Analysis:                 'https://www.datafox.com/data/projects/total-addressable-market-analysis/' }
+    - { Company Search:               'https://www.datafox.com/data/companies/company-search/' }
+    - { Target Account List Creation: 'https://www.datafox.com/data/lists/target-account-list-creation/' }
+    - { ABM Target Accounts:          'https://www.datafox.com/data/projects/account-based-marketing-strategy/' }
+    - { Account Hierarchies:          'https://www.datafox.com/data/crm/account-hierarchies-in-salesforce/' }
 
   Finance Deal Engine:
     - { Private Equity:     'https://www.datafox.com/customers/private-equity/' }
